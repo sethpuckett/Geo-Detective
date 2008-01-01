@@ -1,11 +1,11 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.graphics.Sprite;
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.FadeType;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.TweenType;
-import com.game.phase.utility.android.FixedSizeArray;
+import com.game.loblib.graphics.Sprite;
+import com.game.loblib.messaging.MessageType;
+import com.game.loblib.utility.FadeType;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.TweenType;
+import com.game.loblib.utility.android.FixedSizeArray;
 
 public class FadeBehavior extends TweenBehavior {
 
@@ -19,7 +19,7 @@ public class FadeBehavior extends TweenBehavior {
 
 	public FadeBehavior(float fadeInTime, float fadeOutTime) {
 		super(TweenType.ALPHA, -1f, fadeOutTime);
-		_type = BehaviorType.FADE;
+		_type = GeoDetectiveBehaviorType.FADE;
 		_fadeInTime = fadeInTime;
 		_fadeOutTime = fadeOutTime;
 		_fadeType = FadeType.SINGLE;
@@ -29,7 +29,7 @@ public class FadeBehavior extends TweenBehavior {
 	public FadeBehavior(float fadeInTime, float fadeOutTime, boolean initOn, int fadeType) {
 		super(TweenType.ALPHA, initOn ? -1 : 1f, initOn ? fadeOutTime
 				: fadeInTime);
-		_type = BehaviorType.FADE;
+		_type = GeoDetectiveBehaviorType.FADE;
 		_fadeInTime = fadeInTime;
 		_fadeOutTime = fadeOutTime;
 		_initOn = initOn;
@@ -40,7 +40,7 @@ public class FadeBehavior extends TweenBehavior {
 			FixedSizeArray<Sprite> spriteList) {
 		super(TweenType.ALPHA, initOn ? -1 : 1f, initOn ? fadeOutTime
 				: fadeInTime, spriteList);
-		_type = BehaviorType.FADE;
+		_type = GeoDetectiveBehaviorType.FADE;
 		_fadeInTime = fadeInTime;
 		_fadeOutTime = fadeOutTime;
 		_initOn = initOn;

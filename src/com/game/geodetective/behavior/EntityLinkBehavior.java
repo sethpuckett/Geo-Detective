@@ -1,17 +1,18 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.entity.GameEntity;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.entity.GameEntity;
 
 public class EntityLinkBehavior extends Behavior {
 	
 	protected GameEntity _linkedEntity = null;
 
 	public EntityLinkBehavior() {
-		_type = BehaviorType.ENTITY_LINK;
+		_type = GeoDetectiveBehaviorType.ENTITY_LINK;
 	}
 	
 	public EntityLinkBehavior(GameEntity linkedEntity) {
-		_type = BehaviorType.ENTITY_LINK;
+		_type = GeoDetectiveBehaviorType.ENTITY_LINK;
 		_linkedEntity = linkedEntity;
 	}
 	

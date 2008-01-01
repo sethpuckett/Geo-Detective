@@ -1,12 +1,13 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.graphics.Sprite;
-import com.game.phase.utility.Direction;
-import com.game.phase.utility.Global;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.MathHelper;
-import com.game.phase.utility.android.FixedSizeArray;
-import com.game.phase.utility.area.Vertex;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.graphics.Sprite;
+import com.game.loblib.utility.Direction;
+import com.game.loblib.utility.Global;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.MathHelper;
+import com.game.loblib.utility.android.FixedSizeArray;
+import com.game.loblib.utility.area.Vertex;
 
 public class ScrollingTileBehavior extends Behavior {
 
@@ -24,7 +25,7 @@ public class ScrollingTileBehavior extends Behavior {
 	protected Vertex _imageSize;
 	
 	public ScrollingTileBehavior(int image, int layer, int direction, float scrollSpeed) {
-		_type = BehaviorType.SCROLLING_TILE;
+		_type = GeoDetectiveBehaviorType.SCROLLING_TILE;
 		
 		_imageId = image;
 		_imageSize = new Vertex();
@@ -36,7 +37,7 @@ public class ScrollingTileBehavior extends Behavior {
 	}
 	
 	public ScrollingTileBehavior(int image, int layer, int direction, float scrollSpeed, float startPos) {
-		_type = BehaviorType.SCROLLING_TILE;
+		_type = GeoDetectiveBehaviorType.SCROLLING_TILE;
 		
 		_imageId = image;
 		_imageSize = new Vertex();
@@ -47,7 +48,7 @@ public class ScrollingTileBehavior extends Behavior {
 	}
 	
 	public ScrollingTileBehavior(int image, int layer, int direction, float scrollSpeed, float startPos, float fixedLength, boolean fixedVertical) {
-		_type = BehaviorType.SCROLLING_TILE;
+		_type = GeoDetectiveBehaviorType.SCROLLING_TILE;
 		
 		_imageId = image;
 		_imageSize = new Vertex();

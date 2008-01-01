@@ -1,11 +1,12 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.graphics.Sprite;
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.MathHelper;
-import com.game.phase.utility.TweenType;
-import com.game.phase.utility.android.FixedSizeArray;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.graphics.Sprite;
+import com.game.loblib.messaging.MessageType;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.MathHelper;
+import com.game.loblib.utility.TweenType;
+import com.game.loblib.utility.android.FixedSizeArray;
 
 public class TweenBehavior extends Behavior {
 
@@ -20,14 +21,14 @@ public class TweenBehavior extends Behavior {
 	protected boolean _spriteSet = false;
 	
 	public TweenBehavior(int tweenType, float totalChange, float tweenTime) {
-		_type = BehaviorType.TWEEN;
+		_type = GeoDetectiveBehaviorType.TWEEN;
 		_tweenType = tweenType;
 		_totalChange = totalChange;
 		_tweenTime = tweenTime;
 	}
 	
 	public TweenBehavior(int tweenType, float totalChange, float tweenTime, Sprite sprite) {
-		_type = BehaviorType.TWEEN;
+		_type = GeoDetectiveBehaviorType.TWEEN;
 		_tweenType = tweenType;
 		_totalChange = totalChange;
 		_tweenTime = tweenTime;
@@ -36,7 +37,7 @@ public class TweenBehavior extends Behavior {
 	}
 	
 	public TweenBehavior(int tweenType, float totalChange, float tweenTime, FixedSizeArray<Sprite> spriteList) {
-		_type = BehaviorType.TWEEN;
+		_type = GeoDetectiveBehaviorType.TWEEN;
 		_tweenType = tweenType;
 		_totalChange = totalChange;
 		_tweenTime = tweenTime;

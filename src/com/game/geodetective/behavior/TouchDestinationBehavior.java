@@ -1,18 +1,19 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.input.GameMotionEvent;
-import com.game.phase.input.ITouchListener;
-import com.game.phase.input.MotionType;
-import com.game.phase.input.TouchData;
-import com.game.phase.messaging.IMessageHandler;
-import com.game.phase.messaging.Message;
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.Global;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.area.Area;
-import com.game.phase.utility.area.AreaType;
-import com.game.phase.utility.area.Rectangle;
-import com.game.phase.utility.area.Vertex;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.input.GameMotionEvent;
+import com.game.loblib.input.ITouchListener;
+import com.game.loblib.input.MotionType;
+import com.game.loblib.input.TouchData;
+import com.game.loblib.messaging.IMessageHandler;
+import com.game.loblib.messaging.Message;
+import com.game.loblib.messaging.MessageType;
+import com.game.loblib.utility.Global;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.area.Area;
+import com.game.loblib.utility.area.AreaType;
+import com.game.loblib.utility.area.Rectangle;
+import com.game.loblib.utility.area.Vertex;
 
 
 public class TouchDestinationBehavior extends Behavior implements ITouchListener, IMessageHandler {
@@ -23,7 +24,7 @@ public class TouchDestinationBehavior extends Behavior implements ITouchListener
 	protected final Vertex _cameraLocation = new Vertex();
 	
 	public TouchDestinationBehavior() {
-		_type = BehaviorType.TOUCH_DESTINATION;
+		_type = GeoDetectiveBehaviorType.TOUCH_DESTINATION;
 	}
 	
 	@Override
@@ -62,16 +63,12 @@ public class TouchDestinationBehavior extends Behavior implements ITouchListener
 	public void onTouchEvent(GameMotionEvent event) {	
 		switch (event.Type) {
 		case MotionType.ACTION_DOWN:
-			if (event.ScreenCoords.Y > Manager.Level.getControlBarHeight())
-				_screenTouch = true;
-			else
-				break;
+			_screenTouch = true;
 		case MotionType.ACTION_MOVE:
-			if (_screenTouch || event.ScreenCoords.Y > Manager.Level.getControlBarHeight()) {
-				_screenTouch = true;
+			if (_screenTouch) {
 				_entity.Attributes.Destination.Undefined = false;
 				_entity.Attributes.Destination.X = event.CameraCoords.X;
-				_entity.Attributes.Destination.Y = event.CameraCoords.Y - Manager.Level.getControlBarHeight();
+				_entity.Attributes.Destination.Y = event.CameraCoords.Y;
 				Area.sync(_cameraLocation, Global.Camera.CameraArea.Position);
 			}
 			break;

@@ -3,6 +3,7 @@
 	<name>Geo-Detective</name>
 	<comment></comment>
 	<projects>
+		<project>LobLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

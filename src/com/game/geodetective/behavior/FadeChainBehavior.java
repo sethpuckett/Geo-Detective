@@ -1,11 +1,13 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.graphics.Sprite;
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.FadeType;
-import com.game.phase.utility.Logger;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.android.FixedSizeArray;
+import com.game.geodetective.messaging.GeoDetectiveMessageType;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.graphics.Sprite;
+import com.game.loblib.messaging.MessageType;
+import com.game.loblib.utility.FadeType;
+import com.game.loblib.utility.Logger;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.android.FixedSizeArray;
 
 public class FadeChainBehavior extends Behavior {
 
@@ -34,7 +36,7 @@ public class FadeChainBehavior extends Behavior {
 	protected float _cycleTime = 0;
 	
 	public FadeChainBehavior(int layer, float maxAlpha, float fadeInTime, float fadeOutTime, float holdTime, float advanceSpriteTime, int fadeType) {
-		_type = BehaviorType.FADE_CHAIN;
+		_type = GeoDetectiveBehaviorType.FADE_CHAIN;
 		
 		_stateArray = new int[MAX_SPRITE_COUNT];
 		_stateChangeTimingGrid = new float[MAX_SPRITE_COUNT][4];
@@ -50,7 +52,7 @@ public class FadeChainBehavior extends Behavior {
 	}
 	
 	public FadeChainBehavior(int layer, float maxAlpha, float fadeInTime, float fadeOutTime, float holdTime, float advanceSpriteTime, int fadeType, float pauseTime) {
-		_type = BehaviorType.FADE_CHAIN;
+		_type = GeoDetectiveBehaviorType.FADE_CHAIN;
 		
 		_stateArray = new int[MAX_SPRITE_COUNT];
 		_stateChangeTimingGrid = new float[MAX_SPRITE_COUNT][4];
@@ -133,7 +135,7 @@ public class FadeChainBehavior extends Behavior {
 				else if (_stateArray[i] == STATE_OFF) {
 					_spriteChain.get(i).Alpha = 0;
 					if (i == _spriteChain.getCount() - 1) {
-						Manager.Message.sendMessage(MessageType.FADE_CHAIN_COMPLETE, _entity);
+						Manager.Message.sendMessage(GeoDetectiveMessageType.FADE_CHAIN_COMPLETE, _entity);
 						disable();
 					}
 				}

@@ -1,11 +1,12 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.Logger;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.android.FixedSizeArray;
-import com.game.phase.utility.area.Area;
-import com.game.phase.utility.area.Vertex;
+import com.game.geodetective.messaging.GeoDetectiveMessageType;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.utility.Logger;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.android.FixedSizeArray;
+import com.game.loblib.utility.area.Area;
+import com.game.loblib.utility.area.Vertex;
 
 public class PatrolDestinationBehavior extends Behavior {
 	
@@ -29,22 +30,22 @@ public class PatrolDestinationBehavior extends Behavior {
 	
 	
 	public PatrolDestinationBehavior() {
-		_type = BehaviorType.PATROL_DESTINATION;
+		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
 	}
 	
 	public PatrolDestinationBehavior(int holdTime) {
-		_type = BehaviorType.PATROL_DESTINATION;
+		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
 		_holdTime = holdTime;
 	}
 	
 	public PatrolDestinationBehavior(int holdTime, int startOffset) {
-		_type = BehaviorType.PATROL_DESTINATION;
+		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
 		_holdTime = holdTime;
 		_startOffset = startOffset;
 	}
 	
 	public PatrolDestinationBehavior(int holdTime, int startOffset, int patrolType) {
-		_type = BehaviorType.PATROL_DESTINATION;
+		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
 		_holdTime = holdTime;
 		_startOffset = startOffset;
 		_patrolType = patrolType;
@@ -94,7 +95,7 @@ public class PatrolDestinationBehavior extends Behavior {
 				_currentDestinationIndex = 0;
 		}
 		if (_entity.Attributes.Destination != _destinations.get(_currentDestinationIndex)) {
-			Manager.Message.sendMessage(MessageType.PATROL_START, _entity);
+			Manager.Message.sendMessage(GeoDetectiveMessageType.PATROL_START, _entity);
 			Area.sync(_entity.Attributes.Destination, _destinations.get(_currentDestinationIndex));
 		}
 	}
@@ -129,7 +130,7 @@ public class PatrolDestinationBehavior extends Behavior {
 	}
 	
 	protected void updateDestination(int newIndex) {
-		Manager.Message.sendMessage(MessageType.PATROL_START, _entity);
+		Manager.Message.sendMessage(GeoDetectiveMessageType.PATROL_START, _entity);
 		_currentDestinationIndex = newIndex;
 		if (_currentDestinationIndex >= _destinations.getCount())
 			_currentDestinationIndex = 0;

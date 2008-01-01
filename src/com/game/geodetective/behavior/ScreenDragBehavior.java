@@ -1,20 +1,21 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.exception.UndefinedVertexException;
-import com.game.phase.input.GameMotionEvent;
-import com.game.phase.input.ITouchListener;
-import com.game.phase.input.MotionType;
-import com.game.phase.input.TouchData;
-import com.game.phase.messaging.IMessageHandler;
-import com.game.phase.messaging.Message;
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.Global;
-import com.game.phase.utility.Logger;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.area.Area;
-import com.game.phase.utility.area.AreaType;
-import com.game.phase.utility.area.Rectangle;
-import com.game.phase.utility.area.Vertex;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.exception.UndefinedVertexException;
+import com.game.loblib.input.GameMotionEvent;
+import com.game.loblib.input.ITouchListener;
+import com.game.loblib.input.MotionType;
+import com.game.loblib.input.TouchData;
+import com.game.loblib.messaging.IMessageHandler;
+import com.game.loblib.messaging.Message;
+import com.game.loblib.messaging.MessageType;
+import com.game.loblib.utility.Global;
+import com.game.loblib.utility.Logger;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.area.Area;
+import com.game.loblib.utility.area.AreaType;
+import com.game.loblib.utility.area.Rectangle;
+import com.game.loblib.utility.area.Vertex;
 
 public class ScreenDragBehavior extends Behavior implements ITouchListener, IMessageHandler {
 	private boolean _screenTouch = false;
@@ -27,12 +28,12 @@ public class ScreenDragBehavior extends Behavior implements ITouchListener, IMes
 	protected boolean _dragging;
 	
 	public ScreenDragBehavior() {
-		_type = BehaviorType.SCREEN_DRAG;
+		_type = GeoDetectiveBehaviorType.SCREEN_DRAG;
 		_dragThreshold = 0f;
 	}
 	
 	public ScreenDragBehavior(float threshold) {
-		_type = BehaviorType.SCREEN_DRAG;
+		_type = GeoDetectiveBehaviorType.SCREEN_DRAG;
 		_dragThreshold = threshold;
 	}
 	

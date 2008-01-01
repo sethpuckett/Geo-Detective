@@ -6,6 +6,7 @@ public class GeoDetectiveBehaviorType extends BehaviorType {
 	
 	//rendering
 	public static final long RENDER 		= 1 << 0;
+	public static final long TILE_RENDER	= 1 << 2;
 	public static final long BLINK			= 1 << 6;
 	public static final long DELAYED_RENDER	= 1 << 28;
 	

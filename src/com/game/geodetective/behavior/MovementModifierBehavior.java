@@ -1,27 +1,28 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.collision.CollisionLayer;
-import com.game.phase.collision.ICollisionSender;
-import com.game.phase.exception.UndefinedVertexException;
-import com.game.phase.utility.Direction;
-import com.game.phase.utility.Logger;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.area.Area;
-import com.game.phase.utility.area.IArea;
-import com.game.phase.utility.area.Vertex;
+import com.game.geodetective.collision.GeoDetectiveCollisionLayer;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.collision.ICollisionSender;
+import com.game.loblib.exception.UndefinedVertexException;
+import com.game.loblib.utility.Direction;
+import com.game.loblib.utility.Logger;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.area.Area;
+import com.game.loblib.utility.area.IArea;
+import com.game.loblib.utility.area.Vertex;
 
 public class MovementModifierBehavior extends Behavior {
 
-	protected long _collisionLayers = CollisionLayer.MAIN_BLOCK;
+	protected long _collisionLayers = GeoDetectiveCollisionLayer.MAIN_BLOCK;
 	protected int _direction = Direction.UNKNOWN;
 	protected float _power = 0;
 	
 	public MovementModifierBehavior() {
-		_type = BehaviorType.MOVEMENT_MODIFIER;
+		_type = GeoDetectiveBehaviorType.MOVEMENT_MODIFIER;
 	}
 	
 	public MovementModifierBehavior(int direction, float power) {
-		_type = BehaviorType.MOVEMENT_MODIFIER;
+		_type = GeoDetectiveBehaviorType.MOVEMENT_MODIFIER;
 		_direction = direction;
 		_power = power;
 	}

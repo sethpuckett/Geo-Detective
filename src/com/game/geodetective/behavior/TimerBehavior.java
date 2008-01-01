@@ -1,8 +1,9 @@
 package com.game.geodetective.behavior;
 
-import com.game.phase.messaging.MessageType;
-import com.game.phase.utility.Manager;
-import com.game.phase.utility.TimerType;
+import com.game.loblib.behavior.Behavior;
+import com.game.loblib.messaging.MessageType;
+import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.TimerType;
 
 public class TimerBehavior extends Behavior {
 
@@ -12,11 +13,11 @@ public class TimerBehavior extends Behavior {
 	protected float _timeRemaining;
 	
 	public TimerBehavior() {
-		_type = BehaviorType.TIMER;
+		_type = GeoDetectiveBehaviorType.TIMER;
 	}
 	
 	public TimerBehavior(int timerType, float time) {
-		_type = BehaviorType.TIMER;
+		_type = GeoDetectiveBehaviorType.TIMER;
 		_timerType = timerType;
 		_totalTime = time;
 	}
