@@ -1,0 +1,139 @@
+package com.game.geodetective.graphics;
+
+import com.game.geodetective.entity.GameEntity;
+import com.game.geodetective.messaging.IMessageHandler;
+import com.game.geodetective.messaging.Message;
+import com.game.geodetective.messaging.MessageType;
+import com.game.geodetective.utility.Logger;
+import com.game.geodetective.utility.Manager;
+import com.game.geodetective.utility.MathHelper;
+import com.game.geodetective.utility.area.Area;
+import com.game.geodetective.utility.area.Rectangle;
+import com.game.geodetective.utility.area.Vertex;
+
+public class Camera implements IMessageHandler {
+	protected final static StringBuffer _tag = new StringBuffer("Camera");
+	
+	public GameEntity Anchor = null;
+	public Vertex Threshold = new Vertex();
+	public Rectangle CoveredArea;
+	public Rectangle CameraArea = new Rectangle();
+	public float YOffset;
+	
+	protected float _coveredAreaMinCenterX;
+	protected float _coveredAreaMaxCenterX;
+	protected float _coveredAreaMinCenterY;
+	protected float _coveredAreaMaxCenterY;
+	
+	public Camera() {
+		CoveredArea = new Rectangle();
+		CoveredArea.MaintainCenter = false;
+	}
+	
+	public void init() {
+		Manager.Message.subscribe(this, MessageType.SCREEN_SIZE_SET);
+	}
+	
+	public void update() {
+		if (Anchor != null) {
+			Vertex center = Manager.Vertex.allocate();
+			Vertex anchorCenter = Manager.Vertex.allocate();
+			Anchor.Attributes.Area.getCenter(anchorCenter);
+			CameraArea.getCenter(center);
+			
+			if(updatePosition(center, anchorCenter))
+				CameraArea.setCenter(center);
+			
+			Manager.Vertex.release(center);
+			Manager.Vertex.release(anchorCenter);
+		}
+	}
+	
+	public void setCenter(Vertex center) {
+		//CameraArea.setCenter(center);
+		Vertex newCenter = Manager.Vertex.allocate();
+		Vertex anchorCenter = Manager.Vertex.allocate();
+		Anchor.Attributes.Area.getCenter(anchorCenter);
+		Area.sync(newCenter, center);
+		
+		CameraArea.setCenter(center);
+		if(updatePosition(newCenter, anchorCenter))
+			CameraArea.setCenter(newCenter);
+		
+		Manager.Vertex.release(newCenter);
+		Manager.Vertex.release(anchorCenter);
+	}
+	
+	public void move(Vertex offset) {
+		CameraArea.changePosition(offset);
+	}
+	
+	public void move(float x, float y) {
+		CameraArea.changePosition(x, y);
+	}
+	
+	public void centerOnAnchor() {
+		if (Anchor != null) {
+			Vertex center = Manager.Vertex.allocate();
+			Vertex anchorCenter = Manager.Vertex.allocate();
+			Anchor.Attributes.Area.getCenter(anchorCenter);
+			Area.sync(center, anchorCenter);
+			
+			CameraArea.setCenter(center);
+			if(updatePosition(center, anchorCenter))
+				CameraArea.setCenter(center);
+			
+			Manager.Vertex.release(center);
+			Manager.Vertex.release(anchorCenter);
+		}
+		else
+			Logger.e(_tag, "cannot center; no anchor set");
+	}
+	
+	protected boolean updatePosition(Vertex center, Vertex anchorCenter) {
+		boolean xchange = false;
+		boolean ychange = false;
+		
+		if (Math.abs(anchorCenter.X - center.X) > Threshold.X) {
+			xchange = true;
+			if (anchorCenter.X < center.X)
+				center.X = anchorCenter.X + Threshold.X;
+			else
+				center.X = anchorCenter.X - Threshold.X;
+		}
+		if (Math.abs(anchorCenter.Y - center.Y) > Threshold.Y) {
+			ychange = true;
+			if (anchorCenter.Y < center.Y)
+				center.Y = anchorCenter.Y + Threshold.Y;
+			else
+				center.Y = anchorCenter.Y - Threshold.Y;
+		}
+		
+		float oldX = center.X;
+		float oldY = center.Y;
+		
+		center.X = MathHelper.clamp((CameraArea.Size.X / 2f) + CoveredArea.Position.X, CoveredArea.Position.X + CoveredArea.Size.X - (CameraArea.Size.X / 2f), center.X);
+		center.Y = MathHelper.clamp((CameraArea.Size.Y / 2f) + CoveredArea.Position.Y, CoveredArea.Position.Y + CoveredArea.Size.Y - (CameraArea.Size.Y / 2f), center.Y);
+		
+		if (oldX != center.X)
+			xchange = true;
+		if (oldY != center.Y)
+			ychange = true;
+		
+		return xchange || ychange;
+	}
+
+	@Override
+	public void handleMessage(Message message) {
+		if (message.Type == MessageType.SCREEN_SIZE_SET) {
+			Vertex v = message.getData();
+			// Shouldn't need this
+			//CameraArea.setSize(v.X, v.Y - Manager.Level.getControlBarHeight());
+
+			_coveredAreaMinCenterX = (CameraArea.Size.X / 2f) + CoveredArea.Position.X;
+			_coveredAreaMaxCenterX = CoveredArea.Position.X + CoveredArea.Size.X - (CameraArea.Size.X / 2f);
+			_coveredAreaMinCenterY = (CameraArea.Size.Y / 2f) + CoveredArea.Position.Y;
+			_coveredAreaMaxCenterY = CoveredArea.Position.Y + CoveredArea.Size.Y - (CameraArea.Size.Y / 2f);
+		}
+	}
+}
