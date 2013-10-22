@@ -2,6 +2,7 @@ package com.game.geodetective.graphics;
 
 import java.util.Comparator;
 
+// Deteremines if two textures are the same
 public class TextureComparator implements Comparator<Texture> {
 	@Override
 	public int compare(Texture t1, Texture t2) {

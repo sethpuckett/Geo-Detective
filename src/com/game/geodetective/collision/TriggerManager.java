@@ -8,6 +8,8 @@ import com.game.geodetective.messaging.MessageType;
 import com.game.geodetective.utility.Manager;
 import com.game.geodetective.utility.android.FixedSizeArray;
 
+// Triggers provide helpful functionality on top of basic collision detection.
+// Messages are sent when a collision occurs and when the collision stops
 public class TriggerManager implements IMessageHandler {
 
 	protected FixedSizeArray<ICollisionSender> _triggers = new FixedSizeArray<ICollisionSender>(64);
@@ -37,6 +39,7 @@ public class TriggerManager implements IMessageHandler {
 	
 	@Override
 	public void handleMessage(Message message) {
+		// If trigger is just being hit send message, otherwise set trigger state to true to
 		if (message.Type == MessageType.COLLISION) {
 			ICollisionSender sender = message.getData();
 			if ((sender.getLayers() & CollisionLayer.TRIGGER) > 0) {
@@ -53,6 +56,7 @@ public class TriggerManager implements IMessageHandler {
 		}
 	}
 
+	// returns true if the provided entity is an active trigger
 	public boolean hit(GameEntity entity) {
 		boolean result = false;
 		
@@ -67,6 +71,7 @@ public class TriggerManager implements IMessageHandler {
 		return result;
 	}
 	
+	// removes all triggers
 	 public void flush() {
 		_triggers.clear();
 		_remove.clear();

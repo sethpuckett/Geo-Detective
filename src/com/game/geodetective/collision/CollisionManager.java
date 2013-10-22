@@ -12,6 +12,7 @@ import com.game.geodetective.utility.area.Rectangle;
 public class CollisionManager implements IMessageHandler {
 	protected final StringBuffer _tag = new StringBuffer("CollisionManager");
 	
+	// Partitions are used speed up collision detection by grouping nearby entities
 	protected final static int PARTITION_ROW = 8;
 	protected final static int TOTAL_PARTITIONS = PARTITION_ROW * PARTITION_ROW;
 	
@@ -63,6 +64,7 @@ public class CollisionManager implements IMessageHandler {
 		return returnSender;
 	}
 
+	// Adds collision sender to the appropriate partition(s)
 	public void addSender(ICollisionSender sender) {
 		IArea senderArea = sender.getArea();
 		for (int i = 0; i <  TOTAL_PARTITIONS; i++) {
@@ -72,6 +74,7 @@ public class CollisionManager implements IMessageHandler {
 		}
 	}
 	
+	// removes collision sender from any partitions it is in
 	public void removeSender(ICollisionSender sender) {
 		IArea senderArea = sender.getArea();
 		for (int i = 0; i <  TOTAL_PARTITIONS; i++) {
@@ -97,6 +100,7 @@ public class CollisionManager implements IMessageHandler {
 //		}
 	}
 
+	// Removes all collision senders from all partitions
 	public void flush() {
 		for (int i = 0; i < _senderGrid.length; i++)
 			_senderGrid[i].clear();

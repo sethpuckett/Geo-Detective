@@ -6,6 +6,7 @@ import com.game.geodetective.utility.Logger;
 import com.game.geodetective.utility.android.AllocationGuard;
 import com.game.geodetective.utility.android.FixedSizeArray;
 
+// Game Entities contain a collection of behaviors that determine how they act in the game world
 public class GameEntity extends AllocationGuard {
 	protected static final StringBuffer _tag = new StringBuffer("GameEntity");
 
@@ -43,6 +44,7 @@ public class GameEntity extends AllocationGuard {
 	}
 	
 	public void update(float updateRatio) {
+		// Update all enabled behaviors
 		int count = _behaviors.getCount();
 		for (int i = 0; i < count; i++) {
 			Behavior b = _behaviors.get(i);
@@ -51,7 +53,8 @@ public class GameEntity extends AllocationGuard {
 		}
 	}
 	
-	public void addBehavior(Behavior b) {		
+	// Adds behavior if it does not already exist in entity
+	public void addBehavior(Behavior b) {
 		int index = _behaviors.find(b, false);
 		if (index == -1) {
 			_behaviors.add(b);
@@ -62,7 +65,7 @@ public class GameEntity extends AllocationGuard {
 			Logger.w(_tag, "behavior found; cannot add");
 	}
 
-	
+	// Removes behavior if it exists in entity
 	public void removeBehavior(Behavior b) {
 		int index = _behaviors.find(b, false);
 		if (index != -1) {
@@ -73,6 +76,7 @@ public class GameEntity extends AllocationGuard {
 			Logger.w(_tag, "behavior not found; cannot remove");
 	}
 	
+	// Removes all behaviors indicated by type flags
 	public void removeBehaviors(long types) {
 		int count = _behaviors.getCount();
 		for (int i = 0; i < count; ) {
@@ -86,10 +90,12 @@ public class GameEntity extends AllocationGuard {
 		}
 	}
 	
+	// Enables all behaviors
 	public void enableBehaviors() {
 		enableBehaviors(BehaviorType.ALL);
 	}
 	
+	// Enables behaviors indicated by type flags
 	public void enableBehaviors(long types) {
 		int count = _behaviors.getCount();
 		for (int i = 0; i < count; i++) {
@@ -103,10 +109,12 @@ public class GameEntity extends AllocationGuard {
 		}
 	}
 	
+	// Disables all behaviors
 	public void disableBehaviors() {
 		disableBehaviors(BehaviorType.ALL);
 	}
 	
+	// Disables behaviors indicated by type flags
 	public void disableBehaviors(long types) {
 		int count = _behaviors.getCount();
 		for (int i = 0; i < count; i++) {
@@ -120,10 +128,12 @@ public class GameEntity extends AllocationGuard {
 		}
 	}
 
+	// Removes all behaviors
 	public void destroyBehaviors() {
 		destroyBehaviors(BehaviorType.ALL);
 	}
 	
+	// Removes behaviors indicated by type flags
 	public void destroyBehaviors(long types) {
 		int count = _behaviors.getCount();
 		for (int i = 0; i < count; i++) {
@@ -133,6 +143,7 @@ public class GameEntity extends AllocationGuard {
 		}
 	}
 	
+	// Gets behavior indicated by type flag
 	public Behavior getBehavior(long type) {
 		int count = _behaviors.getCount();
 		for (int i = 0; i < count; i++) {
@@ -144,6 +155,7 @@ public class GameEntity extends AllocationGuard {
 		return null;
 	}
 
+	// Returns type flags indicating all enabled behaviors
 	protected long getEnabledBehaviors() {
 		long enabledBehaviors = 0;
 		int count = _behaviors.getCount();

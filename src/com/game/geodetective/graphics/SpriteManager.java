@@ -27,6 +27,7 @@ public class SpriteManager {
 		_spriteSets[1] = new SpriteSet();
 	}
 	
+	// Allocates and sets up a Sprite object based on provided image
 	public Sprite make(int image) {
 		Sprite sprite = _spritePool.allocate();
 		sprite.reset();
@@ -35,6 +36,7 @@ public class SpriteManager {
 		return sprite;
 	}
 
+	// Releases an allocated sprite object
 	public void release(Sprite sprite) {
 		_allocatedSprites.remove(sprite, false);
 		_spritePool.release(sprite);
@@ -44,20 +46,24 @@ public class SpriteManager {
 		_updateTime = updateTime;
 	}
 	
+	// Draws a sprite to a particular layer
 	public void draw(Sprite sprite, int layer) {
+		// lock the current sprite queue to prevent conflicts
 		synchronized (_spriteQueues[_spriteQueueIndex]) {
 			sprite.update(_updateTime);
+			// don't draw the sprite if it is off screen
 			if (!sprite.UseCamera || Intersection.check(Global.Camera.CameraArea, sprite.Area)) {
+				// make a draw call with the current sprite and add it to the sprite queue
 				_spriteQueues[_spriteQueueIndex].add(makeDrawCall(sprite));
-				_spriteSets[_spriteQueueIndex].addIndex(
-						_spriteQueues[_spriteQueueIndex].getCount() - 1, layer);
+				// add the sprite queue index of the draw call to the current sprite set
+				_spriteSets[_spriteQueueIndex].addIndex(_spriteQueues[_spriteQueueIndex].getCount() - 1, layer);
 			}
 		}
 	}
 
+	// Sends the current sprite queue/set to the renderer and prepares the next queue/set for the next frame
 	public void frameComplete() {
-		Global.Renderer.setDrawQueue(_spriteQueues[_spriteQueueIndex],
-				_spriteSets[_spriteQueueIndex]);
+		Global.Renderer.setDrawQueue(_spriteQueues[_spriteQueueIndex], _spriteSets[_spriteQueueIndex]);
 		_spriteQueueIndex = ~_spriteQueueIndex & 1;
 		int count = _spriteQueues[_spriteQueueIndex].getCount();
 		for (int i = 0; i < count; i++)
@@ -67,6 +73,7 @@ public class SpriteManager {
 	}
 
 	public void onPause() {
+		// When app is paused textures need to be reloaded
 		int count = _allocatedSprites.getCount();
 		for (int i = 0; i < count; i++) {
 			_allocatedSprites.get(i).Texture.Dirty = true;
@@ -74,12 +81,14 @@ public class SpriteManager {
 	}
 	
 	public void onResume() {
+		// When app is unpaused re-bind textures
 		int count = _allocatedSprites.getCount();
 		for (int i = 0; i < count; i++) {
 			Global.View.bindTexture(_allocatedSprites.get(i).Texture);
 		}
 	}
 
+	// Free all textures
 	public void freeTextures() {
 		int count = _allocatedSprites.getCount();
 		for (int i = 0; i < count; i++) {
@@ -90,6 +99,7 @@ public class SpriteManager {
 		Global.Renderer.freeTextures();
 	}
 
+	// Returns the number of currently allocated sprites
 	public int allocatedSpriteCount() {
 		if (_allocatedSprites != null)
 			return _allocatedSprites.getCount();
@@ -97,6 +107,7 @@ public class SpriteManager {
 			return 0;
 	}
 
+	// Releases all allocated sprites
 	public void flush() {
 		while (_allocatedSprites.getCount() > 0) {
 			Sprite sprite = _allocatedSprites.removeLast();
@@ -104,6 +115,7 @@ public class SpriteManager {
 		}
 	}
 
+	// Makes a draw call using current sprite properties
 	protected DrawCall makeDrawCall(Sprite sprite) {
 		DrawCall dc = _drawCallPool.allocate();
 		dc.Alpha = sprite.Alpha;

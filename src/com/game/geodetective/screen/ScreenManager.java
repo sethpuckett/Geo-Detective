@@ -5,7 +5,6 @@ import com.game.geodetective.messaging.Message;
 import com.game.geodetective.messaging.MessageType;
 import com.game.geodetective.utility.ButtonControlType;
 import com.game.geodetective.utility.Global;
-import com.game.geodetective.utility.Logger;
 import com.game.geodetective.utility.Manager;
 import com.game.geodetective.utility.android.AllocationGuard;
 
@@ -22,6 +21,7 @@ public class ScreenManager implements IMessageHandler {
 		Manager.Message.subscribe(this, MessageType.GAME_INIT);
 	}
 	
+	// Update active screen and handle screen code (if there is one)
 	public void update(float updateRatio) {
 		if (_active != null) {
 			_active.update(updateRatio);
@@ -31,20 +31,25 @@ public class ScreenManager implements IMessageHandler {
 		}
 	}
 
+	// Ensure that transition is valid and begin transition process
 	protected void handleCode(ScreenCode code) {
+		// Disable allocation guard to perform cleanup during screen transition
 		AllocationGuard.sGuardActive = false;
 		Manager.Sound.close();
 		Manager.Sound.init();
 		switch (_active.getType()) {
+			// fill with specfic game code
 			default:
 				break;
 		}
+		// Run garbage collector during downtime
 		Runtime.getRuntime().gc();
 		AllocationGuard.sGuardActive = true;
 	}
 
 	@Override
 	public void handleMessage(Message message) {
+		// when game is initialized set screen to splash screen
 		if (message.Type == MessageType.GAME_INIT) {
 			if (Global.Renderer.Width > 0) {
 				if (_active != null)
@@ -64,6 +69,7 @@ public class ScreenManager implements IMessageHandler {
 		}
 	}
 
+	// Handles back button presses
 	public boolean onBackDown() {
 		boolean ret = false;
 		
@@ -80,6 +86,7 @@ public class ScreenManager implements IMessageHandler {
 		return ret;
 	}
 	
+	// Handles menu button presses
 	public boolean onMenuDown() {
 		boolean ret = false;
 		

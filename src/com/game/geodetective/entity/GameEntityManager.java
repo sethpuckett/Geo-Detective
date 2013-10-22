@@ -3,6 +3,7 @@ package com.game.geodetective.entity;
 import com.game.geodetective.utility.Manager;
 import com.game.geodetective.utility.android.FixedSizeArray;
 
+// Handles the updating of Game Entities
 public class GameEntityManager {
 	protected boolean _updating = false;
 	protected FixedSizeArray<GameEntity> _entities;
@@ -15,6 +16,7 @@ public class GameEntityManager {
 		_removeList = new FixedSizeArray<GameEntity>(4096);
 	}
 	
+	// Add entity to managed pool
 	public void addEntity(GameEntity entity) {
 		if (!_updating)
 			_entities.add(entity);
@@ -22,6 +24,7 @@ public class GameEntityManager {
 			_addList.add(entity);
 	}
 	
+	// Remove entity from managed pool
 	public void removeEntity(GameEntity entity) {
 		if(!_updating)
 			_entities.remove(entity, false);
@@ -56,6 +59,7 @@ public class GameEntityManager {
 		_addList.clear();
 	}
 
+	// Removes all entities
 	public void flush() {
 		_entities.clear();
 		_addList.clear();

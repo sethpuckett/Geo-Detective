@@ -2,6 +2,7 @@ package com.game.geodetective.graphics;
 
 import com.game.geodetective.utility.Logger;
 
+// Stores which layer draw calls should be applied to based on sprite queue index
 public class SpriteSet {
 	protected static final StringBuffer _tag = new StringBuffer("SpriteSet");
 	protected int[] _background1 = new int[128];
@@ -26,6 +27,7 @@ public class SpriteSet {
 	
 	protected final int _layerCount = 9;
 	
+	// add a sprite queue index to a particular layer
 	public void addIndex(int index, int layer) {
 		switch (layer) {
 		case SpriteLayer.BACKGROUND1:
@@ -58,6 +60,7 @@ public class SpriteSet {
 		}
 	}
 
+	// clears sprite set of all draw calls
 	public void clear() {
 		_background1Count = 0;
 		_background2Count = 0;
@@ -70,6 +73,7 @@ public class SpriteSet {
 		_uiTopCount = 0;
 	}
 
+	// returns all draw call indices for a particular layer
 	public int[] getLayer(int layer) {
 		switch (layer) {
 		case SpriteLayer.BACKGROUND1:
@@ -96,6 +100,7 @@ public class SpriteSet {
 		}
 	}
 
+	// gets the number of draw calls currently associated with a particular layer
 	public int getSpriteCount(int layer) {
 		switch (layer) {
 		case SpriteLayer.BACKGROUND1:

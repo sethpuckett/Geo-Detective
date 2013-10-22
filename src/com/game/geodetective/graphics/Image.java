@@ -1,5 +1,6 @@
 package com.game.geodetective.graphics;
 
+// helper class for storing image ID's
 public class Image {
 	// Misc
 	public final static int UNKNOWN			= 0;

@@ -1,5 +1,6 @@
 package com.game.geodetective.graphics;
 
+// Helper class for storing frame coordinates
 public class FrameHelper {
 	
 	public static int[]  TitleBackground = new int[] {0, 64, 42, -64,

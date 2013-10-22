@@ -3,6 +3,7 @@ package com.game.geodetective.behavior;
 import com.game.geodetective.entity.GameEntity;
 import com.game.geodetective.utility.android.AllocationGuard;
 
+// Abstract base class that all behaviors should inherit from. Enabled behaviors are updated every frame to modify entity properties
 public abstract class Behavior extends AllocationGuard {
 	protected StringBuffer _tag = new StringBuffer("Behavior");;
 	protected long _type = BehaviorType.UNKNOWN;

@@ -24,6 +24,7 @@ public class InputManager {
 	public InputManager() {
 	}
 	
+	// Subscribe to be notified when a touch event occurs within the bounds defined in the provided TouchData
 	public void subscribe(TouchData touchArea) {
 		int index = _touchSubscribers.find(touchArea, false);
 		if (index == -1) {
@@ -36,6 +37,7 @@ public class InputManager {
 			Logger.w(_tag, "touchArea found; cannot add twice");
 	}
 	
+	// Unsubscribe from touch notifications
 	public void unsubscribe(TouchData touchArea) {
 		int index = _touchSubscribers.find(touchArea, false);
 		if (index != -1) {
@@ -48,6 +50,7 @@ public class InputManager {
 			Logger.w(_tag, "touchArea not found; cannot remove");
 	}
 	
+	// Notifies relevant touch subscribers of motion events
 	public boolean onTouchEvent(MotionEvent event) {
 		_handlingEvent = true;
 		
@@ -165,6 +168,7 @@ public class InputManager {
 		return true;
 	}
 
+	// clears all touch subscribers
 	public void flush() {
 		_touchSubscribers.clear();
 		_addList.clear();

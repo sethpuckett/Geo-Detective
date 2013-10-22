@@ -1,5 +1,6 @@
 package com.game.geodetective.graphics;
 
+// Stores information relating to a single drawn image
 public class DrawCall {
 	public int TextureId;
 	public float Alpha;

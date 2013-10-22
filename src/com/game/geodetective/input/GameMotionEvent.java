@@ -4,8 +4,11 @@ import com.game.geodetective.utility.Global;
 import com.game.geodetective.utility.android.AllocationGuard;
 import com.game.geodetective.utility.area.Vertex;
 
+// Represents a discrete instance of a player touching/swiping the screen
 public class GameMotionEvent extends AllocationGuard {
+	// Coordinates of touch event relative to the screen
 	public Vertex ScreenCoords = new Vertex();
+	// Coordinates of touch event relative to current camera position
 	public Vertex CameraCoords = new Vertex();
 	public int Type = MotionType.UNKNOWN;
 	public boolean Primary = false;

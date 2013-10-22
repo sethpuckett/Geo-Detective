@@ -5,6 +5,7 @@ import com.game.geodetective.utility.area.Area;
 import com.game.geodetective.utility.area.AreaType;
 import com.game.geodetective.utility.area.IArea;
 
+// Settings for a touch subscription
 public class TouchData extends AllocationGuard {
 	
 	protected final ITouchListener _listener;

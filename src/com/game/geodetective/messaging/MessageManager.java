@@ -17,6 +17,7 @@ public class MessageManager {
 		_pool = new MessagePool(32);
 	}
 	
+	// Subscribe to the message types indicated by flags
 	public void subscribe(IMessageHandler receiver, long types) {
 		MessageSubscription ms = _subscriptionPool.allocate();
 		ms.Receiver = receiver;
@@ -29,24 +30,30 @@ public class MessageManager {
 	}
 	
 	protected void addSubscription(MessageSubscription ms) {
+		// If subscriber does not yet exists in _subscribers, add it
 		int index = _subscribers.find(ms, false);
 		if (index == -1)
 			_subscribers.add(ms);
+		// Otherwise update existing entry with any new subscriptions
 		else {
 			_subscribers.get(index).Types |= ms.Types;
 			_subscriptionPool.release(ms);
 		}
 	}
 	
+	// Unsubscribe from the message types indicated by flags
 	public void unsubscribe(IMessageHandler receiver, long types) {
+		// allocate a temporary subscription for searching
 		MessageSubscription search = _subscriptionPool.allocate();
 		search.Receiver = receiver;
 		search.Types = types;
 		
 		int index = _subscribers.find(search, false);
 		if (index != -1) {
+			// if manager is not currently handling messages, remove the subscriptions immediately
 			if (!_handlingMessage)
 				removeSubscription(index, types);
+			// Otherwise add to the removeList for removal when processing is finished
 			else {
 				_removeList.add(_subscribers.get(index));
 				_removeTypeList[_removeList.getCount() - 1] = types;
@@ -69,14 +76,17 @@ public class MessageManager {
 			_subscribers.get(subscriberIndex).Types = newTypes;
 	}
 	
+	// Send a message with no attached data
 	public <T> void sendMessage(long type) {
 		sendMessage(type, null, false);
 	}
 	
+	// Send a message with attached data
 	public <T> void sendMessage(long type, T data) {
 		sendMessage(type, data, false);
 	}
 	
+	// Send a message with attached data
 	public <T> void sendMessage(long type, T data, boolean releaseData) {
 		Message msg = allocate(type, releaseData);
 		if (data != null)
@@ -102,12 +112,14 @@ public class MessageManager {
 		_pool.release(m);
 	}
 
+	// Clear all message subscribers
 	public void flush() {
 		_subscribers.clear();
 		_addList.clear();
 		_removeList.clear();
 	}
 	
+	// Syncs pending subscriptions that were added/removed during processing
 	protected void updateSubscriptions() {
 		int subCount = _addList.getCount();
 		for (int i = 0; i < subCount; i++)
@@ -120,6 +132,7 @@ public class MessageManager {
 		_removeList.clear();
 	}
 
+	// Sends message to relevant subscribers
 	protected void sendMessage(Message message) {
 		_handlingMessage = true;
 		

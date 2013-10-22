@@ -19,19 +19,21 @@ public class GeoDetectiveGameThread implements Runnable {
 	
 	@Override
 	public void run() {
-		while (!_finished) {			
+		while (!_finished) {
+			// Calculate time since last update
 			long updateTime = Math.min(SystemClock.uptimeMillis() - _lastUpdate, 48);
 			_lastUpdate = SystemClock.uptimeMillis();
 			// update ratio: 60fps = 1f, 30fps = 2f, etc
 			float updateRatio = (3f * (float)updateTime) / 50f;
 			
+			// Update all components
 			Manager.Sprite.update(updateTime);
 			Manager.Screen.update(updateRatio);
 			Global.Camera.update();
 			Manager.Entity.update(updateRatio);
-			
-			
 			Manager.Trigger.update();
+			
+			// Finish drawing frame
 			Global.Renderer.waitDrawingComplete();
 			Manager.Sprite.frameComplete();
 			
@@ -62,6 +64,7 @@ public class GeoDetectiveGameThread implements Runnable {
 		}
 	}
 	
+	// ends the application
 	public void stopGame() {
 		synchronized (_pauseLock) {
 			_paused = false;
@@ -70,6 +73,7 @@ public class GeoDetectiveGameThread implements Runnable {
 		}
 	}
 	
+	// pauses the application
 	public void pauseGame() {
 		synchronized (_pauseLock) {
 			_paused = true;
@@ -79,6 +83,7 @@ public class GeoDetectiveGameThread implements Runnable {
 		}
 	}
 	
+	// resumes paused game
 	public void resumeGame() {
 		synchronized (_pauseLock) {
 			_paused = false;

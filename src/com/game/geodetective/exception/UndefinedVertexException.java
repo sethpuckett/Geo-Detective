@@ -1,5 +1,6 @@
 package com.game.geodetective.exception;
 
+// Thrown when an operation is performed on an undefined vertex
 public class UndefinedVertexException extends Exception {
 	private static final long serialVersionUID = 1L;
 	

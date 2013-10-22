@@ -11,15 +11,22 @@ import com.game.geodetective.utility.area.Area;
 import com.game.geodetective.utility.area.Rectangle;
 import com.game.geodetective.utility.area.Vertex;
 
+// Used to define the current onscreen area
 public class Camera implements IMessageHandler {
 	protected final static StringBuffer _tag = new StringBuffer("Camera");
 	
+	// The entity that the camera will track (e.g. if the entity moves, the camera will move)
 	public GameEntity Anchor = null;
+	// The amount of X,Y distance the anchor can move from the camera's focal point before tracking will start
 	public Vertex Threshold = new Vertex();
+	// The total area the camera can cover; the camera will not scroll outside this area
 	public Rectangle CoveredArea;
+	// The area currently visible to the camera
 	public Rectangle CameraArea = new Rectangle();
+	// Stores the Y Offset of the camera. Useful for drawing status bar 
 	public float YOffset;
 	
+	// These contain the min/max center points that the camera can reach while still being inside the CoveredArea
 	protected float _coveredAreaMinCenterX;
 	protected float _coveredAreaMaxCenterX;
 	protected float _coveredAreaMinCenterY;
@@ -35,6 +42,7 @@ public class Camera implements IMessageHandler {
 	}
 	
 	public void update() {
+		// if anchor has moved beyond threshold update camera position
 		if (Anchor != null) {
 			Vertex center = Manager.Vertex.allocate();
 			Vertex anchorCenter = Manager.Vertex.allocate();
@@ -49,8 +57,8 @@ public class Camera implements IMessageHandler {
 		}
 	}
 	
+	// Sets the camera's focal point
 	public void setCenter(Vertex center) {
-		//CameraArea.setCenter(center);
 		Vertex newCenter = Manager.Vertex.allocate();
 		Vertex anchorCenter = Manager.Vertex.allocate();
 		Anchor.Attributes.Area.getCenter(anchorCenter);
@@ -64,14 +72,17 @@ public class Camera implements IMessageHandler {
 		Manager.Vertex.release(anchorCenter);
 	}
 	
+	// Moves the camera's focal point by X & Y defined in vertex
 	public void move(Vertex offset) {
 		CameraArea.changePosition(offset);
 	}
 	
+	// Moves the camera's focal point by X & Y
 	public void move(float x, float y) {
 		CameraArea.changePosition(x, y);
 	}
 	
+	// Centers the camera on the anchor entity
 	public void centerOnAnchor() {
 		if (Anchor != null) {
 			Vertex center = Manager.Vertex.allocate();
@@ -90,6 +101,7 @@ public class Camera implements IMessageHandler {
 			Logger.e(_tag, "cannot center; no anchor set");
 	}
 	
+	// Sets focal point to provided center, or as close as possible while maintaining the threshold distance from anchorCenter
 	protected boolean updatePosition(Vertex center, Vertex anchorCenter) {
 		boolean xchange = false;
 		boolean ychange = false;
@@ -127,8 +139,7 @@ public class Camera implements IMessageHandler {
 	public void handleMessage(Message message) {
 		if (message.Type == MessageType.SCREEN_SIZE_SET) {
 			Vertex v = message.getData();
-			// Shouldn't need this
-			//CameraArea.setSize(v.X, v.Y - Manager.Level.getControlBarHeight());
+			CameraArea.setSize(v.X, v.Y /* - Manager.Level.getControlBarHeight() */);
 
 			_coveredAreaMinCenterX = (CameraArea.Size.X / 2f) + CoveredArea.Position.X;
 			_coveredAreaMaxCenterX = CoveredArea.Position.X + CoveredArea.Size.X - (CameraArea.Size.X / 2f);
