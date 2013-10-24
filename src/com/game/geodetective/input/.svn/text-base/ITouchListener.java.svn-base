@@ -1,6 +1,0 @@
-package com.game.phase.input;
-
-public interface ITouchListener {
-	public void onTouchEvent(GameMotionEvent event);
-	public void onTouchAbort(GameMotionEvent event);
-}
