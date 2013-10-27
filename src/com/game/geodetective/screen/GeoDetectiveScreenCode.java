@@ -2,15 +2,18 @@ package com.game.geodetective.screen;
 
 import com.game.loblib.screen.ScreenCode;
 
-public class GeoDetectiveScreenCode extends ScreenCode {
-	public final static int TRANSITION_TITLE =			2;
-	public final static int TRANSITION_CREDITS = 		3;
-	public final static int TRANSITION_LEVEL_SELECT =	4;
-	public final static int TRANSITION_JOURNAL =		5;
-	public final static int TRANSITION_LEVEL =			6;
-	public final static int TRANSITION_LEVEL_OPTIONS =	7;
-	public final static int TRANSITION_DEATH =			8;
-	public final static int TRANSITION_KILL =			9;
-	public final static int TRANSITION_END_LEVEL =		10;
-	public final static int TRANSITION_END_GAME = 		11;
+public class GeoDetectiveScreenCode extends ScreenCode {	
+	public final static int TRANSITION_TITLE =				2;
+	public final static int TRANSITION_OPTIONS=				3;
+	public final static int TRANSITION_STATS =				4;
+	public final static int TRANSITION_CREDITS =			5;
+	public final static int TRANSITION_CASE_DESCRIPTION =	6;
+	public final static int TRANSITION_CITY =				7;
+	public final static int TRANSITION_CITY_INFO =			8;
+	public final static int TRANSITION_CLUE_LOCATION =		9;
+	public final static int TRANSITION_CRIME_NET =			10;
+	public final static int TRANSITION_TRAVEL =				11;
+	public final static int TRANSITION_TRANSIT_LOAD =		12;
+	public final static int TRANSITION_WIN =				13;
+	public final static int TRANSITION_LOSS =				14;
 }
