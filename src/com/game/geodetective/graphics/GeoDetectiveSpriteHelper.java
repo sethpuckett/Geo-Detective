@@ -4,8 +4,6 @@ import com.game.geodetective.R;
 import com.game.loblib.graphics.Sprite;
 import com.game.loblib.graphics.SpriteHelper;
 import com.game.loblib.utility.Global;
-import com.game.geodetective.graphics.FrameHelper;
-import com.game.geodetective.graphics.GeoDetectiveImage;
 
 // Helper class for loading specific images
 public class GeoDetectiveSpriteHelper extends SpriteHelper {
@@ -73,6 +71,10 @@ public class GeoDetectiveSpriteHelper extends SpriteHelper {
 		case GeoDetectiveImage.TITLE_LOGO:
 			s.Texture.ResourceId = R.drawable.title_maze_title;
 			s.Frames = FrameHelper._512x256;
+			break;
+		case GeoDetectiveImage.SCROLLING_STONE_WALL:
+			s.Texture.ResourceId = R.drawable.menu_dark_stone_h_tile;
+			s.Frames = FrameHelper.MenuStoneTile;
 			break;
 		default:
 			super.setupSprite(s, image);
