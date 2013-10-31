@@ -44,15 +44,15 @@ public class CreditsScreen extends Screen {
 
 	@Override
 	public void onInit() {
-		_background = EntityHelper.scrollingGraphic(GeoDetectiveImage.SCROLLING_STONE_WALL, GeoDetectiveSpriteLayer.BACKGROUND1, Direction.LEFT, .5f, Global.Data.ScrollingBackgroundPos);
-		_entities.add(_background);
+		//_background = EntityHelper.scrollingGraphic(GeoDetectiveImage.SCROLLING_STONE_WALL, GeoDetectiveSpriteLayer.BACKGROUND1, Direction.LEFT, .5f, Global.Data.ScrollingBackgroundPos);
+		//_entities.add(_background);
 		
 		_entities.add(EntityHelper.graphic(GeoDetectiveImage.CREDITS,
 				GeoDetectiveSpriteLayer.FOREGROUND, false, Global.Renderer.Width, Global.Renderer.Width, false, 0, Global.Renderer.Height - Global.Renderer.Width - (Global.Renderer.Width / 10f)));
 		
-		_backButton = EntityHelper.button(GeoDetectiveImage.BACK_BUTTON,
-				GeoDetectiveSpriteLayer.UI_LOW, false, Global.Renderer.Width / 3f, Global.Renderer.Width / 6f, false, Global.Renderer.Width / 60f, Global.Renderer.Width / 60f, AreaType.Rectangle);
-		_entities.add(_backButton);
+		//_backButton = EntityHelper.button(GeoDetectiveImage.BACK_BUTTON,
+		//		GeoDetectiveSpriteLayer.UI_LOW, false, Global.Renderer.Width / 3f, Global.Renderer.Width / 6f, false, Global.Renderer.Width / 60f, Global.Renderer.Width / 60f, AreaType.Rectangle);
+		//_entities.add(_backButton);
 		Manager.Message.subscribe(this, MessageType.BUTTON_CLICKED);
 	}
 

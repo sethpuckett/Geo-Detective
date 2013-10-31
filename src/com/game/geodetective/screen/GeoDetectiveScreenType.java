@@ -10,7 +10,6 @@ public class GeoDetectiveScreenType extends ScreenType {
 	public final static int CREDITS =			1 << 4;
 	public final static int CASE_DESCRIPTION =	1 << 5;
 	public final static int CITY =				1 << 6;
-	public final static int CITY_INFO =			1 << 7;
 	public final static int CLUE_LOCATION =		1 << 8;
 	public final static int CRIME_NET =			1 << 9;
 	public final static int TRAVEL =			1 << 10;

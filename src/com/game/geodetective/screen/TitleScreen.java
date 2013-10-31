@@ -101,7 +101,7 @@ public class TitleScreen extends Screen {
 		_levelSelectClicked = false;
 		_creditsClicked = false;
 	
-		_scrollingBackground = scrollingBackground();
+		//_scrollingBackground = scrollingBackground();
 		_entities.add(_scrollingBackground);
 		
 		_title = EntityHelper.graphic(GeoDetectiveImage.TITLE_LOGO, GeoDetectiveSpriteLayer.UI_LOW, false,
@@ -114,14 +114,14 @@ public class TitleScreen extends Screen {
 //			_entities.add(_continueButton);
 //		}
 //		else {
-			_newGameButton = newGameButton();
-			_entities.add(_newGameButton);
+		//	_newGameButton = newGameButton();
+		//	_entities.add(_newGameButton);
 //		}
 		
 		_creditsButton = creditsButton();
 		_entities.add(_creditsButton);
-		_soundButton = soundButton();
-		_entities.add(_soundButton);
+		//_soundButton = soundButton();
+		//_entities.add(_soundButton);
 		
 		Manager.Message.subscribe(this, MessageType.BUTTON_CLICKED | 
 				MessageType.ANIMATION_FINISHED | 
@@ -206,28 +206,28 @@ public class TitleScreen extends Screen {
 		return button;
 	}
 	
-	protected GameEntity soundButton() {
-		GameEntity button = EntityHelper.button(GeoDetectiveImage.SOUND_BUTTON,
-				GeoDetectiveSpriteLayer.UI_LOW, false, Global.Renderer.Width / 6f, Global.Renderer.Width / 6f, false, 
-				Global.Renderer.Width - (11f * Global.Renderer.Width / 60f), Global.Renderer.Width / 60f, 
-				AreaType.Circle);
-		button.addBehavior(new TweenBehavior(TweenType.ALPHA, -1f, 250));
+	//protected GameEntity soundButton() {
+		//GameEntity button = EntityHelper.button(GeoDetectiveImage.SOUND_BUTTON,
+		//		GeoDetectiveSpriteLayer.UI_LOW, false, Global.Renderer.Width / 6f, Global.Renderer.Width / 6f, false, 
+		//		Global.Renderer.Width - (11f * Global.Renderer.Width / 60f), Global.Renderer.Width / 60f, 
+		//		AreaType.Circle);
+		//button.addBehavior(new TweenBehavior(TweenType.ALPHA, -1f, 250));
 		
-		if (Manager.Sound.isEnabled())
-			button.Attributes.Sprite.setFrame(0);
-		else
-			button.Attributes.Sprite.setFrame(1);
+		//if (Manager.Sound.isEnabled())
+		//	button.Attributes.Sprite.setFrame(0);
+		//else
+		//	button.Attributes.Sprite.setFrame(1);
 		
-		return button;
-	}
+		//return button;
+	//}
 	
-	protected GameEntity scrollingBackground() {
-		return EntityHelper.scrollingGraphic(GeoDetectiveImage.SCROLLING_STONE_WALL, GeoDetectiveSpriteLayer.BACKGROUND1, Direction.LEFT, .5f, Global.Data.ScrollingBackgroundPos);
-	}
-	
-	protected GameEntity newGameButton() {
-		return titleButton(true, GeoDetectiveImage.NEW_GAME_BUTTON);
-	}
+//	protected GameEntity scrollingBackground() {
+//		return EntityHelper.scrollingGraphic(GeoDetectiveImage.SCROLLING_STONE_WALL, GeoDetectiveSpriteLayer.BACKGROUND1, Direction.LEFT, .5f, Global.Data.ScrollingBackgroundPos);
+//	}
+//	
+//	protected GameEntity newGameButton() {
+//		return titleButton(true, GeoDetectiveImage.NEW_GAME_BUTTON);
+//	}
 	
 	protected GameEntity continueButton() {
 		return titleButton(true, GeoDetectiveImage.CONTINUE_BUTTON);

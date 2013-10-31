@@ -61,6 +61,10 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 				_active.pause();
 				_active = _credits;
 			}
+			else if (code == GeoDetectiveScreenCode.TRANSITION_OPTIONS) {
+				_active.pause();
+				_active = _credits;
+			}
 			else {
 				Logger.e(_tag, "Invalid transition");
 				return;
