@@ -9,6 +9,7 @@ public class GeoDetectiveBehaviorType extends BehaviorType {
 	public static final long TILE_RENDER	= 1 << 2;
 	public static final long BLINK			= 1 << 6;
 	public static final long DELAYED_RENDER	= 1 << 28;
+	public static final long TEXT_RENDER	= 1 << 29;
 	
 	//movement
 	public static final long TOUCH_DESTINATION = 1 << 9;

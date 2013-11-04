@@ -19,6 +19,10 @@ public class GeoDetectiveSpriteHelper extends SpriteHelper {
 			s.Texture.ResourceId = R.drawable.menu_continue_button;
 			s.Frames = FrameHelper._256x128;
 			break;
+		case GeoDetectiveImage.NEW_CASE_BUTTON:
+			s.Texture.ResourceId = R.drawable.menu_new_game_button;
+			s.Frames = FrameHelper._256x128;
+			break;
 		case GeoDetectiveImage.CREDITS_BUTTON:
 			s.Texture.ResourceId = R.drawable.title_credits_button;
 			s.Frames = FrameHelper.CreditsButton;

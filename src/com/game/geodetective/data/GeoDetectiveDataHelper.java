@@ -1,5 +1,6 @@
 package com.game.geodetective.data;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,91 +8,74 @@ import java.io.OutputStream;
 
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.game.loblib.utility.Global;
 
-public class GeoDetectiveDataHelper extends SQLiteOpenHelper {
-	
-    private static final String DB_NAME = "geodetective";
+public class GeoDetectiveDataHelper extends SQLiteOpenHelper{
+
+    private static final String DB_NAME = "geodetective.s3db";
+    private static final int DB_VERSION = 1;
+    
     private SQLiteDatabase _db; 
-
-	public GeoDetectiveDataHelper(int version) {
-    	super(Global.Context, DB_NAME, null, version);
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		boolean dbExist = checkDataBase();
-		 
-    	if(dbExist){
-    		//do nothing - database already exist
-    	}else{
  
-    		//By calling this method and empty database will be created into the default system path
-               //of your application so we are gonna be able to overwrite that database with our database.
-        	this.getReadableDatabase();
- 
-        	try {
- 
-    			copyDataBase();
- 
-    		} catch (IOException e) {
- 
-        		throw new Error("Error copying database");
- 
-        	}
+    public GeoDetectiveDataHelper() {
+    	super(Global.Context, DB_NAME, null, DB_VERSION);
+    }	
+    
+    public SQLiteDatabase open() throws SQLException{
+    	// if _db hasn't been set yet create the DB if hasn't been created yet
+    	if (_db == null) {
+	    	boolean dbExists = checkDataBase();
+	    	if (!dbExists) {
+	        	this.getReadableDatabase();
+	        	try {
+	    			copyDataBase();
+	    		} catch (IOException e) {
+	        		//throw new Error("Error copying database");
+	        	}
+	    	}
     	}
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-    @Override
-	public synchronized void close() {
-    	    if(_db != null)
-    	    	_db.close();
-    	    super.close();
-	}
-	
-    public void openDataBase() throws SQLException{
+    	
     	//Open the database
-        String myPath = getDatabasePath() + DB_NAME;
-        _db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        String myPath = Global.Context.getDatabasePath(DB_NAME) + DB_NAME;
+    	_db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    	return _db;
+    }
+   
+    // Deletes app database
+    public void delete() {
+    	if (_db != null) {
+    		_db.close();
+    		_db = null;
+    	}
+    	
+    	Global.Context.deleteDatabase(DB_NAME);
     }
     
-	/**
-     * Check if the database already exists to avoid re-copying the file each time you open the application.
-     * @return true if it exists, false if it doesn't
-     */
-    private boolean checkDataBase() {
-    	SQLiteDatabase checkDB = null;
-    	try {
-    		String myPath = getDatabasePath() + DB_NAME;
-    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-    	} catch(SQLiteException e) { /*database does't exist yet.*/ }
- 
-    	if(checkDB != null)
-    		checkDB.close();
- 
-    	return checkDB != null ? true : false;
+    @Override
+	public synchronized void close() {
+	    if(_db != null) {
+		    _db.close();
+		    _db = null;
+	    }
+	    
+	    super.close();
+	}
+    
+    // Check if the database already exist to avoid re-copying the file each time you open the application.
+    private boolean checkDataBase(){
+    	File dbFile = Global.Context.getDatabasePath(DB_NAME);
+    	return dbFile.exists();
     }
-
-    /**
-     * Copies your database from your local assets-folder to the just created empty database in the
-     * system folder, from where it can be accessed and handled.
-     * This is done by transferring bytestream.
-     * */
+ 
+    // Copies clean database from assets directory app database directory
     private void copyDataBase() throws IOException{
     	//Open your local db as the input stream
     	InputStream myInput = Global.Context.getAssets().open(DB_NAME);
  
     	// Path to the just created empty db
-    	String outFileName = getDatabasePath() + DB_NAME;
+    	String outFileName = Global.Context.getDatabasePath(DB_NAME) + DB_NAME;
  
     	//Open the empty db as the output stream
     	OutputStream myOutput = new FileOutputStream(outFileName);
@@ -109,7 +93,13 @@ public class GeoDetectiveDataHelper extends SQLiteOpenHelper {
     	myInput.close();
     }
 
-    private String getDatabasePath() {
-    	return Global.Context.getFilesDir().getPath() + "/databases/";
-    }
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+	
+	}
+ 
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+ 
+	}
 }

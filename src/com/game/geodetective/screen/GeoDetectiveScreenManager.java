@@ -13,6 +13,8 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 	protected SplashScreen _splash = new SplashScreen();
 	protected TitleScreen _title = new TitleScreen();
 	protected CreditsScreen _credits = new CreditsScreen();
+	protected CaseDescriptionScreen _caseDescription = new CaseDescriptionScreen();
+	protected CityScreen _city = new CityScreen();
 	
 	@Override
 	public void init() {
@@ -65,6 +67,10 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 				_active.pause();
 				_active = _credits;
 			}
+			else if (code == GeoDetectiveScreenCode.TRANSITION_CASE_DESCRIPTION) {
+				_active.close();
+				_active = _caseDescription;
+			}
 			else {
 				Logger.e(_tag, "Invalid transition");
 				return;
@@ -79,8 +85,14 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 				Logger.e(_tag, "Invalid transition");
 				return;
 			}
-			_active.unpause();
-			break;
+		case GeoDetectiveScreenType.CASE_DESCRIPTION:
+			_active.close();
+			if (code == GeoDetectiveScreenCode.TRANSITION_CITY)
+				_active = _city;
+			else {
+				Logger.e(_tag, "Invalid transition");
+				return;
+			}
 		}
 	}
 }

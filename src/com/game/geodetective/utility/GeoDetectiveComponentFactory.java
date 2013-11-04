@@ -11,8 +11,14 @@ import com.game.loblib.sound.MusicHelper;
 import com.game.loblib.utility.CommonData;
 import com.game.loblib.utility.ComponentFactory;
 import com.game.loblib.utility.GameSettings;
+import com.game.loblib.utility.Global;
 
 public class GeoDetectiveComponentFactory extends ComponentFactory {
+	
+	@Override
+	public Global CreateGlobal() {
+		return new GeoDetectiveGlobal();
+	}
 	
 	@Override
 	public CollisionManager CreateCollisionManager() {
