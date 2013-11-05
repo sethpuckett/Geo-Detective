@@ -1,6 +1,6 @@
 package com.game.geodetective.screen;
 
-import com.game.geodetective.behavior.TextRenderBehavior;
+import com.game.geodetective.data.entity.Crime;
 import com.game.geodetective.entity.EntityHelper;
 import com.game.geodetective.graphics.GeoDetectiveImage;
 import com.game.geodetective.graphics.GeoDetectiveSpriteLayer;
@@ -11,6 +11,7 @@ import com.game.loblib.messaging.MessageType;
 import com.game.loblib.screen.Screen;
 import com.game.loblib.sound.Sound;
 import com.game.loblib.utility.ButtonControlType;
+import com.game.loblib.utility.Global;
 import com.game.loblib.utility.Manager;
 import com.game.loblib.utility.area.AreaType;
 
@@ -58,11 +59,15 @@ public class CaseDescriptionScreen extends Screen {
 		_goToCaseButton = continueButton();
 		_entities.add(_goToCaseButton);
 		
-		GameEntity textTest = new GameEntity();
-		textTest.Attributes.Area.Position.X = 50;
-		textTest.Attributes.Area.Position.Y = 50;
-		textTest.addBehavior(new TextRenderBehavior("This is a test."));
-		_entities.add(textTest);	
+		
+		Crime crime = GeoDetectiveGlobal.DataAccess.getCrimeForCurrentCase();
+		// TODO: figure out how to center text on screen
+		float height1 = Global.Renderer.Height - (Global.Renderer .Height / 4);
+		float height2 = height1 - (Global.Renderer .Height / 25);
+		GameEntity setupText = EntityHelper.text("An unknown assailant has stolen", 20, height1);
+		GameEntity crimeText = EntityHelper.text(crime.CrimeText, 20, height2);
+		_entities.add(setupText);	
+		_entities.add(crimeText);	
 	}
 
 	@Override

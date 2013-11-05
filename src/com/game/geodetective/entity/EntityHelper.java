@@ -5,6 +5,7 @@ import com.game.geodetective.behavior.CollisionSenderBehavior;
 import com.game.geodetective.behavior.DelayedRenderBehavior;
 import com.game.geodetective.behavior.DestinationMoveBehavior;
 import com.game.geodetective.behavior.PatrolDestinationBehavior;
+import com.game.geodetective.behavior.TextRenderBehavior;
 import com.game.geodetective.behavior.PatrolDestinationBehavior.PatrolType;
 import com.game.geodetective.behavior.RenderBehavior;
 import com.game.geodetective.behavior.ScrollingTileBehavior;
@@ -174,5 +175,11 @@ public class EntityHelper {
 		return anchor;
 	}
 
-
+	public static GameEntity text(String text, float x, float y) {
+		GameEntity entity = new GameEntity();
+		entity.Attributes.Area.Position.X = x;
+		entity.Attributes.Area.Position.Y = y;
+		entity.addBehavior(new TextRenderBehavior(text));
+		return entity;
+	}
 }

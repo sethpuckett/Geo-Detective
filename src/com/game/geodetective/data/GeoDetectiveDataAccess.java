@@ -222,6 +222,15 @@ public class GeoDetectiveDataAccess {
 		return state;	
 	}
 	
+	public Crime getCrimeForCurrentCase() {
+		CaseState state = getCurrentCaseState();
+		Cursor cursor = getDB().rawQuery("SELECT * FROM Crime WHERE Crime.CityId = ?", new String[] { Integer.toString(state.CrimeCityId)});
+		cursor.moveToFirst();
+		Crime crime = cursorToCrime(cursor);
+		cursor.close();
+		return crime;	
+	}
+	
 	private SQLiteDatabase getDB() {
 		if (_db == null)
 			_db = _dbHelper.open();
@@ -262,8 +271,26 @@ public class GeoDetectiveDataAccess {
 	private CaseState cursorToCaseState(Cursor cursor) {
 		CaseState state = new CaseState();
 		state._id = cursor.getInt(0);
-		state.CaseStateId = cursor.getInt(1);
-		state.CityId = cursor.getInt(2);
+		state.CurrentCityId = cursor.getInt(1);
+		state.CurrentHour = cursor.getInt(2);
+		state.DeadlineHour = cursor.getInt(3);
+		state.PreviousCityId = cursor.getInt(4);
+		state.GoalCityId = cursor.getInt(5);
+		state.CurrentCityVisitCount = cursor.getInt(6);
+		state.GoalCityVisitCount = cursor.getInt(7);
+		state.DifficultyTypeId = cursor.getInt(8);
+		state.SleptToday = cursor.getInt(9) > 0;
+		state.CrimeCityId = cursor.getInt(10);
+		state.VillainId = cursor.getInt(11);
+		state.CurrentClueLocationId = cursor.getInt(12);
+		state.WarrantEyeId = cursor.getInt(13);
+		state.WarrantFeatureId = cursor.getInt(14);
+		state.WarrantFoodId = cursor.getInt(15);
+		state.WarrantGenderId = cursor.getInt(16);
+		state.WarrantHairId = cursor.getInt(17);
+		state.WarrantHobbyId = cursor.getInt(18);
+		state.WarrantVehicleId = cursor.getInt(19);
+		state.HasWarrant = cursor.getInt(20) > 0;
 		return state;
 	}
 	
