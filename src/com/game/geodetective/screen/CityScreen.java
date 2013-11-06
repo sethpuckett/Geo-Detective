@@ -22,6 +22,7 @@ public class CityScreen extends Screen {
 	private GameEntity _clueLocation2Button;
 	private GameEntity _clueLocation3Button;
 	private GameEntity _crimeLabButton;
+	private GameEntity _footstepAnimation;
 	
 	public CityScreen() {
 		_type = GeoDetectiveScreenType.CITY;

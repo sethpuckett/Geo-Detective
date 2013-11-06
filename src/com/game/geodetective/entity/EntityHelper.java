@@ -175,11 +175,11 @@ public class EntityHelper {
 		return anchor;
 	}
 
-	public static GameEntity text(String text, float x, float y) {
+	public static GameEntity text(String text, float x, float y, boolean centerX, boolean centerY) {
 		GameEntity entity = new GameEntity();
 		entity.Attributes.Area.Position.X = x;
 		entity.Attributes.Area.Position.Y = y;
-		entity.addBehavior(new TextRenderBehavior(text));
+		entity.addBehavior(new TextRenderBehavior(text, centerX, centerY));
 		return entity;
 	}
 }

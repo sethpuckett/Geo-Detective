@@ -56,18 +56,25 @@ public class CaseDescriptionScreen extends Screen {
 	public void onInit() {
 		Manager.Message.subscribe(this, MessageType.BUTTON_CLICKED);
 		
-		_goToCaseButton = continueButton();
+		_goToCaseButton = EntityHelper.button(GeoDetectiveImage.CONTINUE_BUTTON, 
+				GeoDetectiveSpriteLayer.UI_LOW, 
+				false, 
+				GeoDetectiveGlobal.Renderer.Width / 2.5f, 
+				GeoDetectiveGlobal.Renderer.Width / 5f,
+				true,
+				GeoDetectiveGlobal.Renderer.Width / 2f,
+				GeoDetectiveGlobal.Renderer.Height / 2f - GeoDetectiveGlobal.Renderer.Width / 4f,
+				AreaType.Rectangle);
 		_entities.add(_goToCaseButton);
 		
-		
 		Crime crime = GeoDetectiveGlobal.DataAccess.getCrimeForCurrentCase();
-		// TODO: figure out how to center text on screen
+
 		float height1 = Global.Renderer.Height - (Global.Renderer .Height / 4);
 		float height2 = height1 - (Global.Renderer .Height / 25);
-		GameEntity setupText = EntityHelper.text("An unknown assailant has stolen", 20, height1);
-		GameEntity crimeText = EntityHelper.text(crime.CrimeText, 20, height2);
+		GameEntity setupText = EntityHelper.text("An unknown assailant has stolen", Global.Renderer.Width / 2f, height1, true, false);
+		GameEntity crimeText = EntityHelper.text(crime.CrimeText, Global.Renderer.Width / 2f, height2, true, false);
 		_entities.add(setupText);	
-		_entities.add(crimeText);	
+		_entities.add(crimeText);
 	}
 
 	@Override
@@ -83,31 +90,5 @@ public class CaseDescriptionScreen extends Screen {
 	@Override
 	public void onClose() {
 		Manager.Message.unsubscribe(this, MessageType.ALL);
-	}
-	
-	protected GameEntity continueButton() {
-		return titleButton(false, GeoDetectiveImage.CONTINUE_BUTTON);
-	}
-	
-	protected GameEntity titleButton(boolean top, int image) {
-		float centerX = GeoDetectiveGlobal.Renderer.Width / 2f;
-		float centerY = 0;
-		
-		if  (top)
-			centerY = GeoDetectiveGlobal.Renderer.Height / 2f;
-		else
-			centerY = GeoDetectiveGlobal.Renderer.Height / 2f - GeoDetectiveGlobal.Renderer.Width / 4f;
-		
-		GameEntity entity = EntityHelper.button(image, 
-				GeoDetectiveSpriteLayer.UI_LOW, 
-				false, 
-				GeoDetectiveGlobal.Renderer.Width / 2.5f, 
-				GeoDetectiveGlobal.Renderer.Width / 5f,
-				true,
-				centerX,
-				centerY,
-				AreaType.Rectangle);
-		
-		return entity;
 	}
 }
