@@ -18,7 +18,7 @@ public class CircleMovementBehavior extends Behavior {
 	protected float _currentAngle;
 
 	public CircleMovementBehavior(float anchorX, float anchorY, float radius, float timeToSpin, boolean clockwise) {
-		_type = GeoDetectiveBehaviorType.CIRCLE_MOVE;
+		_type = GDBehaviorType.CIRCLE_MOVE;
 		_initAnchorX = anchorX;
 		_initAnchorY = anchorY;
 		_radius = radius;
@@ -29,7 +29,7 @@ public class CircleMovementBehavior extends Behavior {
 	}
 	
 	public CircleMovementBehavior(float anchorX, float anchorY, float radius, float timeToSpin, boolean clockwise, float angleOffset) {
-		_type = GeoDetectiveBehaviorType.CIRCLE_MOVE;
+		_type = GDBehaviorType.CIRCLE_MOVE;
 		_initAnchorX = anchorX;
 		_initAnchorY = anchorY;
 		_radius = radius;
@@ -40,7 +40,7 @@ public class CircleMovementBehavior extends Behavior {
 	}
 	
 	public CircleMovementBehavior(Vertex anchor, float radius, float timeToSpin, boolean clockwise, float angleOffset) {
-		_type = GeoDetectiveBehaviorType.CIRCLE_MOVE;
+		_type = GDBehaviorType.CIRCLE_MOVE;
 		_initAnchorX = 0f;
 		_initAnchorY = 0f;
 		_anchor = anchor;

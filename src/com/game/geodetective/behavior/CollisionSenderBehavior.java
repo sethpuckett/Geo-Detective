@@ -15,7 +15,7 @@ public class CollisionSenderBehavior extends Behavior implements ICollisionSende
 	protected Rectangle _prevArea = new Rectangle();
 
 	public CollisionSenderBehavior(AreaType type, long collisionLayers) {
-		_type = GeoDetectiveBehaviorType.COLLISION_SENDER;
+		_type = GDBehaviorType.COLLISION_SENDER;
 		_area = Area.allocate(type);
 		_layers = collisionLayers;
 	}

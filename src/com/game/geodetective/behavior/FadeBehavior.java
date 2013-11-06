@@ -19,7 +19,7 @@ public class FadeBehavior extends TweenBehavior {
 
 	public FadeBehavior(float fadeInTime, float fadeOutTime) {
 		super(TweenType.ALPHA, -1f, fadeOutTime);
-		_type = GeoDetectiveBehaviorType.FADE;
+		_type = GDBehaviorType.FADE;
 		_fadeInTime = fadeInTime;
 		_fadeOutTime = fadeOutTime;
 		_fadeType = FadeType.SINGLE;
@@ -29,7 +29,7 @@ public class FadeBehavior extends TweenBehavior {
 	public FadeBehavior(float fadeInTime, float fadeOutTime, boolean initOn, int fadeType) {
 		super(TweenType.ALPHA, initOn ? -1 : 1f, initOn ? fadeOutTime
 				: fadeInTime);
-		_type = GeoDetectiveBehaviorType.FADE;
+		_type = GDBehaviorType.FADE;
 		_fadeInTime = fadeInTime;
 		_fadeOutTime = fadeOutTime;
 		_initOn = initOn;
@@ -40,7 +40,7 @@ public class FadeBehavior extends TweenBehavior {
 			FixedSizeArray<Sprite> spriteList) {
 		super(TweenType.ALPHA, initOn ? -1 : 1f, initOn ? fadeOutTime
 				: fadeInTime, spriteList);
-		_type = GeoDetectiveBehaviorType.FADE;
+		_type = GDBehaviorType.FADE;
 		_fadeInTime = fadeInTime;
 		_fadeOutTime = fadeOutTime;
 		_initOn = initOn;

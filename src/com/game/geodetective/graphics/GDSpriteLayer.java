@@ -2,7 +2,7 @@ package com.game.geodetective.graphics;
 
 import com.game.loblib.graphics.SpriteLayer;
 
-public class GeoDetectiveSpriteLayer extends SpriteLayer {
+public class GDSpriteLayer extends SpriteLayer {
 	public static final int BACKGROUND1 =	1;
 	public static final int BACKGROUND2 =	2;
 	public static final int PLAYER =		3;

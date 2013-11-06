@@ -5,7 +5,7 @@ import com.game.loblib.utility.Logger;
 
 import android.content.SharedPreferences.Editor;
 
-public class GeoDetectiveGameSettings extends GameSettings {
+public class GDGameSettings extends GameSettings {
 
 	
 	public void setLevelComplete(int level, boolean complete) {

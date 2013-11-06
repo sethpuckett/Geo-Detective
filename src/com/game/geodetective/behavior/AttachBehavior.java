@@ -17,14 +17,14 @@ public class AttachBehavior extends Behavior {
 	
 	public AttachBehavior(GameEntity attachEntity) {
 		_attachEntity = attachEntity;
-		_type = GeoDetectiveBehaviorType.ATTACH;
+		_type = GDBehaviorType.ATTACH;
 	}
 	
 	public AttachBehavior(GameEntity attachEntity, float xOffset, float yOffset) {
 		_attachEntity = attachEntity;
 		_offset.X = xOffset;
 		_offset.Y = yOffset;
-		_type = GeoDetectiveBehaviorType.ATTACH;
+		_type = GDBehaviorType.ATTACH;
 	}
 	
 	public void setOffset(float xOffset, float yOffset) {

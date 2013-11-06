@@ -1,6 +1,6 @@
 package com.game.geodetective.behavior;
 
-import com.game.geodetective.collision.GeoDetectiveCollisionLayer;
+import com.game.geodetective.collision.GDCollisionLayer;
 import com.game.loblib.behavior.Behavior;
 import com.game.loblib.collision.ICollisionSender;
 import com.game.loblib.exception.UndefinedVertexException;
@@ -13,16 +13,16 @@ import com.game.loblib.utility.area.Vertex;
 
 public class MovementModifierBehavior extends Behavior {
 
-	protected long _collisionLayers = GeoDetectiveCollisionLayer.MAIN_BLOCK;
+	protected long _collisionLayers = GDCollisionLayer.MAIN_BLOCK;
 	protected int _direction = Direction.UNKNOWN;
 	protected float _power = 0;
 	
 	public MovementModifierBehavior() {
-		_type = GeoDetectiveBehaviorType.MOVEMENT_MODIFIER;
+		_type = GDBehaviorType.MOVEMENT_MODIFIER;
 	}
 	
 	public MovementModifierBehavior(int direction, float power) {
-		_type = GeoDetectiveBehaviorType.MOVEMENT_MODIFIER;
+		_type = GDBehaviorType.MOVEMENT_MODIFIER;
 		_direction = direction;
 		_power = power;
 	}

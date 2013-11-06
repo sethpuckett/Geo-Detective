@@ -2,7 +2,7 @@ package com.game.geodetective.behavior;
 
 import com.game.loblib.behavior.BehaviorType;
 
-public class GeoDetectiveBehaviorType extends BehaviorType {
+public class GDBehaviorType extends BehaviorType {
 	
 	//rendering
 	public static final long RENDER 		= 1 << 0;

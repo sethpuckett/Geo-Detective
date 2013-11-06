@@ -13,11 +13,11 @@ public class TimerBehavior extends Behavior {
 	protected float _timeRemaining;
 	
 	public TimerBehavior() {
-		_type = GeoDetectiveBehaviorType.TIMER;
+		_type = GDBehaviorType.TIMER;
 	}
 	
 	public TimerBehavior(int timerType, float time) {
-		_type = GeoDetectiveBehaviorType.TIMER;
+		_type = GDBehaviorType.TIMER;
 		_timerType = timerType;
 		_totalTime = time;
 	}

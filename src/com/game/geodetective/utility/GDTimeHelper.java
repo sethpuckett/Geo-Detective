@@ -2,7 +2,7 @@ package com.game.geodetective.utility;
 
 import java.util.Random;
 
-public class GeoDetectiveTimeHelper {
+public class GDTimeHelper {
 	
 	// number of hours in a week. 0 = MON 12 AM
 	private static final int MAX_HOUR = 24 * 7;

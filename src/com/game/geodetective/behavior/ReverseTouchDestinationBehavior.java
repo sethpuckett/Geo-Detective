@@ -12,7 +12,7 @@ public class ReverseTouchDestinationBehavior extends TouchDestinationBehavior{
 	protected Vertex _focus;
 	
 	public ReverseTouchDestinationBehavior(Vertex focus) {
-		_type = GeoDetectiveBehaviorType.REVERSE_TOUCH_DESTINATION;
+		_type = GDBehaviorType.REVERSE_TOUCH_DESTINATION;
 		
 		_focus = focus;
 	}

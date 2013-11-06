@@ -20,7 +20,7 @@ public class CameraDragBehavior extends Behavior implements ITouchListener, IMes
 	protected Vertex _previousLocation = new Vertex();
 	
 	public CameraDragBehavior() {
-		_type = GeoDetectiveBehaviorType.CAMERA_DRAG;
+		_type = GDBehaviorType.CAMERA_DRAG;
 	}
 
 	@Override

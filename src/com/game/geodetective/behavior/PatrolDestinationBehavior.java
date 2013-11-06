@@ -1,6 +1,6 @@
 package com.game.geodetective.behavior;
 
-import com.game.geodetective.messaging.GeoDetectiveMessageType;
+import com.game.geodetective.messaging.GDMessageType;
 import com.game.loblib.behavior.Behavior;
 import com.game.loblib.utility.Logger;
 import com.game.loblib.utility.Manager;
@@ -30,22 +30,22 @@ public class PatrolDestinationBehavior extends Behavior {
 	
 	
 	public PatrolDestinationBehavior() {
-		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
+		_type = GDBehaviorType.PATROL_DESTINATION;
 	}
 	
 	public PatrolDestinationBehavior(int holdTime) {
-		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
+		_type = GDBehaviorType.PATROL_DESTINATION;
 		_holdTime = holdTime;
 	}
 	
 	public PatrolDestinationBehavior(int holdTime, int startOffset) {
-		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
+		_type = GDBehaviorType.PATROL_DESTINATION;
 		_holdTime = holdTime;
 		_startOffset = startOffset;
 	}
 	
 	public PatrolDestinationBehavior(int holdTime, int startOffset, int patrolType) {
-		_type = GeoDetectiveBehaviorType.PATROL_DESTINATION;
+		_type = GDBehaviorType.PATROL_DESTINATION;
 		_holdTime = holdTime;
 		_startOffset = startOffset;
 		_patrolType = patrolType;
@@ -95,7 +95,7 @@ public class PatrolDestinationBehavior extends Behavior {
 				_currentDestinationIndex = 0;
 		}
 		if (_entity.Attributes.Destination != _destinations.get(_currentDestinationIndex)) {
-			Manager.Message.sendMessage(GeoDetectiveMessageType.PATROL_START, _entity);
+			Manager.Message.sendMessage(GDMessageType.PATROL_START, _entity);
 			Area.sync(_entity.Attributes.Destination, _destinations.get(_currentDestinationIndex));
 		}
 	}
@@ -130,7 +130,7 @@ public class PatrolDestinationBehavior extends Behavior {
 	}
 	
 	protected void updateDestination(int newIndex) {
-		Manager.Message.sendMessage(GeoDetectiveMessageType.PATROL_START, _entity);
+		Manager.Message.sendMessage(GDMessageType.PATROL_START, _entity);
 		_currentDestinationIndex = newIndex;
 		if (_currentDestinationIndex >= _destinations.getCount())
 			_currentDestinationIndex = 0;

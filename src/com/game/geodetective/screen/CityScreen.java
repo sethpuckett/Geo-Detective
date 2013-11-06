@@ -1,12 +1,8 @@
 package com.game.geodetective.screen;
 
-import com.game.geodetective.entity.EntityHelper;
-import com.game.geodetective.graphics.GeoDetectiveImage;
-import com.game.geodetective.graphics.GeoDetectiveSpriteLayer;
 import com.game.loblib.entity.GameEntity;
 import com.game.loblib.messaging.MessageType;
 import com.game.loblib.screen.Screen;
-import com.game.loblib.utility.Global;
 import com.game.loblib.utility.Manager;
 
 public class CityScreen extends Screen {
@@ -25,7 +21,7 @@ public class CityScreen extends Screen {
 	private GameEntity _footstepAnimation;
 	
 	public CityScreen() {
-		_type = GeoDetectiveScreenType.CITY;
+		_type = GDScreenType.CITY;
 	}
 	
 	@Override

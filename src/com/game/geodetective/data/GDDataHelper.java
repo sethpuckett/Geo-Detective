@@ -12,14 +12,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.game.loblib.utility.Global;
 
-public class GeoDetectiveDataHelper extends SQLiteOpenHelper{
+public class GDDataHelper extends SQLiteOpenHelper{
 
     private static final String DB_NAME = "geodetective.s3db";
     private static final int DB_VERSION = 1;
     
     private SQLiteDatabase _db; 
  
-    public GeoDetectiveDataHelper() {
+    public GDDataHelper() {
     	super(Global.Context, DB_NAME, null, DB_VERSION);
     }	
     

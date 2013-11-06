@@ -24,7 +24,7 @@ public class TouchDestinationBehavior extends Behavior implements ITouchListener
 	protected final Vertex _cameraLocation = new Vertex();
 	
 	public TouchDestinationBehavior() {
-		_type = GeoDetectiveBehaviorType.TOUCH_DESTINATION;
+		_type = GDBehaviorType.TOUCH_DESTINATION;
 	}
 	
 	@Override

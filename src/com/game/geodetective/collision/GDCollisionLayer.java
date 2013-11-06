@@ -2,7 +2,7 @@ package com.game.geodetective.collision;
 
 import com.game.loblib.collision.CollisionLayer;
 
-public class GeoDetectiveCollisionLayer extends CollisionLayer {
+public class GDCollisionLayer extends CollisionLayer {
 	public final static long MAIN_BLOCK = 	1 << 1;
 	public final static long PLAYER =		1 << 2;
 	public final static long DAMAGE =		1 << 3;

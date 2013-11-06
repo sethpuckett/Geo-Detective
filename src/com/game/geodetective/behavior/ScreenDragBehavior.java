@@ -28,12 +28,12 @@ public class ScreenDragBehavior extends Behavior implements ITouchListener, IMes
 	protected boolean _dragging;
 	
 	public ScreenDragBehavior() {
-		_type = GeoDetectiveBehaviorType.SCREEN_DRAG;
+		_type = GDBehaviorType.SCREEN_DRAG;
 		_dragThreshold = 0f;
 	}
 	
 	public ScreenDragBehavior(float threshold) {
-		_type = GeoDetectiveBehaviorType.SCREEN_DRAG;
+		_type = GDBehaviorType.SCREEN_DRAG;
 		_dragThreshold = threshold;
 	}
 	

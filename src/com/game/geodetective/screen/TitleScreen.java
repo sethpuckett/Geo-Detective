@@ -2,10 +2,10 @@ package com.game.geodetective.screen;
 
 
 import com.game.geodetective.entity.EntityHelper;
-import com.game.geodetective.graphics.GeoDetectiveImage;
-import com.game.geodetective.graphics.GeoDetectiveSpriteLayer;
-import com.game.geodetective.sound.GeoDetectiveSound;
-import com.game.geodetective.utility.GeoDetectiveGlobal;
+import com.game.geodetective.graphics.GDImage;
+import com.game.geodetective.graphics.GDSpriteLayer;
+import com.game.geodetective.sound.GDSound;
+import com.game.geodetective.utility.GDGlobal;
 import com.game.loblib.entity.GameEntity;
 import com.game.loblib.messaging.Message;
 import com.game.loblib.messaging.MessageType;
@@ -25,8 +25,8 @@ public class TitleScreen extends Screen {
 	protected GameEntity _statsButton;
 	
 	public TitleScreen() {
-		_type = GeoDetectiveScreenType.TITLE;
-		_screenMusic = GeoDetectiveSound.BADLOOP;
+		_type = GDScreenType.TITLE;
+		_screenMusic = GDSound.BADLOOP;
 		_backBtnCtl = ButtonControlType.DEFAULT;
 	}
 	
@@ -37,7 +37,7 @@ public class TitleScreen extends Screen {
 			if (entity == _newGameButton) {
 				// TODO: check if there is already an open case and provide a warning if one exists
 				initializeNewCase();
-				_code = GeoDetectiveScreenCode.TRANSITION_CASE_DESCRIPTION;
+				_code = GDScreenCode.TRANSITION_CASE_DESCRIPTION;
 			}
 			else if (entity == _continueButton) {
 
@@ -78,31 +78,31 @@ public class TitleScreen extends Screen {
 	}
 	
 	private void initializeNewCase() {
-		GeoDetectiveGlobal.DataAccess.createNewCase();
+		GDGlobal.DataAccess.createNewCase();
 	}
 	
 	protected GameEntity newGameButton() {
-		return titleButton(true, GeoDetectiveImage.NEW_CASE_BUTTON);
+		return titleButton(true, GDImage.NEW_CASE_BUTTON);
 	}
 	
 	protected GameEntity continueButton() {
-		return titleButton(true, GeoDetectiveImage.CONTINUE_BUTTON);
+		return titleButton(true, GDImage.CONTINUE_BUTTON);
 	}
 	
 	protected GameEntity titleButton(boolean top, int image) {
-		float centerX = GeoDetectiveGlobal.Renderer.Width / 2f;
+		float centerX = GDGlobal.Renderer.Width / 2f;
 		float centerY = 0;
 		
 		if  (top)
-			centerY = GeoDetectiveGlobal.Renderer.Height / 2f;
+			centerY = GDGlobal.Renderer.Height / 2f;
 		else
-			centerY = GeoDetectiveGlobal.Renderer.Height / 2f - GeoDetectiveGlobal.Renderer.Width / 4f;
+			centerY = GDGlobal.Renderer.Height / 2f - GDGlobal.Renderer.Width / 4f;
 		
 		GameEntity entity = EntityHelper.button(image, 
-				GeoDetectiveSpriteLayer.UI_LOW, 
+				GDSpriteLayer.UI_LOW, 
 				false, 
-				GeoDetectiveGlobal.Renderer.Width / 2.5f, 
-				GeoDetectiveGlobal.Renderer.Width / 5f,
+				GDGlobal.Renderer.Width / 2.5f, 
+				GDGlobal.Renderer.Width / 5f,
 				true,
 				centerX,
 				centerY,

@@ -2,7 +2,7 @@ package com.game.geodetective.collision;
 
 import com.game.loblib.collision.CollisionManager;
 
-public class GeoDetectiveCollisionManager extends CollisionManager {
+public class GDCollisionManager extends CollisionManager {
 
 	// TODO: Should be able to set this in subclasses
 	// Partitions are used speed up collision detection by grouping nearby entities

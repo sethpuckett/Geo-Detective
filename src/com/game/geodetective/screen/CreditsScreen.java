@@ -1,10 +1,10 @@
 package com.game.geodetective.screen;
 
-import com.game.geodetective.behavior.GeoDetectiveBehaviorType;
+import com.game.geodetective.behavior.GDBehaviorType;
 import com.game.geodetective.behavior.ScrollingTileBehavior;
 import com.game.geodetective.entity.EntityHelper;
-import com.game.geodetective.graphics.GeoDetectiveImage;
-import com.game.geodetective.graphics.GeoDetectiveSpriteLayer;
+import com.game.geodetective.graphics.GDImage;
+import com.game.geodetective.graphics.GDSpriteLayer;
 import com.game.loblib.entity.GameEntity;
 import com.game.loblib.messaging.Message;
 import com.game.loblib.messaging.MessageType;
@@ -22,14 +22,14 @@ public class CreditsScreen extends Screen {
 	protected GameEntity _backButton;
 	
 	public CreditsScreen() {
-		_type = GeoDetectiveScreenType.CREDITS;
+		_type = GDScreenType.CREDITS;
 		_screenMusic = Sound.CONTINUE_MUSIC;
 		_backBtnCtl = ButtonControlType.OVERRIDE;
 	}
 
 	@Override
 	public void onBackDown() {
-		_code = GeoDetectiveScreenCode.TRANSITION_TITLE;
+		_code = GDScreenCode.TRANSITION_TITLE;
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class CreditsScreen extends Screen {
 		if (message.Type == MessageType.BUTTON_CLICKED) {
 			GameEntity entity = message.getData();
 			if (entity == _backButton) {
-				_code = GeoDetectiveScreenCode.TRANSITION_TITLE;
+				_code = GDScreenCode.TRANSITION_TITLE;
 			}
 		}
 	}
@@ -47,8 +47,8 @@ public class CreditsScreen extends Screen {
 		//_background = EntityHelper.scrollingGraphic(GeoDetectiveImage.SCROLLING_STONE_WALL, GeoDetectiveSpriteLayer.BACKGROUND1, Direction.LEFT, .5f, Global.Data.ScrollingBackgroundPos);
 		//_entities.add(_background);
 		
-		_entities.add(EntityHelper.graphic(GeoDetectiveImage.CREDITS,
-				GeoDetectiveSpriteLayer.FOREGROUND, false, Global.Renderer.Width, Global.Renderer.Width, false, 0, Global.Renderer.Height - Global.Renderer.Width - (Global.Renderer.Width / 10f)));
+		_entities.add(EntityHelper.graphic(GDImage.CREDITS,
+				GDSpriteLayer.FOREGROUND, false, Global.Renderer.Width, Global.Renderer.Width, false, 0, Global.Renderer.Height - Global.Renderer.Width - (Global.Renderer.Width / 10f)));
 		
 		//_backButton = EntityHelper.button(GeoDetectiveImage.BACK_BUTTON,
 		//		GeoDetectiveSpriteLayer.UI_LOW, false, Global.Renderer.Width / 3f, Global.Renderer.Width / 6f, false, Global.Renderer.Width / 60f, Global.Renderer.Width / 60f, AreaType.Rectangle);
@@ -68,7 +68,7 @@ public class CreditsScreen extends Screen {
 
 	@Override
 	public void onClose() {
-		Global.Data.ScrollingBackgroundPos = ((ScrollingTileBehavior)_background.getBehavior(GeoDetectiveBehaviorType.SCROLLING_TILE)).getSpritePosition();
+		Global.Data.ScrollingBackgroundPos = ((ScrollingTileBehavior)_background.getBehavior(GDBehaviorType.SCROLLING_TILE)).getSpritePosition();
 		Manager.Message.unsubscribe(this, MessageType.BUTTON_CLICKED);
 	}
 }

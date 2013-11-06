@@ -12,7 +12,7 @@ public class TileRenderBehavior extends Behavior {
 	protected int _layer;
 	
 	public TileRenderBehavior(int image, int layer, float tileLength, float areaPositionX, float areaPositionY, float areaLength) {
-		_type = GeoDetectiveBehaviorType.TILE_RENDER;
+		_type = GDBehaviorType.TILE_RENDER;
 		_layer = layer;
 		
 		if (areaLength % tileLength != 0) {

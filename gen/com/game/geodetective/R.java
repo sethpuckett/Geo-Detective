@@ -21,24 +21,28 @@ public final class R {
         public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
-        public static final int common_black=0x7f020000;
-        public static final int common_blue=0x7f020001;
-        public static final int common_green=0x7f020002;
-        public static final int common_orange=0x7f020003;
-        public static final int common_red=0x7f020004;
-        public static final int common_white=0x7f020005;
-        public static final int common_yellow=0x7f020006;
-        public static final int credits_credits=0x7f020007;
-        public static final int glyphs_green=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int menu_back_button=0x7f02000a;
-        public static final int menu_continue_button=0x7f02000b;
-        public static final int menu_dark_stone_h_tile=0x7f02000c;
-        public static final int menu_new_game_button=0x7f02000d;
-        public static final int menu_sound_button=0x7f02000e;
-        public static final int splash_logo=0x7f02000f;
-        public static final int title_credits_button=0x7f020010;
-        public static final int title_maze_title=0x7f020011;
+        public static final int casedescription_background=0x7f020000;
+        public static final int casedescription_border=0x7f020001;
+        public static final int casedescription_instructions=0x7f020002;
+        public static final int casedescription_newspaper=0x7f020003;
+        public static final int common_black=0x7f020004;
+        public static final int common_blue=0x7f020005;
+        public static final int common_green=0x7f020006;
+        public static final int common_orange=0x7f020007;
+        public static final int common_red=0x7f020008;
+        public static final int common_white=0x7f020009;
+        public static final int common_yellow=0x7f02000a;
+        public static final int credits_credits=0x7f02000b;
+        public static final int glyphs_green=0x7f02000c;
+        public static final int ic_launcher=0x7f02000d;
+        public static final int menu_back_button=0x7f02000e;
+        public static final int menu_continue_button=0x7f02000f;
+        public static final int menu_dark_stone_h_tile=0x7f020010;
+        public static final int menu_new_game_button=0x7f020011;
+        public static final int menu_sound_button=0x7f020012;
+        public static final int splash_logo=0x7f020013;
+        public static final int title_credits_button=0x7f020014;
+        public static final int title_maze_title=0x7f020015;
     }
     public static final class id {
         public static final int action_settings=0x7f080000;

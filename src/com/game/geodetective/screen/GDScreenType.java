@@ -2,7 +2,7 @@ package com.game.geodetective.screen;
 
 import com.game.loblib.screen.ScreenType;
 
-public class GeoDetectiveScreenType extends ScreenType {
+public class GDScreenType extends ScreenType {
 	public final static int SPLASH =			1 << 0;
 	public final static int TITLE =				1 << 1;
 	public final static int OPTIONS=			1 << 2;

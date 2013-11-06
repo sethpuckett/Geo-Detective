@@ -16,11 +16,11 @@ public class BlinkBehavior extends Behavior {
 	protected int _state;
 	
 	public BlinkBehavior() {
-		_type = GeoDetectiveBehaviorType.BLINK;
+		_type = GDBehaviorType.BLINK;
 	}
 	
 	public BlinkBehavior(float fadeTime, float holdTime) {
-		_type = GeoDetectiveBehaviorType.BLINK;
+		_type = GDBehaviorType.BLINK;
 		_fadeTime = fadeTime;
 		_holdTime = holdTime;
 	}

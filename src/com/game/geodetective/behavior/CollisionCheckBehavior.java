@@ -12,7 +12,7 @@ public class CollisionCheckBehavior extends Behavior {
 	protected Vertex _center = new Vertex();
 	
 	public CollisionCheckBehavior(long layers) {
-		_type = GeoDetectiveBehaviorType.COLLISION_CHECK;
+		_type = GDBehaviorType.COLLISION_CHECK;
 		_collisionLayers = layers;
 	}
 	

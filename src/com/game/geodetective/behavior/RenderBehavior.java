@@ -11,7 +11,7 @@ public class RenderBehavior extends Behavior {
 	
 	public RenderBehavior(int layer) {
 		_layer = layer;
-		_type = GeoDetectiveBehaviorType.RENDER;
+		_type = GDBehaviorType.RENDER;
 	}
 	
 	public void setLayer(int layer) {

@@ -25,7 +25,7 @@ public class ScrollingTileBehavior extends Behavior {
 	protected Vertex _imageSize;
 	
 	public ScrollingTileBehavior(int image, int layer, int direction, float scrollSpeed) {
-		_type = GeoDetectiveBehaviorType.SCROLLING_TILE;
+		_type = GDBehaviorType.SCROLLING_TILE;
 		
 		_imageId = image;
 		_imageSize = new Vertex();
@@ -37,7 +37,7 @@ public class ScrollingTileBehavior extends Behavior {
 	}
 	
 	public ScrollingTileBehavior(int image, int layer, int direction, float scrollSpeed, float startPos) {
-		_type = GeoDetectiveBehaviorType.SCROLLING_TILE;
+		_type = GDBehaviorType.SCROLLING_TILE;
 		
 		_imageId = image;
 		_imageSize = new Vertex();
@@ -48,7 +48,7 @@ public class ScrollingTileBehavior extends Behavior {
 	}
 	
 	public ScrollingTileBehavior(int image, int layer, int direction, float scrollSpeed, float startPos, float fixedLength, boolean fixedVertical) {
-		_type = GeoDetectiveBehaviorType.SCROLLING_TILE;
+		_type = GDBehaviorType.SCROLLING_TILE;
 		
 		_imageId = image;
 		_imageSize = new Vertex();

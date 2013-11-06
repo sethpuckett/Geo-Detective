@@ -2,7 +2,7 @@ package com.game.geodetective.sound;
 
 import com.game.loblib.sound.MusicHelper;
 
-public class GeoDetectiveMusicHelper extends MusicHelper {
+public class GDMusicHelper extends MusicHelper {
 
 	@Override
 	public int getResourceId(int sound) {

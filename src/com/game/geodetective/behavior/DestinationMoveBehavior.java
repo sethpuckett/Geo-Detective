@@ -1,6 +1,6 @@
 package com.game.geodetective.behavior;
 
-import com.game.geodetective.messaging.GeoDetectiveMessageType;
+import com.game.geodetective.messaging.GDMessageType;
 import com.game.loblib.behavior.Behavior;
 import com.game.loblib.exception.UndefinedVertexException;
 import com.game.loblib.utility.Logger;
@@ -13,12 +13,12 @@ public class DestinationMoveBehavior extends Behavior {
 	protected boolean _useCenter;
 	
 	public DestinationMoveBehavior() {
-		_type = GeoDetectiveBehaviorType.DESTINATION_MOVE;
+		_type = GDBehaviorType.DESTINATION_MOVE;
 		_useCenter = true;
 	}
 	
 	public DestinationMoveBehavior(boolean useCenter) {
-		_type = GeoDetectiveBehaviorType.DESTINATION_MOVE;
+		_type = GDBehaviorType.DESTINATION_MOVE;
 		_useCenter = useCenter;
 	}
 	
@@ -75,7 +75,7 @@ public class DestinationMoveBehavior extends Behavior {
 			Area.sync(position, potentialPosition);
 			
 			if (position.equals(destination))
-				Manager.Message.sendMessage(GeoDetectiveMessageType.DESTINATION_REACHED, _entity);
+				Manager.Message.sendMessage(GDMessageType.DESTINATION_REACHED, _entity);
 			
 			// free allocations
 			Manager.Vertex.release(potentialPosition);

@@ -21,14 +21,14 @@ public class TweenBehavior extends Behavior {
 	protected boolean _spriteSet = false;
 	
 	public TweenBehavior(int tweenType, float totalChange, float tweenTime) {
-		_type = GeoDetectiveBehaviorType.TWEEN;
+		_type = GDBehaviorType.TWEEN;
 		_tweenType = tweenType;
 		_totalChange = totalChange;
 		_tweenTime = tweenTime;
 	}
 	
 	public TweenBehavior(int tweenType, float totalChange, float tweenTime, Sprite sprite) {
-		_type = GeoDetectiveBehaviorType.TWEEN;
+		_type = GDBehaviorType.TWEEN;
 		_tweenType = tweenType;
 		_totalChange = totalChange;
 		_tweenTime = tweenTime;
@@ -37,7 +37,7 @@ public class TweenBehavior extends Behavior {
 	}
 	
 	public TweenBehavior(int tweenType, float totalChange, float tweenTime, FixedSizeArray<Sprite> spriteList) {
-		_type = GeoDetectiveBehaviorType.TWEEN;
+		_type = GDBehaviorType.TWEEN;
 		_tweenType = tweenType;
 		_totalChange = totalChange;
 		_tweenTime = tweenTime;

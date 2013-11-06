@@ -1,9 +1,10 @@
 package com.game.geodetective.graphics;
 
+import com.game.loblib.entity.GameEntity;
 import com.game.loblib.graphics.Image;
 
 // helper class for storing image ID's
-public class GeoDetectiveImage extends Image {
+public class GDImage extends Image {
 	// Splash
 	public final static int SPLASH_LOGO 	= 100;
 	
@@ -14,9 +15,17 @@ public class GeoDetectiveImage extends Image {
 	public final static int OPTIONS_BUTTON	= 206;
 	public final static int STATS_BUTTON = 207;
 	public final static int TITLE_LOGO = 208;
+	public final static int TITLE_BACKGROUND = 209;
 	
 	// Credits
 	public final static int CREDITS			= 400;
+	
+	// Case Description
+	public final static int CASE_DESCRIPTION_BACKGROUND = 700;
+	public final static int CASE_DESCRIPTION_NEWSPAPER = 701;
+	public final static int CASE_DESCRIPTION_BORDER = 702;
+	public final static int CASE_DESCRIPTION_INSTRUCTIONS = 703;
+	public final static int CASE_DESCRIPTION_START_BUTTON = 704;
 	
 	// City Screen
 	public final static int CITY_BACKGROUND = 500;

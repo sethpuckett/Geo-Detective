@@ -2,7 +2,7 @@ package com.game.geodetective.sound;
 
 import com.game.loblib.sound.Sound;
 
-public class GeoDetectiveSound extends Sound {
+public class GDSound extends Sound {
 	// sound effects
 	public static final int CLICK		= 100;
 	

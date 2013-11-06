@@ -2,7 +2,7 @@ package com.game.geodetective.screen;
 
 import com.game.loblib.screen.ScreenCode;
 
-public class GeoDetectiveScreenCode extends ScreenCode {	
+public class GDScreenCode extends ScreenCode {	
 	public final static int TRANSITION_TITLE =				2;
 	public final static int TRANSITION_OPTIONS=				3;
 	public final static int TRANSITION_STATS =				4;

@@ -19,14 +19,14 @@ public class ButtonBehavior extends Behavior implements ITouchListener {
 	protected int _buttonDownPointerId;
 	
 	public ButtonBehavior(AreaType type, boolean useCamera) {
-		_type = GeoDetectiveBehaviorType.BUTTON;
+		_type = GDBehaviorType.BUTTON;
 		_useCamera = useCamera;
 		_clickOnRelase = false;
 		_touchArea = new TouchData(this, type, _useCamera, true, false, MotionType.ACTION_DOWN | MotionType.ACTION_POINTER_DOWN);
 	}
 	
 	public ButtonBehavior(AreaType type, boolean useCamera, boolean clickOnRelease) {
-		_type = GeoDetectiveBehaviorType.BUTTON;
+		_type = GDBehaviorType.BUTTON;
 		_useCamera = useCamera;
 		_clickOnRelase = clickOnRelease;
 		int motionTypes = MotionType.ACTION_DOWN | MotionType.ACTION_POINTER_DOWN;

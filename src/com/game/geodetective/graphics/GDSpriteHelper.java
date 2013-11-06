@@ -6,62 +6,82 @@ import com.game.loblib.graphics.SpriteHelper;
 import com.game.loblib.utility.Global;
 
 // Helper class for loading specific images
-public class GeoDetectiveSpriteHelper extends SpriteHelper {
+public class GDSpriteHelper extends SpriteHelper {
 
 	@Override
 	public void setupSprite(Sprite s, int image) {
 		switch (image) {
-		case GeoDetectiveImage.SPLASH_LOGO:
+		case GDImage.SPLASH_LOGO:
 			s.Texture.ResourceId = R.drawable.splash_logo;
 			s.Frames = FrameHelper._256x256;
 			break;
-		case GeoDetectiveImage.CONTINUE_BUTTON:
+		case GDImage.CONTINUE_BUTTON:
 			s.Texture.ResourceId = R.drawable.menu_continue_button;
 			s.Frames = FrameHelper._256x128;
 			break;
-		case GeoDetectiveImage.NEW_CASE_BUTTON:
+		case GDImage.NEW_CASE_BUTTON:
 			s.Texture.ResourceId = R.drawable.menu_new_game_button;
 			s.Frames = FrameHelper._256x128;
 			break;
-		case GeoDetectiveImage.CREDITS_BUTTON:
+		case GDImage.CREDITS_BUTTON:
 			s.Texture.ResourceId = R.drawable.title_credits_button;
 			s.Frames = FrameHelper.CreditsButton;
 			break;
-		case GeoDetectiveImage.CREDITS:
+		case GDImage.CREDITS:
 			s.Texture.ResourceId = R.drawable.credits_credits;
 			s.Frames = FrameHelper._512x512;
 			break;
-		case GeoDetectiveImage.BLACK:
+		case GDImage.BLACK:
 			s.Texture.ResourceId = R.drawable.common_black;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.WHITE:
+		case GDImage.WHITE:
 			s.Texture.ResourceId = R.drawable.common_white;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.RED:
+		case GDImage.RED:
 			s.Texture.ResourceId = R.drawable.common_red;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.YELLOW:
+		case GDImage.YELLOW:
 			s.Texture.ResourceId = R.drawable.common_yellow;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.ORANGE:
+		case GDImage.ORANGE:
 			s.Texture.ResourceId = R.drawable.common_orange;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.GREEN:
+		case GDImage.GREEN:
 			s.Texture.ResourceId = R.drawable.common_green;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.BLUE:
+		case GDImage.BLUE:
 			s.Texture.ResourceId = R.drawable.common_blue;
 			s.Frames = FrameHelper.Color;
 			break;
-		case GeoDetectiveImage.TITLE_LOGO:
+		case GDImage.TITLE_LOGO:
 			s.Texture.ResourceId = R.drawable.title_maze_title;
 			s.Frames = FrameHelper._512x256;
+			break;
+		case GDImage.CASE_DESCRIPTION_BACKGROUND:
+			s.Texture.ResourceId = R.drawable.casedescription_background;
+			s.Frames = FrameHelper._256x512;
+			break;
+		case GDImage.CASE_DESCRIPTION_NEWSPAPER:
+			s.Texture.ResourceId = R.drawable.casedescription_newspaper;
+			s.Frames = FrameHelper._256x256;
+			break;
+		case GDImage.CASE_DESCRIPTION_BORDER:
+			s.Texture.ResourceId = R.drawable.casedescription_border;
+			s.Frames = FrameHelper._64x64;
+			break;
+		case GDImage.CASE_DESCRIPTION_INSTRUCTIONS:
+			s.Texture.ResourceId = R.drawable.casedescription_instructions;
+			s.Frames = FrameHelper._512x64;
+			break;
+		case GDImage.CASE_DESCRIPTION_START_BUTTON:
+			s.Texture.ResourceId = R.drawable.casedescription_background;
+			s.Frames = FrameHelper._256x256;
 			break;
 		default:
 			super.setupSprite(s, image);

@@ -8,7 +8,7 @@ import com.game.loblib.utility.Global;
 import com.game.loblib.utility.Logger;
 import com.game.loblib.utility.Manager;
 
-public class GeoDetectiveScreenManager extends ScreenManager implements IMessageHandler {
+public class GDScreenManager extends ScreenManager implements IMessageHandler {
 
 	protected SplashScreen _splash = new SplashScreen();
 	protected TitleScreen _title = new TitleScreen();
@@ -46,11 +46,11 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 	@Override
 	protected void onHandleCode(int code) {
 		switch (_active.getType()) {
-		case GeoDetectiveScreenType.SPLASH:
+		case GDScreenType.SPLASH:
 			_active.close();
 			if (Manager.Sprite.allocatedSpriteCount() > 0)
 				Logger.e(_tag, "Splash Screen did not free all sprites upon closing");
-			if (code == GeoDetectiveScreenCode.TRANSITION_TITLE)
+			if (code == GDScreenCode.TRANSITION_TITLE)
 				_active = _title;
 			else {
 				Logger.e(_tag, "Invalid transition");
@@ -58,16 +58,16 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 			}
 			_active.init();
 			break;
-		case GeoDetectiveScreenType.TITLE:
-			if (code == GeoDetectiveScreenCode.TRANSITION_CREDITS) {
+		case GDScreenType.TITLE:
+			if (code == GDScreenCode.TRANSITION_CREDITS) {
 				_active.pause();
 				_active = _credits;
 			}
-			else if (code == GeoDetectiveScreenCode.TRANSITION_OPTIONS) {
+			else if (code == GDScreenCode.TRANSITION_OPTIONS) {
 				_active.pause();
 				_active = _credits;
 			}
-			else if (code == GeoDetectiveScreenCode.TRANSITION_CASE_DESCRIPTION) {
+			else if (code == GDScreenCode.TRANSITION_CASE_DESCRIPTION) {
 				_active.close();
 				_active = _caseDescription;
 			}
@@ -77,17 +77,17 @@ public class GeoDetectiveScreenManager extends ScreenManager implements IMessage
 			}
 			_active.init();	
 			break;
-		case GeoDetectiveScreenType.CREDITS:
+		case GDScreenType.CREDITS:
 			_active.close();
-			if (code == GeoDetectiveScreenCode.TRANSITION_TITLE)
+			if (code == GDScreenCode.TRANSITION_TITLE)
 				_active = _title;
 			else {
 				Logger.e(_tag, "Invalid transition");
 				return;
 			}
-		case GeoDetectiveScreenType.CASE_DESCRIPTION:
+		case GDScreenType.CASE_DESCRIPTION:
 			_active.close();
-			if (code == GeoDetectiveScreenCode.TRANSITION_CITY)
+			if (code == GDScreenCode.TRANSITION_CITY)
 				_active = _city;
 			else {
 				Logger.e(_tag, "Invalid transition");

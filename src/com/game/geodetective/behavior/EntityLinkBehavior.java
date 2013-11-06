@@ -8,11 +8,11 @@ public class EntityLinkBehavior extends Behavior {
 	protected GameEntity _linkedEntity = null;
 
 	public EntityLinkBehavior() {
-		_type = GeoDetectiveBehaviorType.ENTITY_LINK;
+		_type = GDBehaviorType.ENTITY_LINK;
 	}
 	
 	public EntityLinkBehavior(GameEntity linkedEntity) {
-		_type = GeoDetectiveBehaviorType.ENTITY_LINK;
+		_type = GDBehaviorType.ENTITY_LINK;
 		_linkedEntity = linkedEntity;
 	}
 	

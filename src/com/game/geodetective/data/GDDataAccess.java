@@ -13,16 +13,16 @@ import com.game.geodetective.data.entity.Crime;
 import com.game.geodetective.data.entity.DifficultyType;
 import com.game.geodetective.data.entity.Villain;
 import com.game.geodetective.utility.Debug;
-import com.game.geodetective.utility.GeoDetectiveGlobal;
-import com.game.geodetective.utility.GeoDetectiveTimeHelper;
+import com.game.geodetective.utility.GDGlobal;
+import com.game.geodetective.utility.GDTimeHelper;
 
-public class GeoDetectiveDataAccess {
+public class GDDataAccess {
 
 	private SQLiteDatabase _db;
-	private GeoDetectiveDataHelper _dbHelper;
+	private GDDataHelper _dbHelper;
 
-	public GeoDetectiveDataAccess() {
-		_dbHelper = new GeoDetectiveDataHelper();
+	public GDDataAccess() {
+		_dbHelper = new GDDataHelper();
 		
 		if (Debug.AlwaysResetDatabase)
 			_dbHelper.delete();
@@ -92,18 +92,18 @@ public class GeoDetectiveDataAccess {
 		resetState();
 		
 		// get difficulty
-		DifficultyType difficulty =  GeoDetectiveGlobal.DataAccess.getCurrentDifficulty();
+		DifficultyType difficulty =  GDGlobal.DataAccess.getCurrentDifficulty();
 		
 		// get villain
-		Villain villain = GeoDetectiveGlobal.DataAccess.getRandomVillain();
+		Villain villain = GDGlobal.DataAccess.getRandomVillain();
 		
 		// get crime and starting city
-		Crime crime = GeoDetectiveGlobal.DataAccess.getRandomCrime(difficulty);
-		City startCity = GeoDetectiveGlobal.DataAccess.getCityByCrime(crime);
+		Crime crime = GDGlobal.DataAccess.getRandomCrime(difficulty);
+		City startCity = GDGlobal.DataAccess.getCityByCrime(crime);
 		
 		// get start time/deadline
-		int startHour = GeoDetectiveTimeHelper.getRandomHour();
-		int deadlineHour = GeoDetectiveTimeHelper.getDeadlineFromStart(startHour);
+		int startHour = GDTimeHelper.getRandomHour();
+		int deadlineHour = GDTimeHelper.getDeadlineFromStart(startHour);
 		
 		// get goal city count (number of cities to travel to be before villain is caught)
 		// TODO: make this configurable in DB and based on difficulty
@@ -128,7 +128,7 @@ public class GeoDetectiveDataAccess {
 		// get visitable cities
 		// TODO: make this configurable in DB
 		int visitableCityCount = 4;
-		City[] visitableCities = GeoDetectiveGlobal.DataAccess.getUnvisitedCities(visitableCityCount, difficulty);
+		City[] visitableCities = GDGlobal.DataAccess.getUnvisitedCities(visitableCityCount, difficulty);
 		
 		for (int i = 0; i <  visitableCities.length; i ++) {
 			getDB().rawQuery("INSERT INTO CaseStateCitiesAvailable (CaseStateId, CityId) VALUES (?, ?)",
@@ -139,7 +139,7 @@ public class GeoDetectiveDataAccess {
 		setRandomGoalCity(state, visitableCities);
 		
 		// get clue locations for this city
-		ClueLocation[] clueLocations = GeoDetectiveGlobal.DataAccess.getRandomClueLocations(3);
+		ClueLocation[] clueLocations = GDGlobal.DataAccess.getRandomClueLocations(3);
 		
 		for (int i = 0; i < clueLocations.length; i ++) {
 			getDB().rawQuery("INSERT INTO CaseStateClueLocations (CaseStateId, ClueLocationId) VALUES (?, ?)",

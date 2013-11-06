@@ -10,7 +10,7 @@ public class TextRenderBehavior extends Behavior {
 	protected boolean _centerY;
 	
 	public TextRenderBehavior(String text, boolean centerX, boolean centerY) {
-		_type = GeoDetectiveBehaviorType.TEXT_RENDER;
+		_type = GDBehaviorType.TEXT_RENDER;
 		_text = text;
 		_centerX = centerX;
 		_centerY = centerY;

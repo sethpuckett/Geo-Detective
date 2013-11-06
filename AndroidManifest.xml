@@ -16,7 +16,7 @@
         android:screenOrientation="portrait"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
-            android:name="com.game.geodetective.GeoDetectiveActivity"
+            android:name="com.game.geodetective.GDActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
