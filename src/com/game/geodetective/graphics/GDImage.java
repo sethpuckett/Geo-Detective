@@ -42,30 +42,31 @@ public class GDImage extends Image {
 	public final static int CITY_RESTAURANT_BUTTON = 511;
 	public final static int CITY_NIGHT_CLUB_BUTTON = 512;
 	public final static int CITY_CRIME_LAB_BUTTON = 512;
+	public final static int CITY_CLOCK_BORDER = 513;
+	public final static int CITY_SCROLL_UP_OPEN = 514;
+	public final static int CITY_SCROLL_UP_CLOSED = 515;
+	public final static int CITY_SCROLL_DOWN_OPEN = 516;
+	public final static int CITY_SCROLL_DOWN_CLOSED = 517;
+	public final static int CITY_INFO_TEXT_BOX = 518;
 	
-	// Clock
-	public final static int CLOCK_MON = 600;
-	public final static int CLOCK_TUE = 601;
-	public final static int CLOCK_WED = 602;
-	public final static int CLOCK_THU = 603;
-	public final static int CLOCK_FRI = 604;
-	public final static int CLOCK_SAT = 605;
-	public final static int CLOCK_SUN = 606;
-	public final static int CLOCK_0 = 607;
-	public final static int CLOCK_1 = 608;
-	public final static int CLOCK_2 = 609;
-	public final static int CLOCK_3 = 610;
-	public final static int CLOCK_4 = 611;
-	public final static int CLOCK_5 = 612;
-	public final static int CLOCK_6 = 613;
-	public final static int CLOCK_7 = 614;
-	public final static int CLOCK_8 = 615;
-	public final static int CLOCK_9 = 616;
-	public final static int CLOCK_AM = 617;
-	public final static int CLOCK_PM = 618;
+	// Clue Locations
+	public final static int CLUE_LOCATION_MUSEUM = 550;
+	public final static int CLUE_LOCATION_HISTORICAL_SOCIETY = 551;
+	public final static int CLUE_LOCATION_TAVERN = 552;
+	public final static int CLUE_LOCATION_STADIUM = 553;
+	public final static int CLUE_LOCATION_LIBRARY = 554;
+	public final static int CLUE_LOCATION_TRAVEL_CENTER = 555;
+	public final static int CLUE_LOCATION_COURTHOUSE = 556;
+	public final static int CLUE_LOCATION_BANK = 557;
 	
 	// City Images
-	
+	public final static int CITY_IMAGE_KABUL = 600;
+	public final static int CITY_IMAGE_BUENOS_AIRES = 601;
+	public final static int CITY_IMAGE_SYDNEY = 602;
+	public final static int CITY_IMAGE_VIENNA = 603;
+	public final static int CITY_IMAGE_NASSAU = 604;
+	public final static int CITY_IMAGE_MANAMA = 605;
+	public final static int CITY_IMAGE_DHAKA = 606;
 	
 	// Colors
 	public final static int BLACK = 2000;

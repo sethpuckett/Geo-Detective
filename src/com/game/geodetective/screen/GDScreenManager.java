@@ -85,6 +85,7 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 				Logger.e(_tag, "Invalid transition");
 				return;
 			}
+			_active.init();
 		case GDScreenType.CASE_DESCRIPTION:
 			_active.close();
 			if (code == GDScreenCode.TRANSITION_CITY)
@@ -93,6 +94,7 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 				Logger.e(_tag, "Invalid transition");
 				return;
 			}
+			_active.init();
 		}
 	}
 }

@@ -26,7 +26,7 @@ public class TitleScreen extends Screen {
 	
 	public TitleScreen() {
 		_type = GDScreenType.TITLE;
-		_screenMusic = GDSound.BADLOOP;
+		_screenMusic = GDSound.CONTINUE_MUSIC;
 		_backBtnCtl = ButtonControlType.DEFAULT;
 	}
 	

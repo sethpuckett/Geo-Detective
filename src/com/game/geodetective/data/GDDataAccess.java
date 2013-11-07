@@ -72,9 +72,9 @@ public class GDDataAccess {
 	// Wipes out any existing state information (i.e. stops current case) by truncating state tables
 	public void resetState() {
 		getDB().rawQuery("DELETE FROM CaseState", null);
-		getDB().rawQuery("DELETE FROM CaseStateCitiesAvailable", null);
-		getDB().rawQuery("DELETE FROM CaseStateCitiesVisited", null);
-		getDB().rawQuery("DELETE FROM CaseStateClueLocations", null);
+		getDB().rawQuery("DELETE FROM CaseStateCityAvailable", null);
+		getDB().rawQuery("DELETE FROM CaseStateCityVisited", null);
+		getDB().rawQuery("DELETE FROM CaseStateClueLocation", null);
 	}
 
 	// Returns true if there is an active, ongoing case
@@ -131,7 +131,7 @@ public class GDDataAccess {
 		City[] visitableCities = GDGlobal.DataAccess.getUnvisitedCities(visitableCityCount, difficulty);
 		
 		for (int i = 0; i <  visitableCities.length; i ++) {
-			getDB().rawQuery("INSERT INTO CaseStateCitiesAvailable (CaseStateId, CityId) VALUES (?, ?)",
+			getDB().rawQuery("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)",
 				new String[] {Integer.toString(state._id), Integer.toString( visitableCities[i]._id) });
 		}
 		
@@ -142,7 +142,7 @@ public class GDDataAccess {
 		ClueLocation[] clueLocations = GDGlobal.DataAccess.getRandomClueLocations(3);
 		
 		for (int i = 0; i < clueLocations.length; i ++) {
-			getDB().rawQuery("INSERT INTO CaseStateClueLocations (CaseStateId, ClueLocationId) VALUES (?, ?)",
+			getDB().rawQuery("INSERT INTO CaseStateClueLocation (CaseStateId, ClueLocationId) VALUES (?, ?)",
 				new String[] {Integer.toString(state._id), Integer.toString(clueLocations[i]._id) });
 		}
 	}
@@ -153,7 +153,7 @@ public class GDDataAccess {
 		
 		int count = 0;
 		while (count < cityCount) {
-		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCitiesAvailable INNER JOIN CaseState ON CaseStateCitiesAvailable.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
+		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityAvailable INNER JOIN CaseState ON CaseStateCityAvailable.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
 					new String[] {Integer.toString(difficulty._id)});
 		  cursor.moveToFirst();
 		  City city = cursorToCity(cursor);
@@ -170,7 +170,7 @@ public class GDDataAccess {
 	}
 	
 	public void setVisitedCity(CaseState state, City city) {
-		getDB().rawQuery("INSERT INTO CaseStateCitiesVisited (CaseStateId, CityId) VALUES (?, ?)", new String[] { Integer.toString(state._id), Integer.toString(city._id) });
+		getDB().rawQuery("INSERT INTO CaseStateCityVisited (CaseStateId, CityId) VALUES (?, ?)", new String[] { Integer.toString(state._id), Integer.toString(city._id) });
 	}
 	
 	public void setRandomGoalCity(CaseState state, City[] visitableCities) {
@@ -182,14 +182,14 @@ public class GDDataAccess {
 	}
 	
 	public void clearAvailableTravelCities() {
-		getDB().rawQuery("DELETE FROM CaseStateCitiesAvailable", null);
+		getDB().rawQuery("DELETE FROM CaseStateCityAvailable", null);
 	}
 	
 	public void setAvailableTravelCities(City[] cities) {
 		clearAvailableTravelCities();
 		CaseState state = getCurrentCaseState();
 		for (int i = 0; i < cities.length; i++) {
-			getDB().rawQuery("INSERT INTO CaseStateCitiesAvailable (CaseStateId, CityId) VALUES (?, ?)", new String[] { Integer.toString(state._id), Integer.toString(cities[i]._id) });
+			getDB().rawQuery("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)", new String[] { Integer.toString(state._id), Integer.toString(cities[i]._id) });
 		}
 	}
 	
@@ -220,6 +220,14 @@ public class GDDataAccess {
 		CaseState state = cursorToCaseState(cursor);
 		cursor.close();
 		return state;	
+	}
+	
+	public City getCity(int cityId) {
+		Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE _id = ? LIMIT 1", new String[] { Integer.toString(cityId) });
+		cursor.moveToFirst();
+		City city = cursorToCity(cursor);
+		cursor.close();
+		return city;	
 	}
 	
 	public Crime getCrimeForCurrentCase() {
