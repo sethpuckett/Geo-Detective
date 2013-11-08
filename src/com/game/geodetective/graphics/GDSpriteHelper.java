@@ -107,38 +107,78 @@ public class GDSpriteHelper extends SpriteHelper {
 			s.Texture.ResourceId = R.drawable.city_info_textbox_placeholder;
 			s.Frames = FrameHelper._512x512;
 			break;
-		case GDImage.CLUE_LOCATION_MUSEUM:
+		case GDImage.CLUE_LOCATION_MUSEUM_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_museum;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_HISTORICAL_SOCIETY:
+		case GDImage.CLUE_LOCATION_HISTORICAL_SOCIETY_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_historical_society;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_TAVERN:
+		case GDImage.CLUE_LOCATION_TAVERN_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_tavern;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_STADIUM:
+		case GDImage.CLUE_LOCATION_STADIUM_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_stadium;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_LIBRARY:
+		case GDImage.CLUE_LOCATION_LIBRARY_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_library;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_TRAVEL_CENTER:
+		case GDImage.CLUE_LOCATION_TRAVEL_CENTER_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_travel_center;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_COURTHOUSE:
+		case GDImage.CLUE_LOCATION_COURTHOUSE_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_courthouse;
 			s.Frames = FrameHelper._512x64;
 			break;
-		case GDImage.CLUE_LOCATION_BANK:
+		case GDImage.CLUE_LOCATION_BANK_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_bank;
 			s.Frames = FrameHelper._512x64;
-			break;			
+			break;
+		case GDImage.CLUE_LOCATION_MUSEUM:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_HISTORICAL_SOCIETY:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_TAVERN:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_STADIUM:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_LIBRARY:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_TRAVEL_CENTER:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_COURTHOUSE:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_BANK:
+			s.Texture.ResourceId = R.drawable.cluelocation_image_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_CLUE_TEXT_BOX:
+			s.Texture.ResourceId = R.drawable.cluelocation_clue_text_box_placeholder;
+			s.Frames = FrameHelper._512x512;
+			break;
+		case GDImage.CLUE_LOCATION_BACK_BUTTON:
+			s.Texture.ResourceId = R.drawable.menu_back_button;
+			s.Frames = FrameHelper._256x128;
+			break;
 		case GDImage.CITY_IMAGE_KABUL:
 			s.Texture.ResourceId = R.drawable.city_image_placeholder;
 			s.Frames = FrameHelper._512x512;

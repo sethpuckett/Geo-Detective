@@ -7,7 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.game.geodetective.data.entity.CaseState;
+import com.game.geodetective.data.entity.CaseStateCityAvailable;
+import com.game.geodetective.data.entity.CaseStateCityVisited;
+import com.game.geodetective.data.entity.CaseStateClueLocation;
 import com.game.geodetective.data.entity.City;
+import com.game.geodetective.data.entity.Clue;
 import com.game.geodetective.data.entity.ClueLocation;
 import com.game.geodetective.data.entity.Crime;
 import com.game.geodetective.data.entity.DifficultyType;
@@ -21,6 +25,10 @@ public class GDDataAccess {
 	private SQLiteDatabase _db;
 	private GDDataHelper _dbHelper;
 
+	/***********************************************
+	 * Initialiazation / Clean-up
+	 ***********************************************/
+	
 	public GDDataAccess() {
 		_dbHelper = new GDDataHelper();
 		
@@ -32,6 +40,78 @@ public class GDDataAccess {
 		_dbHelper.close();
 	}
 
+	
+	/***********************************************
+	 * Basic Select
+	 ***********************************************/
+	
+	public CaseState getCaseState(int id) {
+		Cursor cursor = getDB().query("CaseState", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		CaseState state = cursorToCaseState(cursor);
+		cursor.close();
+		return state;
+	}
+	
+	public CaseStateCityAvailable getCaseStateCityAvailable(int id) {
+		Cursor cursor = getDB().query("CaseStateCityAvailable", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		CaseStateCityAvailable entity = cursorToCaseStateCityAvailable(cursor);
+		cursor.close();
+		return entity;
+	}
+	
+	public CaseStateCityVisited getCaseStateCityVisited(int id) {
+		Cursor cursor = getDB().query("CaseStateCityVisited", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		CaseStateCityVisited entity = cursorToCaseStateCityVisited(cursor);
+		cursor.close();
+		return entity;
+	}
+	
+	public CaseStateClueLocation getCaseStateClueLocation(int id) {
+		Cursor cursor = getDB().query("CaseStateClueLocation", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		CaseStateClueLocation entity = cursorToCaseStateClueLocation(cursor);
+		cursor.close();
+		return entity;
+	}
+	
+	public City getCity(int id) {
+		Cursor cursor = getDB().query("City", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		City entity = cursorToCity(cursor);
+		cursor.close();
+		return entity;
+	}
+	
+	public Clue getClue(int id) {
+		Cursor cursor = getDB().query("Clue", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		Clue entity = cursorToClue(cursor);
+		cursor.close();
+		return entity;
+	}
+	
+	public ClueLocation getClueLocation(int id) {
+		Cursor cursor = getDB().query("ClueLocation", new String[] {"*"}, "_id = ?", new String[] {Integer.toString(id)}, null, null, null);
+		cursor.moveToFirst();
+		ClueLocation entity = cursorToClueLocation(cursor);
+		cursor.close();
+		return entity;
+	}
+
+	
+	/***********************************************
+	 * Basic Insert/Update
+	 ***********************************************/
+	
+	
+	
+	/***********************************************
+	 * Specialized Select
+	 ***********************************************/
+	
 	// Returns a random villain
 	public Villain getRandomVillain() {  
 		  Cursor cursor = getDB().query("Villain", new String[] {"*"}, null, null, null, null, "RANDOM()", "1");
@@ -69,14 +149,6 @@ public class GDDataAccess {
 		  return difficulty;	
 	}
 	
-	// Wipes out any existing state information (i.e. stops current case) by truncating state tables
-	public void resetState() {
-		getDB().rawQuery("DELETE FROM CaseState", null);
-		getDB().rawQuery("DELETE FROM CaseStateCityAvailable", null);
-		getDB().rawQuery("DELETE FROM CaseStateCityVisited", null);
-		getDB().rawQuery("DELETE FROM CaseStateClueLocation", null);
-	}
-
 	// Returns true if there is an active, ongoing case
 	public boolean openCaseExists() {
 		int count = 0;
@@ -86,6 +158,79 @@ public class GDDataAccess {
 		return count > 0;
 	}
 	
+	// Returns a random unvisited city with a difficulty less than or equal to the provided difficulty
+	public City[] getUnvisitedCities(int cityCount, DifficultyType difficulty) {
+		City[] cities = new City[cityCount];
+		
+		int count = 0;
+		while (count < cityCount) {
+		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityAvailable INNER JOIN CaseState ON CaseStateCityAvailable.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
+					new String[] {Integer.toString(difficulty._id)});
+		  cursor.moveToFirst();
+		  City city = cursorToCity(cursor);
+		  cursor.close();
+		  
+		  // add this city to array, if it hasn't been added yet
+		  if (!Arrays.asList(cities).contains(city)) {
+			  cities[count] = city;
+			  count++;
+		  }
+		}
+		
+		return cities;
+	}
+	
+	public ClueLocation[] getRandomClueLocations(int locationCount) {
+		ClueLocation[] locations = new ClueLocation[locationCount];
+		
+		int count = 0;
+		while (count < locationCount) {
+			// TODO: need to be specify if trait clue locations are included
+			Cursor cursor = getDB().rawQuery("SELECT * FROM ClueLocation ORDER BY RANDOM() LIMIT 1", null);
+			cursor.moveToFirst();
+			ClueLocation location = cursorToClueLocation(cursor);
+			cursor.close();
+  
+			// add this location to array, if it hasn't been added yet
+			if (!Arrays.asList(locations).contains(location)) {
+				locations[count] = location;
+				count++;
+			}
+		}
+		
+		return locations;
+	}
+	
+	public CaseState getCurrentCaseState() {
+		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseState LIMIT 1", null);
+		cursor.moveToFirst();
+		CaseState state = cursorToCaseState(cursor);
+		cursor.close();
+		return state;	
+	}
+	
+	public Crime getCrimeForCurrentCase() {
+		CaseState state = getCurrentCaseState();
+		Cursor cursor = getDB().rawQuery("SELECT * FROM Crime WHERE Crime.CityId = ?", new String[] { Integer.toString(state.CrimeCityId)});
+		cursor.moveToFirst();
+		Crime crime = cursorToCrime(cursor);
+		cursor.close();
+		return crime;	
+	}
+	
+	
+	/***********************************************
+	 * Specialized Insert/Update
+	 ***********************************************/
+	
+	// Wipes out any existing state information (i.e. stops current case) by truncating state tables
+	public void resetState() {
+		getDB().rawQuery("DELETE FROM CaseState", null);
+		getDB().rawQuery("DELETE FROM CaseStateCityAvailable", null);
+		getDB().rawQuery("DELETE FROM CaseStateCityVisited", null);
+		getDB().rawQuery("DELETE FROM CaseStateClueLocation", null);
+	}
+
 	// Initialize a new case
 	public void createNewCase() {
 		// Clear any existing state information
@@ -146,29 +291,7 @@ public class GDDataAccess {
 				new String[] {Integer.toString(state._id), Integer.toString(clueLocations[i]._id) });
 		}
 	}
-	
-	// Returns a random unvisited city with a difficulty less than or equal to the provided difficulty
-	public City[] getUnvisitedCities(int cityCount, DifficultyType difficulty) {
-		City[] cities = new City[cityCount];
-		
-		int count = 0;
-		while (count < cityCount) {
-		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityAvailable INNER JOIN CaseState ON CaseStateCityAvailable.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
-					new String[] {Integer.toString(difficulty._id)});
-		  cursor.moveToFirst();
-		  City city = cursorToCity(cursor);
-		  cursor.close();
-		  
-		  // add this city to array, if it hasn't been added yet
-		  if (!Arrays.asList(cities).contains(city)) {
-			  cities[count] = city;
-			  count++;
-		  }
-		}
-		
-		return cities;
-	}
-	
+
 	public void setVisitedCity(CaseState state, City city) {
 		getDB().rawQuery("INSERT INTO CaseStateCityVisited (CaseStateId, CityId) VALUES (?, ?)", new String[] { Integer.toString(state._id), Integer.toString(city._id) });
 	}
@@ -192,53 +315,15 @@ public class GDDataAccess {
 			getDB().rawQuery("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)", new String[] { Integer.toString(state._id), Integer.toString(cities[i]._id) });
 		}
 	}
-	
-	public ClueLocation[] getRandomClueLocations(int locationCount) {
-		ClueLocation[] locations = new ClueLocation[locationCount];
-		
-		int count = 0;
-		while (count < locationCount) {
-			// TODO: need to be specify if trait clue locations are included
-			Cursor cursor = getDB().rawQuery("SELECT * FROM ClueLocation ORDER BY RANDOM() LIMIT 1", null);
-			cursor.moveToFirst();
-			ClueLocation location = cursorToClueLocation(cursor);
-			cursor.close();
-  
-			// add this location to array, if it hasn't been added yet
-			if (!Arrays.asList(locations).contains(location)) {
-				locations[count] = location;
-				count++;
-			}
-		}
-		
-		return locations;
+
+	public void setCurrentClueLocation(CaseState state) {
+		getDB().execSQL("UPDATE CaseState SET CurrentClueLocationId = ? WHERE _id = ?", new String[] {Integer.toString(state.CurrentClueLocationId), Integer.toString(state._id)});
 	}
 	
-	public CaseState getCurrentCaseState() {
-		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseState LIMIT 1", null);
-		cursor.moveToFirst();
-		CaseState state = cursorToCaseState(cursor);
-		cursor.close();
-		return state;	
-	}
-	
-	public City getCity(int cityId) {
-		Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE _id = ? LIMIT 1", new String[] { Integer.toString(cityId) });
-		cursor.moveToFirst();
-		City city = cursorToCity(cursor);
-		cursor.close();
-		return city;	
-	}
-	
-	public Crime getCrimeForCurrentCase() {
-		CaseState state = getCurrentCaseState();
-		Cursor cursor = getDB().rawQuery("SELECT * FROM Crime WHERE Crime.CityId = ?", new String[] { Integer.toString(state.CrimeCityId)});
-		cursor.moveToFirst();
-		Crime crime = cursorToCrime(cursor);
-		cursor.close();
-		return crime;	
-	}
-	
+	/***********************************************
+	 * Private
+	 ***********************************************/
+
 	private SQLiteDatabase getDB() {
 		if (_db == null)
 			_db = _dbHelper.open();
@@ -301,16 +386,7 @@ public class GDDataAccess {
 		state.HasWarrant = cursor.getInt(20) > 0;
 		return state;
 	}
-	
-	private ClueLocation cursorToClueLocation(Cursor cursor) {
-		ClueLocation loc = new ClueLocation();
-		loc._id = cursor.getInt(0);
-		loc.Name = cursor.getString(1);
-		loc.ClueType1Id = cursor.getInt(2);
-		loc.ClueType2Id = cursor.getInt(3);
-		return loc;
-	}
-	
+
 	private DifficultyType cursorToDifficultyType(Cursor cursor) {
 		DifficultyType difficulty = new DifficultyType();
 		difficulty._id = cursor.getInt(0);
@@ -318,4 +394,50 @@ public class GDDataAccess {
 		difficulty.Name = cursor.getString(2);
 		return difficulty;
 	}
+	
+	private CaseStateCityAvailable cursorToCaseStateCityAvailable(Cursor cursor) {
+		CaseStateCityAvailable entity = new CaseStateCityAvailable();
+		entity._id = cursor.getInt(0);
+		entity.CaseStateId = cursor.getInt(1);
+		entity.CityId = cursor.getInt(2);
+		return entity;
+	}
+	
+	private CaseStateCityVisited cursorToCaseStateCityVisited(Cursor cursor) {
+		CaseStateCityVisited entity = new CaseStateCityVisited();
+		entity._id = cursor.getInt(0);
+		entity.CaseStateId = cursor.getInt(1);
+		entity.CityId = cursor.getInt(2);
+		return entity;
+	}
+	
+	private CaseStateClueLocation cursorToCaseStateClueLocation(Cursor cursor) {
+		CaseStateClueLocation entity = new CaseStateClueLocation();
+		entity._id = cursor.getInt(0);
+		entity.CaseStateId = cursor.getInt(1);
+		entity.ClueLocationId = cursor.getInt(2);
+		entity.Visited = cursor.getInt(3) > 0;
+		return entity;
+	}
+	
+	private Clue cursorToClue(Cursor cursor) {
+		Clue entity = new Clue();
+		entity._id = cursor.getInt(0);
+		entity.CityId = cursor.getInt(1);
+		entity.ClueText = cursor.getString(2);
+		entity.ClueTypeId = cursor.getInt(3);
+		return entity;
+	}
+
+	private ClueLocation cursorToClueLocation(Cursor cursor) {
+		ClueLocation entity = new ClueLocation();
+		entity._id = cursor.getInt(0);
+		entity.Name = cursor.getString(1);
+		entity.ClueType1Id = cursor.getInt(2);
+		entity.ClueType2Id = cursor.getInt(3);
+		return entity;
+	}
+	
+	
+
 }

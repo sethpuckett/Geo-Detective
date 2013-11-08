@@ -15,6 +15,7 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 	protected CreditsScreen _credits = new CreditsScreen();
 	protected CaseDescriptionScreen _caseDescription = new CaseDescriptionScreen();
 	protected CityScreen _city = new CityScreen();
+	protected ClueLocationScreen _clueLocation = new ClueLocationScreen();
 	
 	@Override
 	public void init() {
@@ -86,6 +87,7 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 				return;
 			}
 			_active.init();
+			break;
 		case GDScreenType.CASE_DESCRIPTION:
 			_active.close();
 			if (code == GDScreenCode.TRANSITION_CITY)
@@ -95,6 +97,27 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 				return;
 			}
 			_active.init();
+			break;
+		case GDScreenType.CITY:
+			if (code == GDScreenCode.TRANSITION_CLUE_LOCATION) {
+				_active.pause();
+				_active = _clueLocation;
+			}
+			else {
+				Logger.e(_tag, "Invalid transition");
+				return;
+			}
+			_active.init();
+			break;
+		case GDScreenType.CLUE_LOCATION:
+			_active.close();
+			if (code == GDScreenCode.TRANSITION_CITY)
+				_active = _city;
+			else {
+				Logger.e(_tag, "Invalid transition");
+				return;
+			}
+			_active.unpause();
 		}
 	}
 }

@@ -32,6 +32,29 @@ public class CityHelper {
 		return image;
 	}
 
+	public static int GetClueLocationLabel(ClueLocation location) {
+		int image = Image.UNKNOWN;
+
+		if (location.Name.equals("Museum"))
+			image = GDImage.CLUE_LOCATION_MUSEUM_LABEL;
+		else if (location.Name.equals("Historical Society"))
+			image = GDImage.CLUE_LOCATION_HISTORICAL_SOCIETY_LABEL;
+		else if (location.Name.equals("Bar"))
+			image = GDImage.CLUE_LOCATION_TAVERN_LABEL;
+		else if (location.Name.equals("Stadium"))
+			image = GDImage.CLUE_LOCATION_STADIUM_LABEL;
+		else if (location.Name.equals("Library"))
+			image = GDImage.CLUE_LOCATION_LIBRARY_LABEL;
+		else if (location.Name.equals("Travel Center"))
+			image = GDImage.CLUE_LOCATION_TRAVEL_CENTER_LABEL;
+		else if (location.Name.equals("Courthouse"))
+			image = GDImage.CLUE_LOCATION_COURTHOUSE_LABEL;
+		else if (location.Name.equals("Bank"))
+			image = GDImage.CLUE_LOCATION_BANK_LABEL;
+		
+		return image;
+	}
+	
 	public static int GetClueLocationImage(ClueLocation location) {
 		int image = Image.UNKNOWN;
 

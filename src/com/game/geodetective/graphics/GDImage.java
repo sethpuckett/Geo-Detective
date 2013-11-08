@@ -50,14 +50,24 @@ public class GDImage extends Image {
 	public final static int CITY_INFO_TEXT_BOX = 518;
 	
 	// Clue Locations
-	public final static int CLUE_LOCATION_MUSEUM = 550;
-	public final static int CLUE_LOCATION_HISTORICAL_SOCIETY = 551;
-	public final static int CLUE_LOCATION_TAVERN = 552;
-	public final static int CLUE_LOCATION_STADIUM = 553;
-	public final static int CLUE_LOCATION_LIBRARY = 554;
-	public final static int CLUE_LOCATION_TRAVEL_CENTER = 555;
-	public final static int CLUE_LOCATION_COURTHOUSE = 556;
-	public final static int CLUE_LOCATION_BANK = 557;
+	public final static int CLUE_LOCATION_MUSEUM_LABEL = 550;
+	public final static int CLUE_LOCATION_HISTORICAL_SOCIETY_LABEL = 551;
+	public final static int CLUE_LOCATION_TAVERN_LABEL = 552;
+	public final static int CLUE_LOCATION_STADIUM_LABEL = 553;
+	public final static int CLUE_LOCATION_LIBRARY_LABEL = 554;
+	public final static int CLUE_LOCATION_TRAVEL_CENTER_LABEL = 555;
+	public final static int CLUE_LOCATION_COURTHOUSE_LABEL = 556;
+	public final static int CLUE_LOCATION_BANK_LABEL = 557;
+	public final static int CLUE_LOCATION_MUSEUM = 558;
+	public final static int CLUE_LOCATION_HISTORICAL_SOCIETY = 559;
+	public final static int CLUE_LOCATION_TAVERN = 560;
+	public final static int CLUE_LOCATION_STADIUM = 561;
+	public final static int CLUE_LOCATION_LIBRARY = 562;
+	public final static int CLUE_LOCATION_TRAVEL_CENTER = 563;
+	public final static int CLUE_LOCATION_COURTHOUSE = 564;
+	public final static int CLUE_LOCATION_BANK = 565;
+	public final static int CLUE_LOCATION_CLUE_TEXT_BOX = 566;
+	public final static int CLUE_LOCATION_BACK_BUTTON = 567;
 	
 	// City Images
 	public final static int CITY_IMAGE_KABUL = 600;
