@@ -5,4 +5,5 @@ public class CaseStateClueLocation {
 	public int CaseStateId;
 	public int ClueLocationId;
 	public boolean Visited;
+	public int ClueType;
 }

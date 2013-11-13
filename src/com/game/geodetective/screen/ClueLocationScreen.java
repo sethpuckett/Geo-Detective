@@ -1,7 +1,8 @@
 package com.game.geodetective.screen;
 
 import com.game.geodetective.data.entity.CaseState;
-import com.game.geodetective.data.entity.City;
+import com.game.geodetective.data.entity.CaseStateClueLocation;
+import com.game.geodetective.data.entity.Clue;
 import com.game.geodetective.data.entity.ClueLocation;
 import com.game.geodetective.entity.EntityHelper;
 import com.game.geodetective.graphics.GDImage;
@@ -32,6 +33,8 @@ public class ClueLocationScreen extends Screen {
 	
 	private CaseState _state;
 	private ClueLocation _clueLocation;
+	private CaseStateClueLocation _stateClueLocation;
+	private Clue _clue;
 	
 	public ClueLocationScreen() {
 		_type = GDScreenType.CLUE_LOCATION;
@@ -57,6 +60,8 @@ public class ClueLocationScreen extends Screen {
 		
 		_state = GDGlobal.DataAccess.getCurrentCaseState();
 		_clueLocation = GDGlobal.DataAccess.getClueLocation(_state.CurrentClueLocationId);
+		_stateClueLocation = GDGlobal.DataAccess.getStateClueLocation(_clueLocation);
+		_clue = GDGlobal.DataAccess.getClueForCurrentState();
 		
 		float clockHeight = LayoutHelper.HeightSubFrac(1f, 24f);
 		StringBuffer timeString = new StringBuffer();
@@ -123,15 +128,22 @@ public class ClueLocationScreen extends Screen {
 		
 		// TODO: scroll images need to change if text can be scrolled
 		float clueHeight = scrollUpHeight - LayoutHelper.HeightFrac(30f) - LayoutHelper.WidthFrac(12f);
-		_clueBox = EntityHelper.graphic(GDImage.CLUE_LOCATION_CLUE_TEXT_BOX,
-				GDSpriteLayer.UI_HIGH, 
+		_clueBox = EntityHelper.text(_clue.ClueText, 
+				LayoutHelper.WidthFrac(2f) - 500f, 
+				clueHeight, 
 				false, 
-				LayoutHelper.WidthSubFrac(1f, 6f),
-				LayoutHelper.HeightFrac(5f),
-				true, 
-				LayoutHelper.WidthFrac(2f),
-				clueHeight);
+				false);
 		_entities.add(_clueBox);
+		
+//		_clueBox = EntityHelper.graphic(GDImage.CLUE_LOCATION_CLUE_TEXT_BOX,
+//				GDSpriteLayer.UI_HIGH, 
+//				false, 
+//				LayoutHelper.WidthSubFrac(1f, 6f),
+//				LayoutHelper.HeightFrac(5f),
+//				true, 
+//				LayoutHelper.WidthFrac(2f),
+//				clueHeight);
+//		_entities.add(_clueBox);
 		
 		float scrollDownHeight = clueHeight - LayoutHelper.WidthFrac(12f) - LayoutHelper.HeightFrac(30f);
 		_clueScrollDown = EntityHelper.graphic(GDImage.CITY_SCROLL_DOWN_OPEN,

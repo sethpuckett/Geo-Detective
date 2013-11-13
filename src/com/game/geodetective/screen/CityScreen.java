@@ -74,7 +74,7 @@ public class CityScreen extends Screen {
 		
 		_state = GDGlobal.DataAccess.getCurrentCaseState();
 		_currentCity = GDGlobal.DataAccess.getCity(_state.CurrentCityId);
-		_clueLocations = GDGlobal.DataAccess.getRandomClueLocations(3);
+		_clueLocations = GDGlobal.DataAccess.getClueLocationsOrCreateForCurrentCase(3);
 		
 		GDGlobal.Renderer.setTextProperties(1f, 1f, 1f, 1f);
 		
