@@ -230,6 +230,13 @@ public class GDDataAccess {
 		return cursor.getInt(0);
 	}
 	
+	public int getCaseStateCitiesAvailableCount() {
+		CaseState state = getCurrentCaseState();
+		Cursor cursor = getDB().rawQuery("SELECT COUNT(*) FROM CaseStateCitiesAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		cursor.moveToFirst();
+		return cursor.getInt(0);
+	}
+	
 	public CaseStateClueLocation[] getStateClueLocationsForCurrentCase() {
 		CaseState state = getCurrentCaseState();
 
@@ -249,6 +256,25 @@ public class GDDataAccess {
 		return stateLocations;
 	}
 	
+	public CaseStateCityAvailable[] getStateCitiesAvailableForCurrentCase() {
+		CaseState state = getCurrentCaseState();
+
+		int locationCount = getCaseStateCitiesAvailableCount();
+		CaseStateCityAvailable[] stateCities = new CaseStateCityAvailable[locationCount];
+		
+		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseStateCitiesAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		cursor.moveToFirst();
+		for (int i = 0; i < locationCount; i++) {
+			CaseStateCityAvailable stateCity = cursorToCaseStateCityAvailable(cursor);
+			stateCities[i] = stateCity;
+			if (i < locationCount)
+				cursor.moveToNext();
+		}
+		cursor.close();
+		
+		return stateCities;
+	}
+	
 	public ClueLocation[] getClueLocationsForCurrentCase() {
 		int locationCount = getCaseStateClueLocationCount();
 		CaseStateClueLocation[] stateLocations = getStateClueLocationsForCurrentCase();
@@ -259,6 +285,18 @@ public class GDDataAccess {
 		}
 		
 		return locations;
+	}
+	
+	public City[] getAvailableCitiesForCurrentCase() {
+		int locationCount = getCaseStateCitiesAvailableCount();
+		CaseStateCityAvailable[] stateCities = getStateCitiesAvailableForCurrentCase();
+		
+		City[] cities = new City[locationCount];
+		for (int i = 0; i < locationCount; i++) {
+			cities[i] = getCity(stateCities[i].CityId);
+		}
+		
+		return cities;
 	}
 	
 	public ClueLocation getCurrentClueLocation() {

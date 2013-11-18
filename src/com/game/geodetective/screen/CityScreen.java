@@ -33,6 +33,7 @@ public class CityScreen extends Screen {
 	private GameEntity _clueLocation3Button;
 	private GameEntity _crimeLabButton;
 	private GameEntity _footstepAnimation;
+	private GameEntity _travelButton;
 	
 	private CaseState _state;
 	private City _currentCity;
@@ -56,6 +57,9 @@ public class CityScreen extends Screen {
 				clueNumber = 3;
 			else if (entity == _crimeLabButton) {
 				
+			}
+			else if (entity == _travelButton) {
+				_code = GDScreenCode.TRANSITION_TRAVEL;
 			}
 			
 			if (clueNumber > 0)
@@ -204,6 +208,17 @@ public class CityScreen extends Screen {
 				location3Height, 
 				AreaType.Rectangle);
 		_entities.add(_clueLocation3Button);
+		
+		_travelButton = EntityHelper.button(GDImage.CITY_TRAVEL_CENTER_BUTTON, 
+				GDSpriteLayer.UI_HIGH, 
+				false, 
+				LayoutHelper.WidthFrac(4f), 
+				LayoutHelper.WidthFrac(4f),
+				true, 
+				LayoutHelper.WidthSubFrac(1f, 8f), 
+				location1Height, 
+				AreaType.Rectangle);
+		_entities.add(_travelButton);
 	}
 
 	@Override

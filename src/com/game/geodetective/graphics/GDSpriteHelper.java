@@ -107,6 +107,10 @@ public class GDSpriteHelper extends SpriteHelper {
 			s.Texture.ResourceId = R.drawable.city_info_textbox_placeholder;
 			s.Frames = FrameHelper._512x512;
 			break;
+		case GDImage.CITY_TRAVEL_CENTER_BUTTON:
+			s.Texture.ResourceId = R.drawable.city_travel_icon;
+			s.Frames = FrameHelper._128x128;
+			break;
 		case GDImage.CLUE_LOCATION_MUSEUM_LABEL:
 			s.Texture.ResourceId = R.drawable.city_clue_location_museum;
 			s.Frames = FrameHelper._512x64;

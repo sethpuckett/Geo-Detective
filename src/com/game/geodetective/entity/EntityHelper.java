@@ -132,6 +132,18 @@ public class EntityHelper {
 		return entity;
 	}
 
+	public static GameEntity textButton(String text, boolean useCamera, boolean centerX, boolean centerY, float positionX, float positionY, float red, float green, float blue, float alpha) {
+		GameEntity entity = text(text, positionX, positionY, centerX, centerY, 0f, red, green, blue, alpha);
+		entity.addBehavior(new ButtonBehavior(AreaType.Rectangle, useCamera));
+		return entity;
+	}
+	
+	public static GameEntity textButton(String text, boolean useCamera, float sizeX, float sizeY, boolean centerX, boolean centerY, float positionX, float positionY, float red, float green, float blue, float alpha, boolean clickOnRelease) {
+		GameEntity entity = text(text, positionX, positionY, centerX, centerY, 0f, red, green, blue, alpha);
+		entity.addBehavior(new ButtonBehavior(AreaType.Rectangle, useCamera, clickOnRelease));
+		return entity;
+	}
+
 	public static GameEntity timer(int timerType, float time) {
 		GameEntity entity = new GameEntity();
 		entity.addBehavior(new TimerBehavior(timerType, time));

@@ -16,6 +16,7 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 	protected CaseDescriptionScreen _caseDescription = new CaseDescriptionScreen();
 	protected CityScreen _city = new CityScreen();
 	protected ClueLocationScreen _clueLocation = new ClueLocationScreen();
+	protected TravelScreen _travel = new TravelScreen();
 	
 	@Override
 	public void init() {
@@ -102,6 +103,10 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 			if (code == GDScreenCode.TRANSITION_CLUE_LOCATION) {
 				_active.pause();
 				_active = _clueLocation;
+			}
+			else if (code == GDScreenCode.TRANSITION_TRAVEL) {
+				_active.close();
+				_active = _travel;
 			}
 			else {
 				Logger.e(_tag, "Invalid transition");
