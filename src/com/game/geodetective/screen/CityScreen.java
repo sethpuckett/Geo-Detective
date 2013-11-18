@@ -76,8 +76,6 @@ public class CityScreen extends Screen {
 		_currentCity = GDGlobal.DataAccess.getCity(_state.CurrentCityId);
 		_clueLocations = GDGlobal.DataAccess.getClueLocationsOrCreateForCurrentCase(3);
 		
-		GDGlobal.Renderer.setTextProperties(1f, 1f, 1f, 1f);
-		
 		float clockHeight = LayoutHelper.HeightSubFrac(1f, 24f);
 		StringBuffer timeString = new StringBuffer();
 		timeString.append("Current: ");
@@ -86,7 +84,8 @@ public class CityScreen extends Screen {
 				LayoutHelper.WidthFrac(30), 
 				clockHeight, 
 				false, 
-				false);
+				false,
+				0f, 1f, 1f, 1f, 1f);
 		_entities.add(_clock);
 		
 		StringBuffer deadlineString = new StringBuffer();
@@ -96,7 +95,8 @@ public class CityScreen extends Screen {
 				LayoutHelper.WidthAddFrac(2f, 15f), 
 				clockHeight, 
 				false, 
-				false);
+				false,
+				0f, 1f, 1f, 1f, 1f);
 		_entities.add(_deadline);
 		
 		float borderHeight = clockHeight - LayoutHelper.HeightFrac(30f);
@@ -115,7 +115,12 @@ public class CityScreen extends Screen {
 				LayoutHelper.WidthFrac(2f), 
 				cityLabelHeight, 
 				true, 
-				false);
+				false,
+				0f,
+				1f,
+				1f,
+				1f,
+				1f);
 		_entities.add(_cityLabel);
 		
 		float cityImageHeight = cityLabelHeight - LayoutHelper.WidthFrac(4f);

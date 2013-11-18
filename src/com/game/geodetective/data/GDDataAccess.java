@@ -15,8 +15,8 @@ import com.game.geodetective.data.entity.Clue;
 import com.game.geodetective.data.entity.ClueLocation;
 import com.game.geodetective.data.entity.Crime;
 import com.game.geodetective.data.entity.DifficultyType;
+import com.game.geodetective.data.entity.GenderType;
 import com.game.geodetective.data.entity.Villain;
-import com.game.geodetective.utility.Debug;
 import com.game.geodetective.utility.GDGlobal;
 import com.game.geodetective.utility.GDTimeHelper;
 
@@ -31,13 +31,14 @@ public class GDDataAccess {
 	
 	public GDDataAccess() {
 		_dbHelper = new GDDataHelper();
-		
-		if (Debug.AlwaysResetDatabase)
-			_dbHelper.delete();
 	}
 
 	public void close() {
 		_dbHelper.close();
+	}
+	
+	public void delete() {
+		_dbHelper.delete();
 	}
 
 	/***********************************************
@@ -161,7 +162,7 @@ public class GDDataAccess {
 		
 		int count = 0;
 		while (count < cityCount) {
-		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityAvailable INNER JOIN CaseState ON CaseStateCityAvailable.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
+		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityVisited INNER JOIN CaseState ON CaseStateCityVisited.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
 					new String[] {Integer.toString(difficulty._id)});
 		  cursor.moveToFirst();
 		  City city = cursorToCity(cursor);
@@ -297,9 +298,20 @@ public class GDDataAccess {
 		}
 
 		Cursor cursor = getDB().rawQuery("SELECT * FROM Clue WHERE CityId = ? AND ClueTypeId = ? LIMIT 1", 
-			new String[] { Integer.toString(state.CurrentCityId), Integer.toString(clueTypeId) });
+			new String[] { Integer.toString(state.GoalCityId), Integer.toString(clueTypeId) });
 		cursor.moveToFirst();
 		Clue entity = cursorToClue(cursor);
+		cursor.close();
+		
+		return entity;
+	}
+	
+	public GenderType getVillainGenderForCurrentState() {
+		CaseState state = getCurrentCaseState();
+		Cursor cursor = getDB().rawQuery("SELECT GenderType._id, GenderType.Code, GenderType.Name FROM GenderType INNER JOIN Villain ON Villain.GenderTypeId = GenderType._id INNER JOIN CaseState ON CaseState.VillainId = Villain._id WHERE CaseState._id = ? LIMIT 1", 
+				new String[] { Integer.toString(state._id)});
+		cursor.moveToFirst();
+		GenderType entity = cursorToGenderType(cursor);
 		cursor.close();
 		
 		return entity;
@@ -362,7 +374,7 @@ public class GDDataAccess {
 		City[] visitableCities = GDGlobal.DataAccess.getUnvisitedCities(visitableCityCount, difficulty);
 		
 		for (int i = 0; i <  visitableCities.length; i ++) {
-			getDB().rawQuery("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)",
+			getDB().execSQL("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)",
 				new String[] {Integer.toString(state._id), Integer.toString( visitableCities[i]._id) });
 		}
 		
@@ -382,7 +394,7 @@ public class GDDataAccess {
 		Random rand = new Random();
 		City goalCity = visitableCities[rand.nextInt(visitableCities.length)];
 		
-		getDB().rawQuery("UPDATE CaseState SET GoalCityId = ? WHERE _id = ?", new String[] {Integer.toString(state._id), Integer.toString(goalCity._id)});
+		getDB().execSQL("UPDATE CaseState SET GoalCityId = ? WHERE _id = ?", new String[] {Integer.toString(goalCity._id), Integer.toString(state._id)});
 	}
 	
 	public void clearAvailableTravelCities() {
@@ -529,6 +541,14 @@ public class GDDataAccess {
 		entity.Name = cursor.getString(1);
 		entity.ClueType1Id = cursor.getInt(2);
 		entity.ClueType2Id = cursor.getInt(3);
+		return entity;
+	}
+	
+	private GenderType cursorToGenderType(Cursor cursor) {
+		GenderType entity = new GenderType();
+		entity._id = cursor.getInt(0);
+		entity.Code = cursor.getString(1);
+		entity.Name = cursor.getString(2);
 		return entity;
 	}
 	

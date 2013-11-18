@@ -54,8 +54,6 @@ public class CaseDescriptionScreen extends Screen {
 	public void onInit() {
 		Manager.Message.subscribe(this, MessageType.BUTTON_CLICKED);
 		
-		GDGlobal.Renderer.setTextProperties(0f, 0f, 0f, 1f);
-		
 		_backgroundImage = EntityHelper.graphic(GDImage.CASE_DESCRIPTION_BACKGROUND,
 				GDSpriteLayer.UI_LOW, 
 				false,
@@ -109,10 +107,20 @@ public class CaseDescriptionScreen extends Screen {
 
 		Crime crime = GDGlobal.DataAccess.getCrimeForCurrentCase();
 
-		float height1 = LayoutHelper.HeightAddFrac(1f,  3f);
-		float height2 = height1 - LayoutHelper.HeightFrac(24f);
-		GameEntity setupText = EntityHelper.text("An unknown assailant has stolen", LayoutHelper.WidthAddFrac(2f, 24f), height1, true, false);
-		GameEntity crimeText = EntityHelper.text(crime.CrimeText,LayoutHelper.WidthAddFrac(2f, 24f), height2, true, false);
+		float height1 = LayoutHelper.HeightSubFrac(1f,  3f);
+		float height2 = height1 - LayoutHelper.HeightFrac(48f);
+		GameEntity setupText = EntityHelper.text("An unknown assailant has stolen", 
+				LayoutHelper.WidthAddFrac(2f, 24f), 
+				height1, 
+				true, 
+				false,
+				0f,0f,0f,0f,1f);
+		GameEntity crimeText = EntityHelper.text(crime.CrimeText,
+				LayoutHelper.WidthAddFrac(2f, 24f), 
+				height2, 
+				true, 
+				false,
+				0f,0f,0f,0f,1f);
 		_entities.add(setupText);	
 		_entities.add(crimeText);
 	}

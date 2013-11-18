@@ -4,6 +4,7 @@ import com.game.geodetective.data.entity.CaseState;
 import com.game.geodetective.data.entity.CaseStateClueLocation;
 import com.game.geodetective.data.entity.Clue;
 import com.game.geodetective.data.entity.ClueLocation;
+import com.game.geodetective.data.entity.GenderType;
 import com.game.geodetective.entity.EntityHelper;
 import com.game.geodetective.graphics.GDImage;
 import com.game.geodetective.graphics.GDSpriteLayer;
@@ -15,6 +16,7 @@ import com.game.loblib.messaging.Message;
 import com.game.loblib.messaging.MessageType;
 import com.game.loblib.screen.Screen;
 import com.game.loblib.utility.LayoutHelper;
+import com.game.loblib.utility.Logger;
 import com.game.loblib.utility.Manager;
 import com.game.loblib.utility.area.AreaType;
 
@@ -71,7 +73,12 @@ public class ClueLocationScreen extends Screen {
 				LayoutHelper.WidthFrac(30), 
 				clockHeight, 
 				false, 
-				false);
+				false,
+				0f,
+				1f,
+				1f,
+				1f,
+				1f);
 		_entities.add(_clock);
 		
 		StringBuffer deadlineString = new StringBuffer();
@@ -81,7 +88,12 @@ public class ClueLocationScreen extends Screen {
 				LayoutHelper.WidthAddFrac(2f, 15f), 
 				clockHeight, 
 				false, 
-				false);
+				false,
+				0f,
+				1f,
+				1f,
+				1f,
+				1f);
 		_entities.add(_deadline);
 		
 		float borderHeight = clockHeight - LayoutHelper.HeightFrac(30f);
@@ -100,7 +112,12 @@ public class ClueLocationScreen extends Screen {
 				LayoutHelper.WidthFrac(2f), 
 				locationLabelHeight, 
 				true, 
-				false);
+				false,
+				0f,
+				1f,
+				1f,
+				1f,
+				1f);
 		_entities.add(_locationLabel);
 		
 		float locationImageHeight = locationLabelHeight - LayoutHelper.WidthFrac(4f);
@@ -128,22 +145,17 @@ public class ClueLocationScreen extends Screen {
 		
 		// TODO: scroll images need to change if text can be scrolled
 		float clueHeight = scrollUpHeight - LayoutHelper.HeightFrac(30f) - LayoutHelper.WidthFrac(12f);
-		_clueBox = EntityHelper.text(_clue.ClueText, 
-				LayoutHelper.WidthFrac(2f) - 500f, 
+		_clueBox = EntityHelper.text(GetRealClueText(_clue.ClueText), 
+				LayoutHelper.WidthFrac(2f), 
 				clueHeight, 
-				false, 
-				false);
+				true, 
+				false,
+				LayoutHelper.WidthSubFrac(1f, 6f),
+				1f,
+				1f,
+				1f,
+				1f);
 		_entities.add(_clueBox);
-		
-//		_clueBox = EntityHelper.graphic(GDImage.CLUE_LOCATION_CLUE_TEXT_BOX,
-//				GDSpriteLayer.UI_HIGH, 
-//				false, 
-//				LayoutHelper.WidthSubFrac(1f, 6f),
-//				LayoutHelper.HeightFrac(5f),
-//				true, 
-//				LayoutHelper.WidthFrac(2f),
-//				clueHeight);
-//		_entities.add(_clueBox);
 		
 		float scrollDownHeight = clueHeight - LayoutHelper.WidthFrac(12f) - LayoutHelper.HeightFrac(30f);
 		_clueScrollDown = EntityHelper.graphic(GDImage.CITY_SCROLL_DOWN_OPEN,
@@ -182,5 +194,19 @@ public class ClueLocationScreen extends Screen {
 	@Override
 	public void onClose() {
 		Manager.Message.unsubscribe(this, MessageType.ALL);
+	}
+	
+	private String GetRealClueText(String clueText) {
+		GenderType gender = GDGlobal.DataAccess.getVillainGenderForCurrentState();
+		String realClueText = clueText;
+		
+		if (gender.Code.equals("MALE"))
+			realClueText = clueText.replaceAll("\\[procap\\]", "He").replaceAll("\\[prolow\\]", "he").replaceAll("\\[poscap\\]", "His").replaceAll("\\[poslow\\]", "his");
+		else if (gender.Code.equals("FEMALE"))
+			realClueText = clueText.replaceAll("\\[procap\\]", "She").replaceAll("\\[prolow\\]", "she").replaceAll("\\[poscap\\]", "Her").replaceAll("\\[poslow\\]", "her");
+		else
+			Logger.e(_tag, "Invalid Gender Type");
+		
+		return realClueText;
 	}
 }

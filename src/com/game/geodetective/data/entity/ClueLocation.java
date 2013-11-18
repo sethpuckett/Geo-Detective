@@ -17,7 +17,7 @@ public class ClueLocation {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof City))
+		if (!(obj instanceof ClueLocation))
 			return false;
 		
 		ClueLocation location = (ClueLocation)obj;

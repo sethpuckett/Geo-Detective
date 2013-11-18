@@ -182,4 +182,12 @@ public class EntityHelper {
 		entity.addBehavior(new TextRenderBehavior(text, centerX, centerY));
 		return entity;
 	}
+	
+	public static GameEntity text(String text, float x, float y, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha) {
+		GameEntity entity = new GameEntity();
+		entity.Attributes.Area.Position.X = x;
+		entity.Attributes.Area.Position.Y = y;
+		entity.addBehavior(new TextRenderBehavior(text, centerX, centerY, width, red, green, blue, alpha));
+		return entity;
+	}
 }

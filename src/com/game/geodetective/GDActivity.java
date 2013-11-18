@@ -3,6 +3,7 @@ package com.game.geodetective;
 import android.os.Bundle;
 
 import com.game.geodetective.data.GDDataAccess;
+import com.game.geodetective.utility.Debug;
 import com.game.geodetective.utility.GDComponentFactory;
 import com.game.geodetective.utility.GDGlobal;
 import com.game.loblib.LobLibActivity;
@@ -15,6 +16,9 @@ public class GDActivity extends LobLibActivity {
         super.onCreate(savedInstanceState);
         
         GDGlobal.DataAccess = new GDDataAccess();
+        
+        if (Debug.AlwaysResetDatabase)
+        	GDGlobal.DataAccess.delete();
     } 
 	
     @Override
@@ -28,4 +32,10 @@ public class GDActivity extends LobLibActivity {
     	GDGlobal.DataAccess.close();
     	super.onDestroy();
     } 
+    
+    @Override
+    protected void onResume() {
+    	GDGlobal.DataAccess = new GDDataAccess();
+    	super.onResume();
+    }
 }
