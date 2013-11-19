@@ -69,7 +69,8 @@ public class ClueLocationScreen extends Screen {
 		StringBuffer timeString = new StringBuffer();
 		timeString.append("Current: ");
 		timeString.append(GDTimeHelper.getTimeString(_state.CurrentHour));
-		_clock = EntityHelper.text(timeString.toString(), 
+		_clock = EntityHelper.text("CALIBRI SMALL",
+				timeString.toString(), 
 				LayoutHelper.WidthFrac(30), 
 				clockHeight, 
 				false, 
@@ -84,7 +85,8 @@ public class ClueLocationScreen extends Screen {
 		StringBuffer deadlineString = new StringBuffer();
 		deadlineString.append("Deadline: ");
 		deadlineString.append(GDTimeHelper.getTimeString(_state.DeadlineHour));
-		_deadline = EntityHelper.text(deadlineString.toString(), 
+		_deadline = EntityHelper.text("CALIBRI SMALL",
+				deadlineString.toString(), 
 				LayoutHelper.WidthAddFrac(2f, 15f), 
 				clockHeight, 
 				false, 
@@ -108,7 +110,8 @@ public class ClueLocationScreen extends Screen {
 		_entities.add(_clockBorder);
 		
 		float locationLabelHeight = borderHeight - LayoutHelper.HeightFrac(20f);
-		_locationLabel = EntityHelper.text(_clueLocation.Name, 
+		_locationLabel = EntityHelper.text("CALIBRI SMALL",
+				_clueLocation.Name, 
 				LayoutHelper.WidthFrac(2f), 
 				locationLabelHeight, 
 				true, 
@@ -145,7 +148,8 @@ public class ClueLocationScreen extends Screen {
 		
 		// TODO: scroll images need to change if text can be scrolled
 		float clueHeight = scrollUpHeight - LayoutHelper.HeightFrac(30f) - LayoutHelper.WidthFrac(12f);
-		_clueBox = EntityHelper.text(GetRealClueText(_clue.ClueText), 
+		_clueBox = EntityHelper.text("CALIBRI SMALL",
+				GetRealClueText(_clue.ClueText), 
 				LayoutHelper.WidthFrac(2f), 
 				clueHeight, 
 				true, 
@@ -172,8 +176,8 @@ public class ClueLocationScreen extends Screen {
 		_returnToCityButton = EntityHelper.button(GDImage.CLUE_LOCATION_BACK_BUTTON,
 				GDSpriteLayer.UI_HIGH, 
 				false, 
-				GDGlobal.Renderer.Width / 2.5f, 
-				GDGlobal.Renderer.Width / 5f,
+				LayoutHelper.WidthFrac(2.5f),
+				LayoutHelper.WidthFrac(5f),
 				true,
 				LayoutHelper.WidthFrac(2f),
 				backButtonHeight,

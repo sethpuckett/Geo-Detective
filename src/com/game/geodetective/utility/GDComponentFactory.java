@@ -1,9 +1,11 @@
 package com.game.geodetective.utility;
 
+import com.game.geodetective.GDGame;
 import com.game.geodetective.collision.GDCollisionManager;
 import com.game.geodetective.graphics.GDSpriteHelper;
 import com.game.geodetective.screen.GDScreenManager;
 import com.game.geodetective.sound.GDMusicHelper;
+import com.game.loblib.LobLibGame;
 import com.game.loblib.collision.CollisionManager;
 import com.game.loblib.graphics.SpriteHelper;
 import com.game.loblib.screen.ScreenManager;
@@ -18,6 +20,11 @@ public class GDComponentFactory extends ComponentFactory {
 	@Override
 	public Global CreateGlobal() {
 		return new GDGlobal();
+	}
+	
+	@Override
+	public LobLibGame CreateGame() {
+		return new GDGame();
 	}
 	
 	@Override

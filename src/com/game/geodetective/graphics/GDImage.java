@@ -50,6 +50,8 @@ public class GDImage extends Image {
 	
 	// Travel Screen
 	public final static int TRAVEL_WORLD = 800;
+	public final static int TRAVEL_BACK_BUTTON = 801;
+	public final static int TRAVEL_FLY_BUTTON = 802;
 	
 	// Clue Locations
 	public final static int CLUE_LOCATION_MUSEUM_LABEL = 550;

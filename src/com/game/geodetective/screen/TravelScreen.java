@@ -1,5 +1,6 @@
 package com.game.geodetective.screen;
 
+import com.game.geodetective.behavior.GDBehaviorType;
 import com.game.geodetective.data.entity.CaseState;
 import com.game.geodetective.data.entity.City;
 import com.game.geodetective.entity.EntityHelper;
@@ -14,6 +15,7 @@ import com.game.loblib.messaging.MessageType;
 import com.game.loblib.screen.Screen;
 import com.game.loblib.utility.LayoutHelper;
 import com.game.loblib.utility.Manager;
+import com.game.loblib.utility.area.AreaType;
 
 
 public class TravelScreen extends Screen {
@@ -48,6 +50,35 @@ public class TravelScreen extends Screen {
 	public void onHandleMessage(Message message) {
 		if (message.Type == MessageType.BUTTON_CLICKED) {
 			GameEntity entity = message.getData();
+			boolean destinationSelected = false;
+			
+			if (entity == _backButton) {
+				_code = GDScreenCode.TRANSITION_CITY;
+			}
+			else if (entity == _destination1Button) {
+				destinationSelected = true;
+			}
+			else if (entity == _destination2Button) {
+				destinationSelected = true;
+			}
+			else if (entity == _destination3Button) {
+				destinationSelected = true;
+			}
+			else if (entity == _destination4Button) {
+				destinationSelected = true;
+			}
+			else if (entity == _destination5Button) {
+				destinationSelected = true;
+			}
+			else if (entity == _destination6Button) {
+				destinationSelected = true;
+			}
+			
+			if (destinationSelected) {
+				_travelButton.Attributes.Sprite.setFrame(0);
+				_travelButton.enableBehaviors(GDBehaviorType.BUTTON);
+			}
+			
 		}
 	}
 	
@@ -70,7 +101,8 @@ public class TravelScreen extends Screen {
 		StringBuffer timeString = new StringBuffer();
 		timeString.append("Current: ");
 		timeString.append(GDTimeHelper.getTimeString(_state.CurrentHour));
-		_clock = EntityHelper.text(timeString.toString(), 
+		_clock = EntityHelper.text("CALIBRI SMALL",
+				timeString.toString(), 
 				LayoutHelper.WidthFrac(30), 
 				clockHeight, 
 				false, 
@@ -81,7 +113,8 @@ public class TravelScreen extends Screen {
 		StringBuffer deadlineString = new StringBuffer();
 		deadlineString.append("Deadline: ");
 		deadlineString.append(GDTimeHelper.getTimeString(_state.DeadlineHour));
-		_deadline = EntityHelper.text(deadlineString.toString(), 
+		_deadline = EntityHelper.text("CALIBRI SMALL",
+				deadlineString.toString(), 
 				LayoutHelper.WidthAddFrac(2f, 15f), 
 				clockHeight, 
 				false, 
@@ -101,7 +134,8 @@ public class TravelScreen extends Screen {
 		_entities.add(_clockBorder);
 		
 		float cityLabelHeight = borderHeight - LayoutHelper.HeightFrac(20f);
-		_cityLabel = EntityHelper.text(CityHelper.getLabel(_currentCity), 
+		_cityLabel = EntityHelper.text("CALIBRI SMALL",
+				CityHelper.getLabel(_currentCity), 
 				LayoutHelper.WidthFrac(2f), 
 				cityLabelHeight, 
 				true, 
@@ -126,7 +160,8 @@ public class TravelScreen extends Screen {
 		
 		float location1Height = cityImageHeight - LayoutHelper.WidthSubFrac(2f, 4f) - LayoutHelper.HeightFrac(30f);
 		if (_previousCity != null) {
-			_destination1Button = EntityHelper.textButton(CityHelper.getLabel(_previousCity), 
+			_destination1Button = EntityHelper.textButton("CALIBRI BIG",
+					CityHelper.getLabel(_previousCity), 
 					false,
 					false, 
 					false, 
@@ -140,7 +175,8 @@ public class TravelScreen extends Screen {
 		}
 		
 		float location2Height = location1Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
-		_destination2Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[0]), 
+		_destination2Button = EntityHelper.textButton("CALIBRI BIG",
+				CityHelper.getLabel(_availableCities[0]), 
 				false,
 				false, 
 				false, 
@@ -153,7 +189,8 @@ public class TravelScreen extends Screen {
 		_entities.add(_destination2Button);
 		
 		float location3Height = location2Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
-		_destination3Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[1]), 
+		_destination3Button = EntityHelper.textButton("CALIBRI BIG",
+				CityHelper.getLabel(_availableCities[1]), 
 				false,
 				false, 
 				false, 
@@ -166,7 +203,8 @@ public class TravelScreen extends Screen {
 		_entities.add(_destination3Button);
 		
 		float location4Height = location3Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
-		_destination4Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[2]), 
+		_destination4Button = EntityHelper.textButton("CALIBRI BIG",
+				CityHelper.getLabel(_availableCities[2]), 
 				false,
 				false, 
 				false, 
@@ -180,7 +218,8 @@ public class TravelScreen extends Screen {
 		
 		float location5Height = location4Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
 		if (_availableCities.length > 3) {
-			_destination5Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[3]), 
+			_destination5Button = EntityHelper.textButton("CALIBRI BIG",
+					CityHelper.getLabel(_availableCities[3]), 
 					false,
 					false, 
 					false, 
@@ -195,7 +234,8 @@ public class TravelScreen extends Screen {
 		
 		float location6Height = location5Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
 		if (_availableCities.length > 4) {
-			_destination6Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[4]), 
+			_destination6Button = EntityHelper.textButton("CALIBRI BIG",
+					CityHelper.getLabel(_availableCities[4]), 
 					false,
 					false, 
 					false, 
@@ -207,6 +247,38 @@ public class TravelScreen extends Screen {
 					1f);
 			_entities.add(_destination6Button);
 		}
+		
+		float backButtonHeight = LayoutHelper.HeightFrac(12f);
+		_backButton = EntityHelper.button(GDImage.TRAVEL_BACK_BUTTON,
+				GDSpriteLayer.UI_HIGH, 
+				false, 
+				LayoutHelper.WidthFrac(2.5f),
+				LayoutHelper.WidthFrac(5f),
+				true,
+				LayoutHelper.WidthFrac(2f),
+				backButtonHeight,
+				AreaType.Rectangle);
+		_entities.add(_backButton);
+		
+		float travelButtonHeight = backButtonHeight + LayoutHelper.WidthFrac(5f) + LayoutHelper.HeightFrac(12f);
+		_travelButton = EntityHelper.button(GDImage.TRAVEL_FLY_BUTTON,
+				GDSpriteLayer.UI_HIGH, 
+				false, 
+				LayoutHelper.WidthFrac(2.5f),
+				LayoutHelper.WidthFrac(5f),
+				true,
+				LayoutHelper.WidthFrac(2f),
+				travelButtonHeight,
+				AreaType.Rectangle);
+		_travelButton.Attributes.Sprite.setFrame(1);
+		_entities.add(_travelButton);
+	}
+	
+	@Override
+	protected void enableBehaviors() {
+		super.enableBehaviors();
+		
+		_travelButton.disableBehaviors(GDBehaviorType.BUTTON);
 	}
 
 	@Override

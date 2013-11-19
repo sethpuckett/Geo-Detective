@@ -84,7 +84,8 @@ public class CityScreen extends Screen {
 		StringBuffer timeString = new StringBuffer();
 		timeString.append("Current: ");
 		timeString.append(GDTimeHelper.getTimeString(_state.CurrentHour));
-		_clock = EntityHelper.text(timeString.toString(), 
+		_clock = EntityHelper.text("CALIBRI SMALL",
+				timeString.toString(), 
 				LayoutHelper.WidthFrac(30), 
 				clockHeight, 
 				false, 
@@ -95,7 +96,8 @@ public class CityScreen extends Screen {
 		StringBuffer deadlineString = new StringBuffer();
 		deadlineString.append("Deadline: ");
 		deadlineString.append(GDTimeHelper.getTimeString(_state.DeadlineHour));
-		_deadline = EntityHelper.text(deadlineString.toString(), 
+		_deadline = EntityHelper.text("CALIBRI SMALL",
+				deadlineString.toString(), 
 				LayoutHelper.WidthAddFrac(2f, 15f), 
 				clockHeight, 
 				false, 
@@ -115,7 +117,8 @@ public class CityScreen extends Screen {
 		_entities.add(_clockBorder);
 		
 		float cityLabelHeight = borderHeight - LayoutHelper.HeightFrac(20f);
-		_cityLabel = EntityHelper.text(CityHelper.getLabel(_currentCity), 
+		_cityLabel = EntityHelper.text("CALIBRI SMALL",
+				CityHelper.getLabel(_currentCity), 
 				LayoutHelper.WidthFrac(2f), 
 				cityLabelHeight, 
 				true, 

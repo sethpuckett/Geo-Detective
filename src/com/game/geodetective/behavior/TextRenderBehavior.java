@@ -5,6 +5,7 @@ import com.game.loblib.utility.Manager;
 
 public class TextRenderBehavior extends Behavior {
 
+	protected String _textName;
 	protected String _text;
 	protected boolean _centerX;
 	protected boolean _centerY;
@@ -14,8 +15,10 @@ public class TextRenderBehavior extends Behavior {
 	protected float _blue;
 	protected float _alpha;
 	
-	public TextRenderBehavior(String text, boolean centerX, boolean centerY) {
+	public TextRenderBehavior(String textName, String text, boolean centerX, boolean centerY) {
 		_type = GDBehaviorType.TEXT_RENDER;
+		
+		_textName = textName;
 		_text = text;
 		_centerX = centerX;
 		_centerY = centerY;
@@ -27,8 +30,10 @@ public class TextRenderBehavior extends Behavior {
 		_alpha = 1f;
 	}
 	
-	public TextRenderBehavior(String text, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha) {
+	public TextRenderBehavior(String textName, String text, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha) {
 		_type = GDBehaviorType.TEXT_RENDER;
+		
+		_textName = textName;
 		_text = text;
 		_centerX = centerX;
 		_centerY = centerY;
@@ -38,6 +43,10 @@ public class TextRenderBehavior extends Behavior {
 		_green = green;
 		_blue = blue;
 		_alpha = alpha;
+	}
+	
+	public void setTextName(String name) {
+		_textName = name;
 	}
 	
 	public void setText(String text) {
@@ -62,7 +71,7 @@ public class TextRenderBehavior extends Behavior {
 	
 	@Override
 	public void onUpdate(float updateRatio) {
-		Manager.Sprite.drawText(_text, _entity.Attributes.Area.Position.X, _entity.Attributes.Area.Position.Y, _centerX, _centerY, _width, _red, _green, _blue, _alpha);
+		Manager.Sprite.drawText(_textName, _text, _entity.Attributes.Area.Position.X, _entity.Attributes.Area.Position.Y, _centerX, _centerY, _width, _red, _green, _blue, _alpha);
 	}
 	
 	@Override 

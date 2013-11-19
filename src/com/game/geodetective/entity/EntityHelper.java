@@ -132,14 +132,14 @@ public class EntityHelper {
 		return entity;
 	}
 
-	public static GameEntity textButton(String text, boolean useCamera, boolean centerX, boolean centerY, float positionX, float positionY, float red, float green, float blue, float alpha) {
-		GameEntity entity = text(text, positionX, positionY, centerX, centerY, 0f, red, green, blue, alpha);
+	public static GameEntity textButton(String textName, String text, boolean useCamera, boolean centerX, boolean centerY, float positionX, float positionY, float red, float green, float blue, float alpha) {
+		GameEntity entity = text(textName, text, positionX, positionY, centerX, centerY, 0f, red, green, blue, alpha);
 		entity.addBehavior(new ButtonBehavior(AreaType.Rectangle, useCamera));
 		return entity;
 	}
 	
-	public static GameEntity textButton(String text, boolean useCamera, float sizeX, float sizeY, boolean centerX, boolean centerY, float positionX, float positionY, float red, float green, float blue, float alpha, boolean clickOnRelease) {
-		GameEntity entity = text(text, positionX, positionY, centerX, centerY, 0f, red, green, blue, alpha);
+	public static GameEntity textButton(String textName, String text, boolean useCamera, float sizeX, float sizeY, boolean centerX, boolean centerY, float positionX, float positionY, float red, float green, float blue, float alpha, boolean clickOnRelease) {
+		GameEntity entity = text(textName, text, positionX, positionY, centerX, centerY, 0f, red, green, blue, alpha);
 		entity.addBehavior(new ButtonBehavior(AreaType.Rectangle, useCamera, clickOnRelease));
 		return entity;
 	}
@@ -187,19 +187,22 @@ public class EntityHelper {
 		return anchor;
 	}
 
-	public static GameEntity text(String text, float x, float y, boolean centerX, boolean centerY) {
+	public static GameEntity text(String textName, String text, float x, float y, boolean centerX, boolean centerY) {
 		GameEntity entity = new GameEntity();
 		entity.Attributes.Area.Position.X = x;
 		entity.Attributes.Area.Position.Y = y;
-		entity.addBehavior(new TextRenderBehavior(text, centerX, centerY));
+		entity.addBehavior(new TextRenderBehavior(textName, text, centerX, centerY));
 		return entity;
 	}
 	
-	public static GameEntity text(String text, float x, float y, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha) {
+	public static GameEntity text(String textName, String text, float x, float y, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha) {
 		GameEntity entity = new GameEntity();
 		entity.Attributes.Area.Position.X = x;
 		entity.Attributes.Area.Position.Y = y;
-		entity.addBehavior(new TextRenderBehavior(text, centerX, centerY, width, red, green, blue, alpha));
+		// TODO: testing
+		entity.Attributes.Area.Size.X = 1000;
+		entity.Attributes.Area.Size.Y = 200;
+		entity.addBehavior(new TextRenderBehavior(textName, text, centerX, centerY, width, red, green, blue, alpha));
 		return entity;
 	}
 }

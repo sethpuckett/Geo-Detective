@@ -3,6 +3,10 @@ package com.game.geodetective.graphics;
 // Helper class for storing frame coordinates
 public class FrameHelper {
 	
+	public static int[] TravelButton = new int[] {
+		0, 128, 256, -128,
+		0, 256, 256, -128};
+	
 	public static int[]  TitleBackground = new int[] {0, 64, 42, -64,
 		42, 64, 42, -64,
 		84, 64, 42, -64,

@@ -109,13 +109,15 @@ public class CaseDescriptionScreen extends Screen {
 
 		float height1 = LayoutHelper.HeightSubFrac(1f,  3f);
 		float height2 = height1 - LayoutHelper.HeightFrac(48f);
-		GameEntity setupText = EntityHelper.text("An unknown assailant has stolen", 
+		GameEntity setupText = EntityHelper.text("CALIBRI SMALL",
+				"An unknown assailant has stolen", 
 				LayoutHelper.WidthAddFrac(2f, 24f), 
 				height1, 
 				true, 
 				false,
 				0f,0f,0f,0f,1f);
-		GameEntity crimeText = EntityHelper.text(crime.CrimeText,
+		GameEntity crimeText = EntityHelper.text("CALIBRI SMALL",
+				crime.CrimeText,
 				LayoutHelper.WidthAddFrac(2f, 24f), 
 				height2, 
 				true, 

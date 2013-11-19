@@ -123,6 +123,17 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 				return;
 			}
 			_active.unpause();
+			break;
+		case GDScreenType.TRAVEL:
+			_active.close();
+			if (code == GDScreenCode.TRANSITION_CITY)
+				_active = _city;
+			else {
+				Logger.e(_tag, "Invalid transition");
+				return;
+			}
+			_active.init();
+			break;
 		}
 	}
 }
