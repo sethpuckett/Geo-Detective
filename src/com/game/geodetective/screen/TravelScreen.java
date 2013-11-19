@@ -62,7 +62,8 @@ public class TravelScreen extends Screen {
 		
 		_state = GDGlobal.DataAccess.getCurrentCaseState();
 		_currentCity = GDGlobal.DataAccess.getCity(_state.CurrentCityId);
-		_previousCity = GDGlobal.DataAccess.getCity(_state.PreviousCityId);
+		if (_state.PreviousCityId > 0)
+			_previousCity = GDGlobal.DataAccess.getCity(_state.PreviousCityId);
 		_availableCities = GDGlobal.DataAccess.getAvailableCitiesForCurrentCase();
 		
 		float clockHeight = LayoutHelper.HeightSubFrac(1f, 24f);
@@ -113,7 +114,7 @@ public class TravelScreen extends Screen {
 		_entities.add(_cityLabel);
 		
 		float cityImageHeight = cityLabelHeight - LayoutHelper.WidthFrac(4f);
-		_worldImage = EntityHelper.graphic(CityHelper.getCityImage(_currentCity),
+		_worldImage = EntityHelper.graphic(GDImage.TRAVEL_WORLD,
 				GDSpriteLayer.UI_HIGH, 
 				false, 
 				LayoutHelper.WidthSubFrac(1f, 6f),
@@ -123,18 +124,89 @@ public class TravelScreen extends Screen {
 				cityImageHeight);
 		_entities.add(_worldImage);
 		
-		float location1Height = cityImageHeight - LayoutHelper.WidthSubFrac(2f, 4f) - LayoutHelper.HeightFrac(40f);
-		_destination1Button = EntityHelper.textButton(CityHelper.getLabel(_previousCity), 
+		float location1Height = cityImageHeight - LayoutHelper.WidthSubFrac(2f, 4f) - LayoutHelper.HeightFrac(30f);
+		if (_previousCity != null) {
+			_destination1Button = EntityHelper.textButton(CityHelper.getLabel(_previousCity), 
+					false,
+					false, 
+					false, 
+					LayoutHelper.WidthFrac(12f),
+					location1Height, 
+					1f, 
+					1f, 
+					1f, 
+					1f);
+			_entities.add(_destination1Button);
+		}
+		
+		float location2Height = location1Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
+		_destination2Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[0]), 
 				false,
 				false, 
 				false, 
-				LayoutHelper.WidthSubFrac(24f, 12f),
-				location1Height, 
+				LayoutHelper.WidthFrac(12f),
+				location2Height, 
 				1f, 
 				1f, 
 				1f, 
 				1f);
-		_entities.add(_destination1Button);
+		_entities.add(_destination2Button);
+		
+		float location3Height = location2Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
+		_destination3Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[1]), 
+				false,
+				false, 
+				false, 
+				LayoutHelper.WidthFrac(12f),
+				location3Height, 
+				1f, 
+				1f, 
+				1f, 
+				1f);
+		_entities.add(_destination3Button);
+		
+		float location4Height = location3Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
+		_destination4Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[2]), 
+				false,
+				false, 
+				false, 
+				LayoutHelper.WidthFrac(12f),
+				location4Height, 
+				1f, 
+				1f, 
+				1f, 
+				1f);
+		_entities.add(_destination4Button);
+		
+		float location5Height = location4Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
+		if (_availableCities.length > 3) {
+			_destination5Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[3]), 
+					false,
+					false, 
+					false, 
+					LayoutHelper.WidthFrac(12f),
+					location5Height, 
+					1f, 
+					1f, 
+					1f, 
+					1f);
+			_entities.add(_destination5Button);
+		}
+		
+		float location6Height = location5Height - LayoutHelper.HeightFrac(40f) - LayoutHelper.HeightFrac(30f);
+		if (_availableCities.length > 4) {
+			_destination6Button = EntityHelper.textButton(CityHelper.getLabel(_availableCities[4]), 
+					false,
+					false, 
+					false, 
+					LayoutHelper.WidthFrac(12f),
+					location6Height, 
+					1f, 
+					1f, 
+					1f, 
+					1f);
+			_entities.add(_destination6Button);
+		}
 	}
 
 	@Override

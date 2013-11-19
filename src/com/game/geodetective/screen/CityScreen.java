@@ -212,10 +212,10 @@ public class CityScreen extends Screen {
 		_travelButton = EntityHelper.button(GDImage.CITY_TRAVEL_CENTER_BUTTON, 
 				GDSpriteLayer.UI_HIGH, 
 				false, 
-				LayoutHelper.WidthFrac(4f), 
-				LayoutHelper.WidthFrac(4f),
+				LayoutHelper.WidthFrac(6f), 
+				LayoutHelper.WidthFrac(6f),
 				true, 
-				LayoutHelper.WidthSubFrac(1f, 8f), 
+				LayoutHelper.WidthSubFrac(1f, 12f), 
 				location1Height, 
 				AreaType.Rectangle);
 		_entities.add(_travelButton);

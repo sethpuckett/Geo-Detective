@@ -183,6 +183,10 @@ public class GDSpriteHelper extends SpriteHelper {
 			s.Texture.ResourceId = R.drawable.menu_back_button;
 			s.Frames = FrameHelper._256x128;
 			break;
+		case GDImage.TRAVEL_WORLD:
+			s.Texture.ResourceId = R.drawable.travel_world;
+			s.Frames = FrameHelper._1024x512;
+			break;
 		case GDImage.CITY_IMAGE_KABUL:
 			s.Texture.ResourceId = R.drawable.city_image_placeholder;
 			s.Frames = FrameHelper._512x512;

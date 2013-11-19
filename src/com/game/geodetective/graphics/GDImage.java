@@ -1,6 +1,5 @@
 package com.game.geodetective.graphics;
 
-import com.game.loblib.entity.GameEntity;
 import com.game.loblib.graphics.Image;
 
 // helper class for storing image ID's
@@ -48,6 +47,9 @@ public class GDImage extends Image {
 	public final static int CITY_SCROLL_DOWN_OPEN = 516;
 	public final static int CITY_SCROLL_DOWN_CLOSED = 517;
 	public final static int CITY_INFO_TEXT_BOX = 518;
+	
+	// Travel Screen
+	public final static int TRAVEL_WORLD = 800;
 	
 	// Clue Locations
 	public final static int CLUE_LOCATION_MUSEUM_LABEL = 550;

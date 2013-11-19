@@ -230,9 +230,9 @@ public class GDDataAccess {
 		return cursor.getInt(0);
 	}
 	
-	public int getCaseStateCitiesAvailableCount() {
+	public int getCaseStateCityAvailableCount() {
 		CaseState state = getCurrentCaseState();
-		Cursor cursor = getDB().rawQuery("SELECT COUNT(*) FROM CaseStateCitiesAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		Cursor cursor = getDB().rawQuery("SELECT COUNT(*) FROM CaseStateCityAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
 		cursor.moveToFirst();
 		return cursor.getInt(0);
 	}
@@ -259,10 +259,10 @@ public class GDDataAccess {
 	public CaseStateCityAvailable[] getStateCitiesAvailableForCurrentCase() {
 		CaseState state = getCurrentCaseState();
 
-		int locationCount = getCaseStateCitiesAvailableCount();
+		int locationCount = getCaseStateCityAvailableCount();
 		CaseStateCityAvailable[] stateCities = new CaseStateCityAvailable[locationCount];
 		
-		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseStateCitiesAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseStateCityAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
 		cursor.moveToFirst();
 		for (int i = 0; i < locationCount; i++) {
 			CaseStateCityAvailable stateCity = cursorToCaseStateCityAvailable(cursor);
@@ -288,7 +288,7 @@ public class GDDataAccess {
 	}
 	
 	public City[] getAvailableCitiesForCurrentCase() {
-		int locationCount = getCaseStateCitiesAvailableCount();
+		int locationCount = getCaseStateCityAvailableCount();
 		CaseStateCityAvailable[] stateCities = getStateCitiesAvailableForCurrentCase();
 		
 		City[] cities = new City[locationCount];
