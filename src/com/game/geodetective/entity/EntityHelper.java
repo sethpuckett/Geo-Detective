@@ -191,7 +191,7 @@ public class EntityHelper {
 		GameEntity entity = new GameEntity();
 		entity.Attributes.Area.Position.X = x;
 		entity.Attributes.Area.Position.Y = y;
-		entity.addBehavior(new TextRenderBehavior(textName, text, centerX, centerY));
+		entity.addBehavior(new TextRenderBehavior(textName, text, centerX, centerY, true));
 		return entity;
 	}
 	
@@ -199,10 +199,7 @@ public class EntityHelper {
 		GameEntity entity = new GameEntity();
 		entity.Attributes.Area.Position.X = x;
 		entity.Attributes.Area.Position.Y = y;
-		// TODO: testing
-		entity.Attributes.Area.Size.X = 1000;
-		entity.Attributes.Area.Size.Y = 200;
-		entity.addBehavior(new TextRenderBehavior(textName, text, centerX, centerY, width, red, green, blue, alpha));
+		entity.addBehavior(new TextRenderBehavior(textName, text, centerX, centerY, width, red, green, blue, alpha, true));
 		return entity;
 	}
 }

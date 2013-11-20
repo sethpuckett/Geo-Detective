@@ -1,6 +1,8 @@
 package com.game.geodetective.behavior;
 
 import com.game.loblib.behavior.Behavior;
+import com.game.loblib.text.TextData;
+import com.game.loblib.utility.Global;
 import com.game.loblib.utility.Manager;
 
 public class TextRenderBehavior extends Behavior {
@@ -14,8 +16,9 @@ public class TextRenderBehavior extends Behavior {
 	protected float _green;
 	protected float _blue;
 	protected float _alpha;
+	protected boolean _setSize; // if true the entities height & width will be determined by size of text
 	
-	public TextRenderBehavior(String textName, String text, boolean centerX, boolean centerY) {
+	public TextRenderBehavior(String textName, String text, boolean centerX, boolean centerY, boolean setSize) {
 		_type = GDBehaviorType.TEXT_RENDER;
 		
 		_textName = textName;
@@ -28,9 +31,11 @@ public class TextRenderBehavior extends Behavior {
 		_green = 0f;
 		_blue = 0f;
 		_alpha = 1f;
+		
+		_setSize = setSize;
 	}
 	
-	public TextRenderBehavior(String textName, String text, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha) {
+	public TextRenderBehavior(String textName, String text, boolean centerX, boolean centerY, float width, float red, float green, float blue, float alpha, boolean setSize) {
 		_type = GDBehaviorType.TEXT_RENDER;
 		
 		_textName = textName;
@@ -43,14 +48,22 @@ public class TextRenderBehavior extends Behavior {
 		_green = green;
 		_blue = blue;
 		_alpha = alpha;
+		
+		_setSize = setSize;
 	}
 	
 	public void setTextName(String name) {
 		_textName = name;
+		
+		if (_setSize)
+			setEntitySize();
 	}
 	
 	public void setText(String text) {
 		_text = text;
+		
+		if (_setSize)
+			setEntitySize();
 	}
 	
 	public void setCenter(boolean centerX, boolean centerY) {
@@ -79,6 +92,20 @@ public class TextRenderBehavior extends Behavior {
 		_tag.setLength(0);
 		_tag.append(_entity.getTag());
 		_tag.append(": RenderBehavior");
+	}
+	
+	@Override
+	protected void onSetEntity() {
+		if (_setSize)
+			setEntitySize();
+	}
+	
+	private void setEntitySize() {
+		TextData textData = Global.TextManager.getText(_textName);
+		float entityWidth = textData.getText().getLength(_text);
+		float entityHeight = textData.getText().getHeight();
+		_entity.Attributes.Area.MaintainCenter = false;
+		_entity.Attributes.Area.setSize(entityWidth, entityHeight);
 	}
 
 }

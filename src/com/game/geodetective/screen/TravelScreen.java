@@ -1,6 +1,7 @@
 package com.game.geodetective.screen;
 
 import com.game.geodetective.behavior.GDBehaviorType;
+import com.game.geodetective.behavior.TextRenderBehavior;
 import com.game.geodetective.data.entity.CaseState;
 import com.game.geodetective.data.entity.City;
 import com.game.geodetective.entity.EntityHelper;
@@ -42,6 +43,8 @@ public class TravelScreen extends Screen {
 	private City _previousCity;
 	private City[] _availableCities;
 	
+	private int _destinationSelected;
+	
 	public TravelScreen() {
 		_type = GDScreenType.TRAVEL;
 	}
@@ -50,31 +53,62 @@ public class TravelScreen extends Screen {
 	public void onHandleMessage(Message message) {
 		if (message.Type == MessageType.BUTTON_CLICKED) {
 			GameEntity entity = message.getData();
-			boolean destinationSelected = false;
+			boolean destinationChanged = false;
 			
 			if (entity == _backButton) {
 				_code = GDScreenCode.TRANSITION_CITY;
 			}
 			else if (entity == _destination1Button) {
-				destinationSelected = true;
+				destinationChanged = true;
+				_destinationSelected = 1;
 			}
 			else if (entity == _destination2Button) {
-				destinationSelected = true;
+				destinationChanged = true;
+				_destinationSelected = 2;
 			}
 			else if (entity == _destination3Button) {
-				destinationSelected = true;
+				destinationChanged = true;
+				_destinationSelected = 3;
 			}
 			else if (entity == _destination4Button) {
-				destinationSelected = true;
+				destinationChanged = true;
+				_destinationSelected = 4;
 			}
 			else if (entity == _destination5Button) {
-				destinationSelected = true;
+				destinationChanged = true;
+				_destinationSelected = 5;
 			}
 			else if (entity == _destination6Button) {
-				destinationSelected = true;
+				destinationChanged = true;
+				_destinationSelected = 6;
+			}
+			else if (entity == _travelButton) {
+				// update previous city
+				_state.PreviousCityId = _state.CurrentCityId;
+				// update current city
+				if (_destinationSelected == 1)
+					_state.CurrentCityId = _previousCity._id;
+				else
+					_state.CurrentCityId = _availableCities[_destinationSelected - 2]._id;
+				
+				// if city is correct
+				if (_state.CurrentCityId == _state.GoalCityId) {
+					// update visited count
+					_state.CurrentCityVisitCount++;
+					// update visited city
+					// update available cities
+					// update goal city
+					// update clue locations
+				}
+				
+				//if city is not correct
+				//update CaseStateBadClueLocation
+				
+				// save updated state
 			}
 			
-			if (destinationSelected) {
+			if (destinationChanged) {
+				updateTravelButtonColors(_destinationSelected);
 				_travelButton.Attributes.Sprite.setFrame(0);
 				_travelButton.enableBehaviors(GDBehaviorType.BUTTON);
 			}
@@ -260,7 +294,7 @@ public class TravelScreen extends Screen {
 				AreaType.Rectangle);
 		_entities.add(_backButton);
 		
-		float travelButtonHeight = backButtonHeight + LayoutHelper.WidthFrac(5f) + LayoutHelper.HeightFrac(12f);
+		float travelButtonHeight = backButtonHeight + LayoutHelper.WidthFrac(5f) + LayoutHelper.HeightFrac(24f);
 		_travelButton = EntityHelper.button(GDImage.TRAVEL_FLY_BUTTON,
 				GDSpriteLayer.UI_HIGH, 
 				false, 
@@ -294,5 +328,38 @@ public class TravelScreen extends Screen {
 	@Override
 	public void onClose() {
 		Manager.Message.unsubscribe(this, MessageType.ALL);
+	}
+
+	private void updateTravelButtonColors(int selected) {
+		if (_destination1Button != null)
+			((TextRenderBehavior)_destination1Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 1f, 1f, 1f);
+		((TextRenderBehavior)_destination2Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 1f, 1f, 1f);
+		((TextRenderBehavior)_destination3Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 1f, 1f, 1f);
+		((TextRenderBehavior)_destination4Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 1f, 1f, 1f);
+		if (_destination5Button != null)
+			((TextRenderBehavior)_destination5Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 1f, 1f, 1f);
+		if (_destination6Button != null)
+			((TextRenderBehavior)_destination6Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 1f, 1f, 1f);
+		
+		switch (selected) {
+		case 1:
+			((TextRenderBehavior)_destination1Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 0f, 1f, 1f);
+			break;
+		case 2:
+			((TextRenderBehavior)_destination2Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 0f, 1f, 1f);
+			break;
+		case 3:
+			((TextRenderBehavior)_destination3Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 0f, 1f, 1f);
+			break;
+		case 4:
+			((TextRenderBehavior)_destination4Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 0f, 1f, 1f);
+			break;
+		case 5:
+			((TextRenderBehavior)_destination5Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 0f, 1f, 1f);
+			break;
+		case 6:
+			((TextRenderBehavior)_destination6Button.getBehavior(GDBehaviorType.TEXT_RENDER)).setProperties(1f, 0f, 1f, 1f);
+			break;
+		}
 	}
 }
