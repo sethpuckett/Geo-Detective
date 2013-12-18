@@ -22,4 +22,6 @@ public class CaseState {
 	public int WarrantHobbyId;
 	public int WarrantVehicleId;
 	public boolean HasWarrant;
+	public boolean InBadCity;
+	public boolean InFailCity;
 }

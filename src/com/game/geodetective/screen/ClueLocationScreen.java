@@ -1,7 +1,6 @@
 package com.game.geodetective.screen;
 
 import com.game.geodetective.data.entity.CaseState;
-import com.game.geodetective.data.entity.CaseStateClueLocation;
 import com.game.geodetective.data.entity.Clue;
 import com.game.geodetective.data.entity.ClueLocation;
 import com.game.geodetective.data.entity.GenderType;
@@ -35,7 +34,6 @@ public class ClueLocationScreen extends Screen {
 	
 	private CaseState _state;
 	private ClueLocation _clueLocation;
-	private CaseStateClueLocation _stateClueLocation;
 	private Clue _clue;
 	
 	public ClueLocationScreen() {
@@ -62,8 +60,16 @@ public class ClueLocationScreen extends Screen {
 		
 		_state = GDGlobal.DataAccess.getCurrentCaseState();
 		_clueLocation = GDGlobal.DataAccess.getClueLocation(_state.CurrentClueLocationId);
-		_stateClueLocation = GDGlobal.DataAccess.getStateClueLocation(_clueLocation);
-		_clue = GDGlobal.DataAccess.getClueForCurrentState();
+		if (!_state.InBadCity && !_state.InFailCity)
+			_clue = GDGlobal.DataAccess.getClueForCurrentState();
+		else if (_state.InBadCity && !_state.InFailCity) {
+			Clue badClue = new Clue();
+			badClue.ClueText = "No, I haven't seen anybody like that.";
+			_clue = badClue;
+		}
+		else if (_state.InFailCity) {
+			// TODO: Show fail screen and end game
+		}
 		
 		float clockHeight = LayoutHelper.HeightSubFrac(1f, 24f);
 		StringBuffer timeString = new StringBuffer();

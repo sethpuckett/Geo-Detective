@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.game.geodetective.data.entity.CaseState;
+import com.game.geodetective.data.entity.CaseStateBadClueLocation;
 import com.game.geodetective.data.entity.CaseStateCityAvailable;
 import com.game.geodetective.data.entity.CaseStateCityVisited;
 import com.game.geodetective.data.entity.CaseStateClueLocation;
@@ -104,6 +105,38 @@ public class GDDataAccess {
 	/***********************************************
 	 * Basic Insert/Update
 	 ***********************************************/
+	
+	public void UpdateCaseState(CaseState state) {
+		getDB().execSQL("UPDATE CaseState SET " +
+				"CurrentCityId = ?," +
+				"CurrentHour = ?," +
+				"DeadlineHour = ?," +
+				"GoalCityId = ?," +
+				"CurrentCityVisitCount = ?," +
+				"GoalCityVisitCount = ?," +
+				"DifficultyTypeId = ?," +
+				"SleptToday = ?," +
+				"CrimeCityId = ?," +
+				"VillainId = ?," +
+				"CurrentClueLocationId = ?," +
+				"WarrantEyeId = ?," +
+				"WarrantFeatureId = ?," +
+				"WarrantFoodId = ?," +
+				"WarrantGenderId = ?," +
+				"WarrantHairId = ?," +
+				"WarrantHobbyId = ?," +
+				"WarrantVehicleId = ?," +
+				"HasWarrant = ?," +
+				"InBadCity = ?," +
+				"InFailCity = ?" +
+				"WHERE _id = ?",
+				new String[] {Integer.toString(state.CurrentCityId), Integer.toString(state.CurrentHour), Integer.toString(state.DeadlineHour), Integer.toString(state.GoalCityId),
+				Integer.toString(state.CurrentCityVisitCount), Integer.toString(state.GoalCityVisitCount), Integer.toString(state.DifficultyTypeId), state.SleptToday ? "1" : "0",
+				Integer.toString(state.CrimeCityId), Integer.toString(state.VillainId), Integer.toString(state.CurrentClueLocationId), Integer.toString(state.WarrantEyeId),
+				Integer.toString(state.WarrantFeatureId), Integer.toString(state.WarrantFoodId), Integer.toString(state.WarrantGenderId), Integer.toString(state.WarrantHairId),
+				Integer.toString(state.WarrantHobbyId), Integer.toString(state.WarrantVehicleId), state.HasWarrant ? "1" : "0", state.InBadCity ? "1" : "0", 
+				state.InFailCity ? "1" : "0", Integer.toString(state._id)});
+	}
 	
 	
 	/***********************************************
@@ -206,6 +239,13 @@ public class GDDataAccess {
 		return locations;
 	}
 	
+	public ClueLocation[] getBadClueLocationsOrCreateForCurrentCase(int locationCount) {
+		int currentClueLocationCount = getCaseStateBadClueLocationCount();
+		if (currentClueLocationCount == 0)
+			setRandomBadClueLocationsForCurrentCase(3);
+		return getBadClueLocationsForCurrentCase();
+	}
+	
 	public CaseState getCurrentCaseState() {
 		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseState LIMIT 1", null);
 		cursor.moveToFirst();
@@ -230,6 +270,13 @@ public class GDDataAccess {
 		return cursor.getInt(0);
 	}
 	
+	public int getCaseStateBadClueLocationCount() {
+		CaseState state = getCurrentCaseState();
+		Cursor cursor = getDB().rawQuery("SELECT COUNT(*) FROM CaseStateBadClueLocation WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		cursor.moveToFirst();
+		return cursor.getInt(0);
+	}
+	
 	public int getCaseStateCityAvailableCount() {
 		CaseState state = getCurrentCaseState();
 		Cursor cursor = getDB().rawQuery("SELECT COUNT(*) FROM CaseStateCityAvailable WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
@@ -247,6 +294,25 @@ public class GDDataAccess {
 		cursor.moveToFirst();
 		for (int i = 0; i < locationCount; i++) {
 			CaseStateClueLocation location = cursorToCaseStateClueLocation(cursor);
+			stateLocations[i] = location;
+			if (i < locationCount)
+				cursor.moveToNext();
+		}
+		cursor.close();
+		
+		return stateLocations;
+	}
+	
+	public CaseStateBadClueLocation[] getStateBadClueLocationsForCurrentCase() {
+		CaseState state = getCurrentCaseState();
+
+		int locationCount = getCaseStateClueLocationCount();
+		CaseStateBadClueLocation[] stateLocations = new CaseStateBadClueLocation[locationCount];
+		
+		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseStateBadClueLocation WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		cursor.moveToFirst();
+		for (int i = 0; i < locationCount; i++) {
+			CaseStateBadClueLocation location = cursorToCaseStateBadClueLocation(cursor);
 			stateLocations[i] = location;
 			if (i < locationCount)
 				cursor.moveToNext();
@@ -278,6 +344,18 @@ public class GDDataAccess {
 	public ClueLocation[] getClueLocationsForCurrentCase() {
 		int locationCount = getCaseStateClueLocationCount();
 		CaseStateClueLocation[] stateLocations = getStateClueLocationsForCurrentCase();
+		
+		ClueLocation[] locations = new ClueLocation[locationCount];
+		for (int i = 0; i < locationCount; i++) {
+			locations[i] = getClueLocation(stateLocations[i].ClueLocationId);
+		}
+		
+		return locations;
+	}
+	
+	public ClueLocation[] getBadClueLocationsForCurrentCase() {
+		int locationCount = getCaseStateBadClueLocationCount();
+		CaseStateBadClueLocation[] stateLocations = getStateBadClueLocationsForCurrentCase();
 		
 		ClueLocation[] locations = new ClueLocation[locationCount];
 		for (int i = 0; i < locationCount; i++) {
@@ -406,21 +484,28 @@ public class GDDataAccess {
 		//set start city as visited
 		setVisitedCity(state, startCity);
 		
-		// get visitable cities
-		// TODO: make this configurable in DB
-		int visitableCityCount = 4;
-		City[] visitableCities = GDGlobal.DataAccess.getUnvisitedCities(visitableCityCount, difficulty);
-		
-		for (int i = 0; i <  visitableCities.length; i ++) {
-			getDB().execSQL("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)",
-				new String[] {Integer.toString(state._id), Integer.toString( visitableCities[i]._id) });
-		}
+		City[] visitableCities = setVisitableCities(state, 4, difficulty);
 		
 		// set goal city
 		setRandomGoalCity(state, visitableCities);
 		
 		// get clue locations for this city
 		setRandomClueLocationsForCurrentCase(3);
+	}
+	
+	public City[] setVisitableCities(CaseState state, int visitableCityCount, DifficultyType difficulty) {
+		// TODO: make visitableCityCount configurable in DB
+		
+		City[] visitableCities = GDGlobal.DataAccess.getUnvisitedCities(visitableCityCount, difficulty);
+		
+		getDB().execSQL("DELETE FROM CaseStateCityAvailable");
+		
+		for (int i = 0; i <  visitableCities.length; i ++) {
+			getDB().execSQL("INSERT INTO CaseStateCityAvailable (CaseStateId, CityId) VALUES (?, ?)",
+				new String[] {Integer.toString(state._id), Integer.toString( visitableCities[i]._id) });
+		}
+		
+		return visitableCities;
 	}
 
 	public void setVisitedCity(CaseState state, City city) {
@@ -460,6 +545,18 @@ public class GDDataAccess {
 		for (int i = 0; i < locations.length; i++) {
 			getDB().execSQL("INSERT INTO CaseStateClueLocation (CaseStateId, ClueLocationId, Visited, ClueType) VALUES (?, ?, ?, ?)", 
 				new String[] { Integer.toString(state._id), Integer.toString(locations[i]._id), "0", Integer.toString(clueType) }); 
+		}
+	}
+	
+	public void setRandomBadClueLocationsForCurrentCase(int locationCount) {
+		CaseState state = getCurrentCaseState();
+		ClueLocation[] locations = getRandomClueLocation(locationCount);
+		Random rand = new Random();
+		int clueType = rand.nextInt(2) + 1;
+		
+		for (int i = 0; i < locations.length; i++) {
+			getDB().execSQL("INSERT INTO CaseStateBadClueLocation (CaseStateId, ClueLocationId) VALUES (?, ?)", 
+				new String[] { Integer.toString(state._id), Integer.toString(locations[i]._id) }); 
 		}
 	}
 	
@@ -527,6 +624,8 @@ public class GDDataAccess {
 		state.WarrantHobbyId = cursor.getInt(18);
 		state.WarrantVehicleId = cursor.getInt(19);
 		state.HasWarrant = cursor.getInt(20) > 0;
+		state.InBadCity = cursor.getInt(21) > 0;
+		state.InFailCity = cursor.getInt(22) > 0;
 		return state;
 	}
 
@@ -561,6 +660,14 @@ public class GDDataAccess {
 		entity.ClueLocationId = cursor.getInt(2);
 		entity.Visited = cursor.getInt(3) > 0;
 		entity.ClueType = cursor.getInt(4);
+		return entity;
+	}
+	
+	private CaseStateBadClueLocation cursorToCaseStateBadClueLocation(Cursor cursor) {
+		CaseStateBadClueLocation entity = new CaseStateBadClueLocation();
+		entity._id = cursor.getInt(0);
+		entity.CaseStateId = cursor.getInt(1);
+		entity.ClueLocationId = cursor.getInt(2);
 		return entity;
 	}
 	

@@ -78,7 +78,10 @@ public class CityScreen extends Screen {
 		
 		_state = GDGlobal.DataAccess.getCurrentCaseState();
 		_currentCity = GDGlobal.DataAccess.getCity(_state.CurrentCityId);
-		_clueLocations = GDGlobal.DataAccess.getClueLocationsOrCreateForCurrentCase(3);
+		if (!_state.InBadCity && !_state.InFailCity)
+			_clueLocations = GDGlobal.DataAccess.getClueLocationsOrCreateForCurrentCase(3);
+		else
+			_clueLocations = GDGlobal.DataAccess.getBadClueLocationsOrCreateForCurrentCase(3);
 		
 		float clockHeight = LayoutHelper.HeightSubFrac(1f, 24f);
 		StringBuffer timeString = new StringBuffer();
