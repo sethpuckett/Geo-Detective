@@ -111,6 +111,7 @@ public class GDDataAccess {
 				"CurrentCityId = ?," +
 				"CurrentHour = ?," +
 				"DeadlineHour = ?," +
+				"PreviousCityId = ?," +
 				"GoalCityId = ?," +
 				"CurrentCityVisitCount = ?," +
 				"GoalCityVisitCount = ?," +
@@ -130,12 +131,29 @@ public class GDDataAccess {
 				"InBadCity = ?," +
 				"InFailCity = ?" +
 				"WHERE _id = ?",
-				new String[] {Integer.toString(state.CurrentCityId), Integer.toString(state.CurrentHour), Integer.toString(state.DeadlineHour), Integer.toString(state.GoalCityId),
-				Integer.toString(state.CurrentCityVisitCount), Integer.toString(state.GoalCityVisitCount), Integer.toString(state.DifficultyTypeId), state.SleptToday ? "1" : "0",
-				Integer.toString(state.CrimeCityId), Integer.toString(state.VillainId), Integer.toString(state.CurrentClueLocationId), Integer.toString(state.WarrantEyeId),
-				Integer.toString(state.WarrantFeatureId), Integer.toString(state.WarrantFoodId), Integer.toString(state.WarrantGenderId), Integer.toString(state.WarrantHairId),
-				Integer.toString(state.WarrantHobbyId), Integer.toString(state.WarrantVehicleId), state.HasWarrant ? "1" : "0", state.InBadCity ? "1" : "0", 
-				state.InFailCity ? "1" : "0", Integer.toString(state._id)});
+				new String[] {Integer.toString(state.CurrentCityId), 
+				Integer.toString(state.CurrentHour), 
+				Integer.toString(state.DeadlineHour),
+				Integer.toString(state.PreviousCityId),
+				Integer.toString(state.GoalCityId),
+				Integer.toString(state.CurrentCityVisitCount), 
+				Integer.toString(state.GoalCityVisitCount), 
+				Integer.toString(state.DifficultyTypeId), 
+				state.SleptToday ? "1" : "0",
+				Integer.toString(state.CrimeCityId), 
+				Integer.toString(state.VillainId), 
+				Integer.toString(state.CurrentClueLocationId), 
+				Integer.toString(state.WarrantEyeId),
+				Integer.toString(state.WarrantFeatureId), 
+				Integer.toString(state.WarrantFoodId), 
+				Integer.toString(state.WarrantGenderId), 
+				Integer.toString(state.WarrantHairId),
+				Integer.toString(state.WarrantHobbyId), 
+				Integer.toString(state.WarrantVehicleId), 
+				state.HasWarrant ? "1" : "0", 
+				state.InBadCity ? "1" : "0", 
+				state.InFailCity ? "1" : "0", 
+				Integer.toString(state._id)});
 	}
 	
 	
@@ -306,7 +324,7 @@ public class GDDataAccess {
 	public CaseStateBadClueLocation[] getStateBadClueLocationsForCurrentCase() {
 		CaseState state = getCurrentCaseState();
 
-		int locationCount = getCaseStateClueLocationCount();
+		int locationCount = getCaseStateBadClueLocationCount();
 		CaseStateBadClueLocation[] stateLocations = new CaseStateBadClueLocation[locationCount];
 		
 		Cursor cursor = getDB().rawQuery("SELECT * FROM CaseStateBadClueLocation WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
@@ -443,6 +461,7 @@ public class GDDataAccess {
 		getDB().rawQuery("DELETE FROM CaseStateCityAvailable", null);
 		getDB().rawQuery("DELETE FROM CaseStateCityVisited", null);
 		getDB().rawQuery("DELETE FROM CaseStateClueLocation", null);
+		getDB().rawQuery("DELETE FROM CaseStateBadClueLocation", null);
 	}
 
 	// Initialize a new case
@@ -538,6 +557,9 @@ public class GDDataAccess {
 	
 	public void setRandomClueLocationsForCurrentCase(int locationCount) {
 		CaseState state = getCurrentCaseState();
+		
+		getDB().rawQuery("DELETE FROM CaseStateClueLocation WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		
 		ClueLocation[] locations = getRandomClueLocation(locationCount);
 		Random rand = new Random();
 		int clueType = rand.nextInt(2) + 1;
@@ -550,6 +572,9 @@ public class GDDataAccess {
 	
 	public void setRandomBadClueLocationsForCurrentCase(int locationCount) {
 		CaseState state = getCurrentCaseState();
+		
+		getDB().rawQuery("DELETE FROM CaseStateBadClueLocation WHERE CaseStateId = ?", new String[] { Integer.toString(state._id) });
+		
 		ClueLocation[] locations = getRandomClueLocation(locationCount);
 		Random rand = new Random();
 		int clueType = rand.nextInt(2) + 1;

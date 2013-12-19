@@ -84,6 +84,10 @@ public class TravelScreen extends Screen {
 				_destinationSelected = 6;
 			}
 			else if (entity == _travelButton) {
+				if (_destinationSelected == 1 && !_state.InBadCity) {
+					// TODO: show popup warning about this and don't allow change
+				}
+				
 				// update previous city
 				_state.PreviousCityId = _state.CurrentCityId;
 				// update current city
@@ -106,6 +110,9 @@ public class TravelScreen extends Screen {
 					// update available cities
 					DifficultyType difficulty = GDGlobal.DataAccess.getCurrentDifficulty();
 					City[] visitableCities =  GDGlobal.DataAccess.setVisitableCities(_state, 4, difficulty);
+					
+					GDGlobal.DataAccess.UpdateCaseState(_state);
+					
 					// set goal city
 					 GDGlobal.DataAccess.setRandomGoalCity(_state, visitableCities);
 					// get clue locations for this city
@@ -114,19 +121,24 @@ public class TravelScreen extends Screen {
 				// Handles case where user was in good city and is traveling to bad city
 				else if (!_state.InBadCity && _state.CurrentCityId != _state.GoalCityId) {
 					_state.InBadCity = true;
+					
+					GDGlobal.DataAccess.UpdateCaseState(_state);
+					
 					// set bad clue locations
 					GDGlobal.DataAccess.setRandomBadClueLocationsForCurrentCase(3);
 				}
 				// Handles case where user was in bad city and is returning to good city
 				else if (_state.InBadCity && returning) {
 					_state.InBadCity = false;
+					// reset previous city to prevent showing in travel list
+					_state.PreviousCityId = 0;
+					GDGlobal.DataAccess.UpdateCaseState(_state);
 				}
 				// Handles case where user was in bad city and is traveling to another bad city (loss)
 				else if (_state.InBadCity && !returning) {
 					_state.InFailCity = true;
+					GDGlobal.DataAccess.UpdateCaseState(_state);
 				}
-				
-				GDGlobal.DataAccess.UpdateCaseState(_state);
 				
 				_code = GDScreenCode.TRANSITION_TRANSIT_LOAD;
 			}
@@ -138,11 +150,6 @@ public class TravelScreen extends Screen {
 			}
 			
 		}
-	}
-	
-	@Override
-	public void update(float updateRatio) {
-
 	}
 	
 	@Override
@@ -216,7 +223,7 @@ public class TravelScreen extends Screen {
 				cityImageHeight);
 		_entities.add(_worldImage);
 		
-		float location1Height = cityImageHeight - LayoutHelper.WidthSubFrac(2f, 4f) - LayoutHelper.HeightFrac(30f);
+		float location1Height = cityImageHeight - LayoutHelper.WidthSubFrac(2f, 4f) - LayoutHelper.HeightFrac(20f);
 		if (_previousCity != null) {
 			_destination1Button = EntityHelper.textButton("CALIBRI BIG",
 					CityHelper.getLabel(_previousCity), 
@@ -318,7 +325,7 @@ public class TravelScreen extends Screen {
 				AreaType.Rectangle);
 		_entities.add(_backButton);
 		
-		float travelButtonHeight = backButtonHeight + LayoutHelper.WidthFrac(5f) + LayoutHelper.HeightFrac(24f);
+		float travelButtonHeight = backButtonHeight + LayoutHelper.WidthFrac(5f) + LayoutHelper.HeightFrac(48f);
 		_travelButton = EntityHelper.button(GDImage.TRAVEL_FLY_BUTTON,
 				GDSpriteLayer.UI_HIGH, 
 				false, 
