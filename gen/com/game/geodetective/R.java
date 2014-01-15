@@ -58,11 +58,12 @@ public final class R {
         public static final int menu_dark_stone_h_tile=0x7f020022;
         public static final int menu_new_game_button=0x7f020023;
         public static final int menu_sound_button=0x7f020024;
-        public static final int splash_logo=0x7f020025;
-        public static final int title_credits_button=0x7f020026;
-        public static final int title_maze_title=0x7f020027;
-        public static final int travel_fly_button=0x7f020028;
-        public static final int travel_world=0x7f020029;
+        public static final int popup_body=0x7f020025;
+        public static final int splash_logo=0x7f020026;
+        public static final int title_credits_button=0x7f020027;
+        public static final int title_maze_title=0x7f020028;
+        public static final int travel_fly_button=0x7f020029;
+        public static final int travel_world=0x7f02002a;
     }
     public static final class id {
         public static final int action_settings=0x7f080000;

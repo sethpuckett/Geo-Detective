@@ -95,6 +95,7 @@ public class TravelScreen extends Screen {
 				boolean returning = false;
 				if (_destinationSelected == 1) {
 					currentCity = _previousCity;
+					_state.PreviousCityId = 0;
 					returning = true;
 				}
 				else
@@ -130,8 +131,6 @@ public class TravelScreen extends Screen {
 				// Handles case where user was in bad city and is returning to good city
 				else if (_state.InBadCity && returning) {
 					_state.InBadCity = false;
-					// reset previous city to prevent showing in travel list
-					_state.PreviousCityId = 0;
 					GDGlobal.DataAccess.UpdateCaseState(_state);
 				}
 				// Handles case where user was in bad city and is traveling to another bad city (loss)
@@ -158,9 +157,20 @@ public class TravelScreen extends Screen {
 		
 		_state = GDGlobal.DataAccess.getCurrentCaseState();
 		_currentCity = GDGlobal.DataAccess.getCity(_state.CurrentCityId);
+		
+		// set previous city if player is coming from somewhere else and not returning to past destiantion
 		if (_state.PreviousCityId > 0)
 			_previousCity = GDGlobal.DataAccess.getCity(_state.PreviousCityId);
-		_availableCities = GDGlobal.DataAccess.getAvailableCitiesForCurrentCase();
+		else
+			_previousCity = null;
+		
+		// set random travel destinations if player is in wrong city
+		if (_state.InBadCity) {
+			DifficultyType difficulty = GDGlobal.DataAccess.getCurrentDifficulty();
+			_availableCities = GDGlobal.DataAccess.getUnvisitedCities(4, difficulty);
+		}
+		else
+			_availableCities = GDGlobal.DataAccess.getAvailableCitiesForCurrentCase();
 		
 		float clockHeight = LayoutHelper.HeightSubFrac(1f, 24f);
 		StringBuffer timeString = new StringBuffer();

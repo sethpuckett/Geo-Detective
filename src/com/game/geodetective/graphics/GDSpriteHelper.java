@@ -224,6 +224,10 @@ public class GDSpriteHelper extends SpriteHelper {
 			s.Texture.ResourceId = R.drawable.city_image_placeholder;
 			s.Frames = FrameHelper._512x512;
 			break;
+		case GDImage.POPUP_BACKGROUND:
+			s.Texture.ResourceId = R.drawable.popup_body;
+			s.Frames = FrameHelper._128x128;
+			break;
 		default:
 			super.setupSprite(s, image);
 			break;

@@ -90,4 +90,7 @@ public class GDImage extends Image {
 	public final static int GREEN = 2005;
 	public final static int ORANGE = 2006;
 	public final static int BLUE = 2007;
+	
+	// Popup
+	public final static int POPUP_BACKGROUND = 2100;
 }

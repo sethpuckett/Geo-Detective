@@ -156,7 +156,6 @@ public class GDDataAccess {
 				Integer.toString(state._id)});
 	}
 	
-	
 	/***********************************************
 	 * Specialized Select
 	 ***********************************************/
@@ -213,7 +212,7 @@ public class GDDataAccess {
 		
 		int count = 0;
 		while (count < cityCount) {
-		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityVisited INNER JOIN CaseState ON CaseStateCityVisited.CaseStateId = CaseState._id) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
+		  Cursor cursor = getDB().rawQuery("SELECT * FROM City WHERE City._id NOT IN (SELECT CityId FROM CaseStateCityVisited INNER JOIN CaseState ON CaseStateCityVisited.CaseStateId = CaseState._id) AND City._id NOT IN (SELECT CurrentCityId FROM CaseState) AND City.DifficultyId <= ? ORDER BY RANDOM() LIMIT 1",
 					new String[] {Integer.toString(difficulty._id)});
 		  cursor.moveToFirst();
 		  City city = cursorToCity(cursor);

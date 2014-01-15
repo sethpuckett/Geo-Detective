@@ -3,7 +3,6 @@ package com.game.geodetective.screen;
 import com.game.loblib.screen.ScreenCode;
 
 public class GDScreenCode extends ScreenCode {	
-	public final static int TRANSITION_TITLE =				2;
 	public final static int TRANSITION_OPTIONS=				3;
 	public final static int TRANSITION_STATS =				4;
 	public final static int TRANSITION_CREDITS =			5;
@@ -16,4 +15,6 @@ public class GDScreenCode extends ScreenCode {
 	public final static int TRANSITION_TRANSIT_LOAD =		12;
 	public final static int TRANSITION_WIN =				13;
 	public final static int TRANSITION_LOSS =				14;
+	public final static int TRANSITION_POPUP =				15;
+	public final static int TRANSITION_TITLE =				16;
 }

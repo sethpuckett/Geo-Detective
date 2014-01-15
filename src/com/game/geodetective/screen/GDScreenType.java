@@ -16,4 +16,5 @@ public class GDScreenType extends ScreenType {
 	public final static int TRANSIT_LOAD =		1 << 11;
 	public final static int WIN =				1 << 12;
 	public final static int LOSS =				1 << 13;
+	public final static int POPUP = 			1 << 14;
 }
