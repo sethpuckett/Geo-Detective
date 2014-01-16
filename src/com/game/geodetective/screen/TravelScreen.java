@@ -9,6 +9,7 @@ import com.game.geodetective.entity.EntityHelper;
 import com.game.geodetective.graphics.GDImage;
 import com.game.geodetective.graphics.GDSpriteLayer;
 import com.game.geodetective.utility.CityHelper;
+import com.game.geodetective.utility.GDCommonData;
 import com.game.geodetective.utility.GDGlobal;
 import com.game.geodetective.utility.GDTimeHelper;
 import com.game.loblib.entity.GameEntity;
@@ -85,61 +86,63 @@ public class TravelScreen extends Screen {
 			}
 			else if (entity == _travelButton) {
 				if (_destinationSelected == 1 && !_state.InBadCity) {
-					// TODO: show popup warning about this and don't allow change
+					((GDCommonData)GDGlobal.Data).PopupText = "You just came from there!";
+					_code = GDScreenCode.TRANSITION_POPUP;
 				}
-				
-				// update previous city
-				_state.PreviousCityId = _state.CurrentCityId;
-				// update current city
-				City currentCity = null;
-				boolean returning = false;
-				if (_destinationSelected == 1) {
-					currentCity = _previousCity;
-					_state.PreviousCityId = 0;
-					returning = true;
-				}
-				else
-					currentCity = _availableCities[_destinationSelected - 2];
-				_state.CurrentCityId = currentCity._id;
-				
-				// Handles case where user was in good city and is traveling to next good city
-				if (!_state.InBadCity && _state.CurrentCityId == _state.GoalCityId) {
-					// update visited count
-					_state.CurrentCityVisitCount++;
-					// update visited city
-					GDGlobal.DataAccess.setVisitedCity(_state, currentCity);
-					// update available cities
-					DifficultyType difficulty = GDGlobal.DataAccess.getCurrentDifficulty();
-					City[] visitableCities =  GDGlobal.DataAccess.setVisitableCities(_state, 4, difficulty);
+				else {
+					// update previous city
+					_state.PreviousCityId = _state.CurrentCityId;
+					// update current city
+					City currentCity = null;
+					boolean returning = false;
+					if (_destinationSelected == 1) {
+						currentCity = _previousCity;
+						_state.PreviousCityId = 0;
+						returning = true;
+					}
+					else
+						currentCity = _availableCities[_destinationSelected - 2];
+					_state.CurrentCityId = currentCity._id;
 					
-					GDGlobal.DataAccess.UpdateCaseState(_state);
+					// Handles case where user was in good city and is traveling to next good city
+					if (!_state.InBadCity && _state.CurrentCityId == _state.GoalCityId) {
+						// update visited count
+						_state.CurrentCityVisitCount++;
+						// update visited city
+						GDGlobal.DataAccess.setVisitedCity(_state, currentCity);
+						// update available cities
+						DifficultyType difficulty = GDGlobal.DataAccess.getCurrentDifficulty();
+						City[] visitableCities =  GDGlobal.DataAccess.setVisitableCities(_state, 4, difficulty);
+						
+						GDGlobal.DataAccess.UpdateCaseState(_state);
+						
+						// set goal city
+						 GDGlobal.DataAccess.setRandomGoalCity(_state, visitableCities);
+						// get clue locations for this city
+						 GDGlobal.DataAccess.setRandomClueLocationsForCurrentCase(3);
+					}
+					// Handles case where user was in good city and is traveling to bad city
+					else if (!_state.InBadCity && _state.CurrentCityId != _state.GoalCityId) {
+						_state.InBadCity = true;
+						
+						GDGlobal.DataAccess.UpdateCaseState(_state);
+						
+						// set bad clue locations
+						GDGlobal.DataAccess.setRandomBadClueLocationsForCurrentCase(3);
+					}
+					// Handles case where user was in bad city and is returning to good city
+					else if (_state.InBadCity && returning) {
+						_state.InBadCity = false;
+						GDGlobal.DataAccess.UpdateCaseState(_state);
+					}
+					// Handles case where user was in bad city and is traveling to another bad city (loss)
+					else if (_state.InBadCity && !returning) {
+						_state.InFailCity = true;
+						GDGlobal.DataAccess.UpdateCaseState(_state);
+					}
 					
-					// set goal city
-					 GDGlobal.DataAccess.setRandomGoalCity(_state, visitableCities);
-					// get clue locations for this city
-					 GDGlobal.DataAccess.setRandomClueLocationsForCurrentCase(3);
+					_code = GDScreenCode.TRANSITION_TRANSIT_LOAD;
 				}
-				// Handles case where user was in good city and is traveling to bad city
-				else if (!_state.InBadCity && _state.CurrentCityId != _state.GoalCityId) {
-					_state.InBadCity = true;
-					
-					GDGlobal.DataAccess.UpdateCaseState(_state);
-					
-					// set bad clue locations
-					GDGlobal.DataAccess.setRandomBadClueLocationsForCurrentCase(3);
-				}
-				// Handles case where user was in bad city and is returning to good city
-				else if (_state.InBadCity && returning) {
-					_state.InBadCity = false;
-					GDGlobal.DataAccess.UpdateCaseState(_state);
-				}
-				// Handles case where user was in bad city and is traveling to another bad city (loss)
-				else if (_state.InBadCity && !returning) {
-					_state.InFailCity = true;
-					GDGlobal.DataAccess.UpdateCaseState(_state);
-				}
-				
-				_code = GDScreenCode.TRANSITION_TRANSIT_LOAD;
 			}
 			
 			if (destinationChanged) {

@@ -18,6 +18,7 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 	protected ClueLocationScreen _clueLocation = new ClueLocationScreen();
 	protected TravelScreen _travel = new TravelScreen();
 	protected TransitLoadScreen _transitLoad = new TransitLoadScreen();
+	protected PopupScreen _popup = new PopupScreen();
 	
 	@Override
 	public void init() {
@@ -126,11 +127,18 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 			_active.unpause();
 			break;
 		case GDScreenType.TRAVEL:
-			_active.close();
-			if (code == GDScreenCode.TRANSITION_CITY)
+			if (code == GDScreenCode.TRANSITION_CITY) {
+				_active.close();
 				_active = _city;
-			else if (code == GDScreenCode.TRANSITION_TRANSIT_LOAD)
+			}
+			else if (code == GDScreenCode.TRANSITION_TRANSIT_LOAD) {
+				_active.close();
 				_active = _transitLoad;
+			}
+			else if (code == GDScreenCode.TRANSITION_POPUP) {
+				_active.pause();
+				_active = _popup;
+			}
 			else {
 				Logger.e(_tag, "Invalid transition");
 				return;
@@ -147,6 +155,11 @@ public class GDScreenManager extends ScreenManager implements IMessageHandler {
 			}
 			_active.init();
 			break;
+		case GDScreenType.POPUP:
+			_active.close();
+			// TODO: Need to create screen stack so we can pop popup off - or, don't make popups screens (maybe better)
+			_active = _travel;
+			_active.unpause();
 		}
 	}
 }
